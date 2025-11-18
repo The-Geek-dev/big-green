@@ -40,24 +40,24 @@ const Navigation = () => {
   };
 
   const navItems = [
-    { name: "Features", href: "#features", onClick: () => scrollToSection('features') },
-    { name: "Prices", href: "#pricing", onClick: () => scrollToSection('pricing') },
-    { name: "Testimonials", href: "#testimonials", onClick: () => scrollToSection('testimonials') },
+    { name: "Models", href: "#features", onClick: () => scrollToSection('features') },
+    { name: "Pricing", href: "#pricing", onClick: () => scrollToSection('pricing') },
+    { name: "Reviews", href: "#testimonials", onClick: () => scrollToSection('testimonials') },
   ];
 
   return (
     <header
       className={`fixed top-3.5 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 rounded-full ${
         isScrolled 
-          ? "h-14 bg-[#1B1B1B]/40 backdrop-blur-xl border border-white/10 scale-95 w-[90%] max-w-2xl" 
-          : "h-14 bg-[#1B1B1B] w-[95%] max-w-3xl"
+          ? "h-14 glass backdrop-blur-xl border border-border scale-95 w-[90%] max-w-2xl" 
+          : "h-14 bg-card/80 backdrop-blur-sm w-[95%] max-w-3xl"
       }`}
     >
       <div className="mx-auto h-full px-6">
         <nav className="flex items-center justify-between h-full">
           <div className="flex items-center gap-2">
             <Command className="w-5 h-5 text-primary" />
-            <span className="font-bold text-base">CryptoTrade</span>
+            <span className="font-bold text-base text-foreground">Tesla</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -82,7 +82,7 @@ const Navigation = () => {
               size="sm"
               className="button-gradient"
             >
-              Start Trading
+              Order Now
             </Button>
           </div>
 
@@ -119,7 +119,7 @@ const Navigation = () => {
                     }}
                     className="button-gradient mt-4"
                   >
-                    Start Trading
+                    Order Now
                   </Button>
                 </div>
               </SheetContent>
