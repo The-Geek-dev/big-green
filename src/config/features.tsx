@@ -1,28 +1,28 @@
-import { BarChart3, ShieldCheck, Wallet, ArrowUpDown } from "lucide-react";
+import { Battery, ShieldCheck, Zap, TrendingUp } from "lucide-react";
 
 export const features = [
   {
-    title: "Advanced Trading Interface",
-    description: "Professional-grade trading tools with real-time market data and advanced charting capabilities.",
-    icon: <BarChart3 className="w-6 h-6" />,
+    title: "Advanced Autopilot",
+    description: "Full self-driving capability with cutting-edge AI and neural networks for safer, smarter driving.",
+    icon: <Zap className="w-6 h-6" />,
     image: "/lovable-uploads/86329743-ee49-4f2e-96f7-50508436273d.png"
   },
   {
-    title: "Portfolio Management",
-    description: "Track your investments and monitor your gains with our comprehensive portfolio dashboard.",
-    icon: <Wallet className="w-6 h-6" />,
+    title: "Long Range Battery",
+    description: "Industry-leading battery technology providing up to 400+ miles of range on a single charge.",
+    icon: <Battery className="w-6 h-6" />,
     image: "/lovable-uploads/7335619d-58a9-41ad-a233-f7826f56f3e9.png"
   },
   {
-    title: "Security & Verification",
-    description: "Industry-leading security measures with KYC verification process to protect your assets.",
+    title: "Enhanced Safety",
+    description: "Built to be the safest cars on the road with active safety features and reinforced structure.",
     icon: <ShieldCheck className="w-6 h-6" />,
     image: "/lovable-uploads/b6436838-5c1a-419a-9cdc-1f9867df073d.png"
   },
   {
-    title: "Performance Analytics",
-    description: "Detailed analytics and credit scoring system to help you make informed decisions.",
-    icon: <ArrowUpDown className="w-6 h-6" />,
+    title: "Supercharger Network",
+    description: "Access to 50,000+ Superchargers worldwide for fast, convenient charging on long trips.",
+    icon: <TrendingUp className="w-6 h-6" />,
     image: "/lovable-uploads/79f2b901-8a4e-42a5-939f-fae0828e0aef.png"
   }
 ];

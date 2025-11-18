@@ -7,45 +7,45 @@ import { Card } from "./ui/card";
 const testimonials = [
   {
     name: "Michael Chen",
-    role: "Professional Trader",
+    role: "Model 3 Owner",
     image: "https://avatars.githubusercontent.com/u/1234567?v=4",
-    content: "The real-time market data and advanced trading features have significantly improved my trading performance. The platform's security measures give me peace of mind."
+    content: "Switching to Tesla was the best decision I've made. The autopilot technology and instant torque make every drive incredible. Zero gas stations, zero emissions!"
   },
   {
     name: "Sarah Johnson",
-    role: "Crypto Fund Manager",
+    role: "Model Y Owner",
     image: "https://avatars.githubusercontent.com/u/2345678?v=4",
-    content: "CryptoTrade's institutional-grade tools have transformed our trading strategy. The API integration and automated features have saved us countless hours."
+    content: "The Model Y has transformed our family road trips. With its spacious interior and Supercharger network, we've never felt range anxiety. Tesla truly delivers on innovation."
   },
   {
     name: "David Wilson",
-    role: "Early Crypto Investor",
+    role: "Model S Owner",
     image: "https://avatars.githubusercontent.com/u/3456789?v=4",
-    content: "The customer support is exceptional, and the platform's intuitive design made getting started with crypto trading seamless. A game-changer for both beginners and pros."
+    content: "The performance is mind-blowing - 0-60 in under 3 seconds! Plus the over-the-air updates keep making the car better. It's like getting a new car every few months."
   },
   {
     name: "Emily Zhang",
-    role: "DeFi Developer",
+    role: "Model 3 Performance Owner",
     image: "https://avatars.githubusercontent.com/u/4567890?v=4",
-    content: "We've seen remarkable improvements in our trading efficiency since switching to CryptoTrade. The smart order routing and liquidity aggregation are particularly impressive."
+    content: "I've saved thousands on fuel costs, and the maintenance is minimal. The instant acceleration and tech features make it feel like driving a spaceship."
   },
   {
     name: "James Rodriguez",
-    role: "Crypto Security Expert",
+    role: "Model X Owner",
     image: "https://avatars.githubusercontent.com/u/5678901?v=4",
-    content: "The security features are robust and the regular updates keep us ahead of emerging threats. It's exactly what the crypto industry needed."
+    content: "The falcon wing doors always turn heads, but it's the safety features and autopilot that truly impressed me. Tesla has redefined what a luxury SUV should be."
   },
   {
     name: "Lisa Thompson",
-    role: "Portfolio Manager",
+    role: "Model S Plaid Owner",
     image: "https://avatars.githubusercontent.com/u/6789012?v=4",
-    content: "The platform's ability to handle complex trading strategies while maintaining simplicity in its interface is remarkable. It's been invaluable for our portfolio management."
+    content: "The Plaid's performance is absolutely insane - fastest production car I've ever driven. Combined with the elegant design and premium interior, it's perfection."
   }
 ];
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-20 overflow-hidden bg-black">
+    <section className="py-20 overflow-hidden bg-background">
       <div className="container px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -54,9 +54,9 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl font-normal mb-4">Trusted by Traders</h2>
+          <h2 className="text-5xl font-normal mb-4 text-foreground">Loved by Drivers</h2>
           <p className="text-muted-foreground text-lg">
-            Join thousands of satisfied traders on CryptoTrade
+            Join thousands of satisfied Tesla owners worldwide
           </p>
         </motion.div>
 
@@ -64,18 +64,18 @@ const TestimonialsSection = () => {
           <div className="relative flex overflow-hidden py-4">
             <div className="animate-marquee flex min-w-full shrink-0 items-stretch gap-8">
               {testimonials.map((testimonial, index) => (
-                <Card key={`${index}-1`} className="w-[400px] shrink-0 bg-black/40 backdrop-blur-xl border-white/5 hover:border-white/10 transition-all duration-300 p-8">
+                <Card key={`${index}-1`} className="w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-8">
                   <div className="flex items-center gap-4 mb-6">
                     <Avatar className="h-12 w-12">
                       <AvatarImage src={testimonial.image} />
                       <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <h4 className="font-medium text-white/90">{testimonial.name}</h4>
-                      <p className="text-sm text-white/60">{testimonial.role}</p>
+                      <h4 className="font-medium text-foreground">{testimonial.name}</h4>
+                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                     </div>
                   </div>
-                  <p className="text-white/70 leading-relaxed">
+                  <p className="text-foreground/80 leading-relaxed">
                     {testimonial.content}
                   </p>
                 </Card>
@@ -83,18 +83,18 @@ const TestimonialsSection = () => {
             </div>
             <div className="animate-marquee flex min-w-full shrink-0 items-stretch gap-8">
               {testimonials.map((testimonial, index) => (
-                <Card key={`${index}-2`} className="w-[400px] shrink-0 bg-black/40 backdrop-blur-xl border-white/5 hover:border-white/10 transition-all duration-300 p-8">
+                <Card key={`${index}-2`} className="w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-8">
                   <div className="flex items-center gap-4 mb-6">
                     <Avatar className="h-12 w-12">
                       <AvatarImage src={testimonial.image} />
                       <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <h4 className="font-medium text-white/90">{testimonial.name}</h4>
-                      <p className="text-sm text-white/60">{testimonial.role}</p>
+                      <h4 className="font-medium text-foreground">{testimonial.name}</h4>
+                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                     </div>
                   </div>
-                  <p className="text-white/70 leading-relaxed">
+                  <p className="text-foreground/80 leading-relaxed">
                     {testimonial.content}
                   </p>
                 </Card>
