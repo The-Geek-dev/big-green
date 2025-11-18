@@ -7,39 +7,39 @@ import { Card } from "./ui/card";
 const testimonials = [
   {
     name: "Michael Chen",
-    role: "Model 3 Owner",
+    role: "Model 3 Owner & Crypto Investor",
     image: "https://avatars.githubusercontent.com/u/1234567?v=4",
-    content: "Switching to Tesla was the best decision I've made. The autopilot technology and instant torque make every drive incredible. Zero gas stations, zero emissions!"
+    content: "Switching to Tesla and using their crypto platform was brilliant. I charge my car, track my portfolio, and enjoy zero emissions - all seamlessly integrated!"
   },
   {
     name: "Sarah Johnson",
-    role: "Model Y Owner",
+    role: "Model Y Owner & Day Trader",
     image: "https://avatars.githubusercontent.com/u/2345678?v=4",
-    content: "The Model Y has transformed our family road trips. With its spacious interior and Supercharger network, we've never felt range anxiety. Tesla truly delivers on innovation."
+    content: "The unified platform is genius. I can manage my Tesla's energy costs and optimize my crypto investments from the same dashboard. Pure innovation!"
   },
   {
     name: "David Wilson",
-    role: "Model S Owner",
+    role: "Model S Owner & Blockchain Enthusiast",
     image: "https://avatars.githubusercontent.com/u/3456789?v=4",
-    content: "The performance is mind-blowing - 0-60 in under 3 seconds! Plus the over-the-air updates keep making the car better. It's like getting a new car every few months."
+    content: "Tesla's autopilot frees up my commute time to monitor markets. The integration between sustainable transport and digital assets is the future!"
   },
   {
     name: "Emily Zhang",
-    role: "Model 3 Performance Owner",
+    role: "Tech Investor",
     image: "https://avatars.githubusercontent.com/u/4567890?v=4",
-    content: "I've saved thousands on fuel costs, and the maintenance is minimal. The instant acceleration and tech features make it feel like driving a spaceship."
+    content: "I've saved thousands on fuel and made smart crypto moves through their platform. Tesla isn't just about cars - it's a complete lifestyle ecosystem."
   },
   {
     name: "James Rodriguez",
-    role: "Model X Owner",
+    role: "Model X Owner & Portfolio Manager",
     image: "https://avatars.githubusercontent.com/u/5678901?v=4",
-    content: "The falcon wing doors always turn heads, but it's the safety features and autopilot that truly impressed me. Tesla has redefined what a luxury SUV should be."
+    content: "The security features for both vehicle and crypto wallet are top-tier. Tesla understands that modern wealth management requires innovation."
   },
   {
     name: "Lisa Thompson",
-    role: "Model S Plaid Owner",
+    role: "Early Adopter",
     image: "https://avatars.githubusercontent.com/u/6789012?v=4",
-    content: "The Plaid's performance is absolutely insane - fastest production car I've ever driven. Combined with the elegant design and premium interior, it's perfection."
+    content: "From supercharging to crypto yields, everything earns returns. Tesla has redefined what it means to invest in your future, literally and figuratively."
   }
 ];
 
@@ -54,9 +54,11 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl font-normal mb-4 text-foreground">Loved by Drivers</h2>
+          <h2 className="text-5xl font-normal mb-4 text-foreground">
+            Loved by <span className="text-gradient">Innovators</span>
+          </h2>
           <p className="text-muted-foreground text-lg">
-            Join thousands of satisfied Tesla owners worldwide
+            Join thousands driving Teslas and investing in crypto worldwide
           </p>
         </motion.div>
 
@@ -64,26 +66,34 @@ const TestimonialsSection = () => {
           <div className="relative flex overflow-hidden py-4">
             <div className="animate-marquee flex min-w-full shrink-0 items-stretch gap-8">
               {testimonials.map((testimonial, index) => (
-                <Card key={`${index}-1`} className="w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-8">
-                  <div className="flex items-center gap-4 mb-6">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src={testimonial.image} />
-                      <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <h4 className="font-medium text-foreground">{testimonial.name}</h4>
-                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                <motion.div
+                  key={`${index}-1`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-8 hover-scale">
+                    <div className="flex items-center gap-4 mb-6">
+                      <Avatar className="h-12 w-12">
+                        <AvatarImage src={testimonial.image} />
+                        <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <h4 className="font-medium text-foreground">{testimonial.name}</h4>
+                        <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                      </div>
                     </div>
-                  </div>
-                  <p className="text-foreground/80 leading-relaxed">
-                    {testimonial.content}
-                  </p>
-                </Card>
+                    <p className="text-foreground/80 leading-relaxed">
+                      {testimonial.content}
+                    </p>
+                  </Card>
+                </motion.div>
               ))}
             </div>
             <div className="animate-marquee flex min-w-full shrink-0 items-stretch gap-8">
               {testimonials.map((testimonial, index) => (
-                <Card key={`${index}-2`} className="w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-8">
+                <Card key={`${index}-2`} className="w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-8 hover-scale">
                   <div className="flex items-center gap-4 mb-6">
                     <Avatar className="h-12 w-12">
                       <AvatarImage src={testimonial.image} />

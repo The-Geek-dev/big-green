@@ -40,8 +40,8 @@ const Navigation = () => {
   };
 
   const navItems = [
-    { name: "Models", href: "#features", onClick: () => scrollToSection('features') },
-    { name: "Pricing", href: "#pricing", onClick: () => scrollToSection('pricing') },
+    { name: "Features", href: "#features", onClick: () => scrollToSection('features') },
+    { name: "Packages", href: "#pricing", onClick: () => scrollToSection('pricing') },
     { name: "Reviews", href: "#testimonials", onClick: () => scrollToSection('testimonials') },
   ];
 
@@ -80,9 +80,9 @@ const Navigation = () => {
             <Button 
               onClick={() => scrollToSection('cta')}
               size="sm"
-              className="button-gradient"
+              className="button-gradient hover-scale"
             >
-              Order Now
+              Get Started
             </Button>
           </div>
 
@@ -117,9 +117,9 @@ const Navigation = () => {
                       setIsMobileMenuOpen(false);
                       scrollToSection('cta');
                     }}
-                    className="button-gradient mt-4"
+                    className="button-gradient mt-4 hover-scale"
                   >
-                    Order Now
+                    Get Started
                   </Button>
                 </div>
               </SheetContent>
