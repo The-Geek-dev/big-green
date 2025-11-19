@@ -27,6 +27,10 @@
     --input: 30 15% 75%;
     --ring: 0 79% 54%;
     --radius: 0.75rem;
+    
+    --green-tech: 142 71% 45%;
+    --green-tech-light: 142 71% 95%;
+    --green-tech-dark: 142 71% 25%;
   }
 }
 

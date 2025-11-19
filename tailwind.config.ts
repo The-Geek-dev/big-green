@@ -56,6 +56,11 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "green-tech": {
+          DEFAULT: "hsl(var(--green-tech))",
+          light: "hsl(var(--green-tech-light))",
+          dark: "hsl(var(--green-tech-dark))",
+        },
       },
       keyframes: {
         marquee: {
