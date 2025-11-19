@@ -150,7 +150,7 @@ const Index = () => {
               transition={{ delay: 0.3 }}
               className="text-4xl md:text-6xl font-bold text-white mb-6"
             >
-              Invest in Green Technology
+              Green Technology Meets Smart Investment
             </motion.h2>
 
             <motion.p
@@ -160,9 +160,10 @@ const Index = () => {
               transition={{ delay: 0.4 }}
               className="text-xl text-white/90 mb-12 leading-relaxed"
             >
-              Your investments can drive real change. With our platform, you're not just buying assets—you're 
-              funding renewable energy, sustainable transportation, and clean technology initiatives. Every Tesla 
-              on the road and every green crypto transaction contributes to a carbon-neutral future.
+              Access exclusive government grants and incentives when you combine Tesla ownership with sustainable crypto investments. 
+              Qualify for federal tax credits on electric vehicles, renewable energy rebates for charging infrastructure, and blockchain 
+              sustainability grants. Our platform connects your Tesla purchase, green crypto portfolio, and eco-friendly practices to 
+              maximize available funding—helping you save while building a sustainable future.
             </motion.p>
 
             <motion.div
@@ -173,9 +174,9 @@ const Index = () => {
               className="grid md:grid-cols-3 gap-8 mb-12"
             >
               {[
-                { value: "100%", label: "Renewable Energy Powered", icon: "⚡" },
-                { value: "50M+", label: "Trees Equivalent CO₂ Saved", icon: "🌳" },
-                { value: "85%", label: "Carbon Reduction Target", icon: "♻️" }
+                { value: "$7,500", label: "Federal EV Tax Credit Available", icon: "💰" },
+                { value: "$12K+", label: "Average Grant Value Per User", icon: "🎁" },
+                { value: "45+", label: "Active Grant Programs", icon: "📋" }
               ].map((stat, index) => (
                 <motion.div
                   key={index}
@@ -202,7 +203,7 @@ const Index = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Button size="lg" className="bg-white text-green-tech hover:bg-white/90 font-semibold">
-                Start Green Investing
+                Check Grant Eligibility
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </motion.div>
