@@ -8,6 +8,9 @@ import LogoCarousel from "@/components/LogoCarousel";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Footer from "@/components/Footer";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import greenFarming1 from "@/assets/green-farming-1.jpg";
+import greenFarming2 from "@/assets/green-farming-2.jpg";
+import greenFarming3 from "@/assets/green-farming-3.jpg";
 
 const Index = () => {
   return (
@@ -124,90 +127,149 @@ const Index = () => {
         </div>
         
         <div className="container px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
-          >
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+            {/* Left Column - Content */}
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-block mb-6 px-6 py-2 rounded-full bg-white/20 backdrop-blur-sm"
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+              className="text-left"
             >
-              <span className="text-sm font-medium text-white">
-                🌱 Sustainable Future
-              </span>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="inline-block mb-6 px-6 py-2 rounded-full bg-white/20 backdrop-blur-sm"
+              >
+                <span className="text-sm font-medium text-white">
+                  🌱 Sustainable Future
+                </span>
+              </motion.div>
+
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="text-4xl md:text-6xl font-bold text-white mb-6"
+              >
+                Green Technology Meets Smart Investment
+              </motion.h2>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="text-xl text-white/90 mb-8 leading-relaxed"
+              >
+                Access exclusive government grants and incentives when you combine Tesla ownership with sustainable crypto investments. 
+                Qualify for federal tax credits on electric vehicles, renewable energy rebates for charging infrastructure, and blockchain 
+                sustainability grants. Our platform connects your Tesla purchase, green crypto portfolio, and eco-friendly practices to 
+                maximize available funding—helping you save while building a sustainable future.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8"
+              >
+                {[
+                  { value: "$7,500", label: "Federal EV Tax Credit Available", icon: "💰" },
+                  { value: "$12K+", label: "Average Grant Value Per User", icon: "🎁" },
+                  { value: "45+", label: "Active Grant Programs", icon: "📋" }
+                ].map((stat, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.6 + index * 0.1 }}
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20"
+                  >
+                    <div className="text-3xl mb-2">{stat.icon}</div>
+                    <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
+                    <div className="text-xs text-white/80">{stat.label}</div>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.9 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button size="lg" className="bg-white text-green-tech hover:bg-white/90 font-semibold">
+                  Check Grant Eligibility
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </motion.div>
             </motion.div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="text-4xl md:text-6xl font-bold text-white mb-6"
-            >
-              Green Technology Meets Smart Investment
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="text-xl text-white/90 mb-12 leading-relaxed"
-            >
-              Access exclusive government grants and incentives when you combine Tesla ownership with sustainable crypto investments. 
-              Qualify for federal tax credits on electric vehicles, renewable energy rebates for charging infrastructure, and blockchain 
-              sustainability grants. Our platform connects your Tesla purchase, green crypto portfolio, and eco-friendly practices to 
-              maximize available funding—helping you save while building a sustainable future.
-            </motion.p>
-
+            {/* Right Column - Images */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="grid md:grid-cols-3 gap-8 mb-12"
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-4"
             >
-              {[
-                { value: "$7,500", label: "Federal EV Tax Credit Available", icon: "💰" },
-                { value: "$12K+", label: "Average Grant Value Per User", icon: "🎁" },
-                { value: "45+", label: "Active Grant Programs", icon: "📋" }
-              ].map((stat, index) => (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                whileHover={{ scale: 1.02 }}
+                className="rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl"
+              >
+                <img 
+                  src={greenFarming1} 
+                  alt="Community members planting crops in sustainable greenhouse farming"
+                  className="w-full h-auto"
+                />
+              </motion.div>
+              
+              <div className="grid grid-cols-2 gap-4">
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
+                  transition={{ delay: 0.5 }}
                   whileHover={{ scale: 1.05 }}
-                  className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20"
+                  className="rounded-xl overflow-hidden border-4 border-white/20 shadow-xl"
                 >
-                  <div className="text-4xl mb-2">{stat.icon}</div>
-                  <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-                  <div className="text-sm text-white/80">{stat.label}</div>
+                  <img 
+                    src={greenFarming2} 
+                    alt="Sustainable agriculture and green technology farming practices"
+                    className="w-full h-auto"
+                  />
                 </motion.div>
-              ))}
+                
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="rounded-xl overflow-hidden border-4 border-white/20 shadow-xl"
+                >
+                  <img 
+                    src={greenFarming3} 
+                    alt="Organic farming and renewable energy initiatives in agriculture"
+                    className="w-full h-auto"
+                  />
+                </motion.div>
+              </div>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.9 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button size="lg" className="bg-white text-green-tech hover:bg-white/90 font-semibold">
-                Check Grant Eligibility
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
