@@ -11,6 +11,10 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import greenFarming1 from "@/assets/green-farming-1.jpg";
 import greenFarming2 from "@/assets/green-farming-2.jpg";
 import greenFarming3 from "@/assets/green-farming-3.jpg";
+import housingGrant from "@/assets/housing-grant.jpg";
+import personalGarden from "@/assets/personal-garden.jpg";
+import schoolClassroom from "@/assets/school-classroom.jpg";
+import businessFunding from "@/assets/business-funding.jpg";
 const Index = () => {
   return <div className="min-h-screen bg-background text-foreground">
       <Navigation />
@@ -130,7 +134,7 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }}>
-              <img src={greenFarming2} alt="Students learning about food and gardening" className="w-full h-auto rounded-2xl shadow-2xl" />
+              <img src={schoolClassroom} alt="Students learning about food and gardening" className="w-full h-auto rounded-2xl shadow-2xl" />
             </motion.div>
 
             <motion.div initial={{
@@ -193,7 +197,7 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-1 lg:order-2">
-              <img src={greenFarming1} alt="Individual home gardening" className="w-full h-auto rounded-2xl shadow-2xl" />
+              <img src={personalGarden} alt="Individual home gardening" className="w-full h-auto rounded-2xl shadow-2xl" />
             </motion.div>
           </div>
 
@@ -210,7 +214,7 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }}>
-              <img src={greenFarming3} alt="Sustainable business and farming" className="w-full h-auto rounded-2xl shadow-2xl" />
+              <img src={businessFunding} alt="Sustainable business and farming" className="w-full h-auto rounded-2xl shadow-2xl" />
             </motion.div>
 
             <motion.div initial={{
@@ -273,7 +277,7 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-1 lg:order-2">
-              <img src={greenFarming2} alt="Community housing gardens" className="w-full h-auto rounded-2xl shadow-2xl" />
+              <img src={housingGrant} alt="Community housing gardens" className="w-full h-auto rounded-2xl shadow-2xl" />
             </motion.div>
           </div>
         </div>
