@@ -4,6 +4,12 @@ import { motion } from "framer-motion";
 import { Star, Award, Trophy } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card } from "./ui/card";
+import marcusImg from "@/assets/testimonial-marcus.jpg";
+import sarahImg from "@/assets/testimonial-sarah.jpg";
+import davidImg from "@/assets/testimonial-david.jpg";
+import jenniferImg from "@/assets/testimonial-jennifer.jpg";
+import robertImg from "@/assets/testimonial-robert.jpg";
+import amandaImg from "@/assets/testimonial-amanda.jpg";
 
 const testimonials = [
   {
@@ -11,7 +17,7 @@ const testimonials = [
     tier: "Tier 1",
     tierIcon: Star,
     location: "Denver, CO",
-    image: "https://avatars.githubusercontent.com/u/1234567?v=4",
+    image: marcusImg,
     content: "I enrolled in Tier 1 three months ago and received my $65,000 grant immediately! The $20 daily bonus is amazing - it's like getting paid to grow food and invest. The welcome packet was professional and made me feel valued from day one."
   },
   {
@@ -19,7 +25,7 @@ const testimonials = [
     tier: "Tier 2",
     tierIcon: Award,
     location: "Austin, TX",
-    image: "https://avatars.githubusercontent.com/u/2345678?v=4",
+    image: sarahImg,
     content: "Best decision ever! After investing $1,000 to upgrade to Tier 2, my $100 daily rewards started immediately. The advanced analytics dashboard is incredible, and the 24/7 support team is always there when I need help. Already withdrew $25,000!"
   },
   {
@@ -27,7 +33,7 @@ const testimonials = [
     tier: "Tier 3",
     tierIcon: Trophy,
     location: "San Francisco, CA",
-    image: "https://avatars.githubusercontent.com/u/3456789?v=4",
+    image: davidImg,
     content: "Tier 3 VIP status changed my life! Getting $500 every 4 hours is unreal. The unlimited instant withdrawals mean I have complete financial freedom. And yes, I received my Cybertruck - it's sitting in my driveway right now. This is truly a legacy!"
   },
   {
@@ -35,7 +41,7 @@ const testimonials = [
     tier: "Tier 1",
     tierIcon: Star,
     location: "Seattle, WA",
-    image: "https://avatars.githubusercontent.com/u/4567890?v=4",
+    image: jenniferImg,
     content: "The $65,000 grant helped me start my community garden project. Between the daily $20 bonus and growing my own food, I'm saving so much money. Big Green's mission to get everyone growing food really resonated with me. Highly recommend!"
   },
   {
@@ -43,7 +49,7 @@ const testimonials = [
     tier: "Tier 2",
     tierIcon: Award,
     location: "Miami, FL",
-    image: "https://avatars.githubusercontent.com/u/5678901?v=4",
+    image: robertImg,
     content: "The Quantum Leap to Tier 2 was worth every penny. Priority processing is a game changer - my withdrawal requests are handled instantly. The $100 daily adds up fast, and the certificate they sent made it feel official and legitimate."
   },
   {
@@ -51,7 +57,7 @@ const testimonials = [
     tier: "Tier 3",
     tierIcon: Trophy,
     location: "Los Angeles, CA",
-    image: "https://avatars.githubusercontent.com/u/6789012?v=4",
+    image: amandaImg,
     content: "As a Tier 3 VIP member, I'm living the dream. The $500 daily rewards every 4 hours means I'm earning $1,500+ per day. My Cybertruck arrived with all the documents as promised. The dedication advisor helped me maximize my crypto investments. Worth it!"
   }
 ];
