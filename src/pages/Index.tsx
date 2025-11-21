@@ -293,7 +293,7 @@ const Index = () => {
         </div>
         
         <div className="container px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto bg-green-500">
             <motion.div initial={{
             opacity: 0,
             x: -40
