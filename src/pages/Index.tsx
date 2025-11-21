@@ -122,7 +122,7 @@ const Index = () => {
       <section className="relative bg-background py-24">
         <div className="container max-w-7xl px-4 space-y-32">
           {/* Schools & Gardens */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
             <motion.div initial={{
             opacity: 0,
             x: -40
@@ -133,7 +133,7 @@ const Index = () => {
             once: true
           }} transition={{
             duration: 0.6
-          }}>
+          }} className="order-1">
               <img src={schoolClassroom} alt="Students learning about food and gardening" className="w-full h-auto rounded-2xl shadow-2xl" />
             </motion.div>
 
@@ -147,7 +147,7 @@ const Index = () => {
             once: true
           }} transition={{
             duration: 0.6
-          }}>
+          }} className="order-2">
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
                 AT SCHOOL
               </span>
@@ -162,7 +162,7 @@ const Index = () => {
           </div>
 
           {/* Individual Grants */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
             <motion.div initial={{
             opacity: 0,
             x: -40
@@ -202,7 +202,7 @@ const Index = () => {
           </div>
 
           {/* Business Funding */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
             <motion.div initial={{
             opacity: 0,
             x: -40
@@ -213,7 +213,7 @@ const Index = () => {
             once: true
           }} transition={{
             duration: 0.6
-          }}>
+          }} className="order-1">
               <img src={businessFunding} alt="Sustainable business and farming" className="w-full h-auto rounded-2xl shadow-2xl" />
             </motion.div>
 
@@ -227,7 +227,7 @@ const Index = () => {
             once: true
           }} transition={{
             duration: 0.6
-          }}>
+          }} className="order-2">
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
                 FOR BUSINESSES
               </span>
@@ -242,7 +242,7 @@ const Index = () => {
           </div>
 
           {/* Housing Grants */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
             <motion.div initial={{
             opacity: 0,
             x: -40
