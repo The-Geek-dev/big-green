@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import { TrendingUp, Shield, Zap, ArrowRight } from "lucide-react";
+import { TrendingUp, Shield, Zap, ArrowRight, Trophy, Award, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import teslaModel3 from "@/assets/tesla-model-3.jpg";
 import teslaModelY from "@/assets/tesla-model-y.jpg";
 import teslaModelS from "@/assets/tesla-model-s.jpg";
+import teslaCybertruck from "@/assets/tesla-cybertruck.jpg";
 
 export const CryptoInvestmentSection = () => {
   return (
@@ -63,9 +64,9 @@ export const CryptoInvestmentSection = () => {
           ))}
         </div>
 
-        {/* Tesla Vehicles Showcase */}
+        {/* Investment Tiers */}
         <div className="space-y-20">
-          {/* Model 3 */}
+          {/* Tier 1 */}
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -75,7 +76,7 @@ export const CryptoInvestmentSection = () => {
             >
               <img 
                 src={teslaModel3} 
-                alt="Tesla Model 3 - Entry to sustainable driving" 
+                alt="Investment Tier 1 - Tesla Model 3" 
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />
             </motion.div>
@@ -85,21 +86,36 @@ export const CryptoInvestmentSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="text-4xl md:text-5xl font-black mb-4">
-                Tesla Model 3
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <Star className="w-8 h-8 text-primary" />
+                <h3 className="text-4xl md:text-5xl font-black">
+                  TIER 1
+                </h3>
+              </div>
+              <div className="text-3xl font-bold mb-6">
+                <span className="text-primary">$65,000</span>
+                <span className="text-lg text-foreground/60 ml-2">Investment Grant</span>
+              </div>
               <p className="text-xl text-foreground/70 mb-6">
-                Start your journey with the Model 3 and gain access to our basic crypto portfolio tracking. 
-                Perfect for first-time investors interested in sustainable technology.
+                Start your sustainable investment journey with Tier 1. Get access to exclusive crypto portfolios, 
+                green technology grants, and your Tesla Model 3.
               </p>
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
-                  <span>272 miles range</span>
+                  <span>Tesla Model 3 vehicle</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
-                  <span>Basic crypto tracking dashboard</span>
+                  <span>$65,000 investment grant</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span>Basic crypto portfolio access</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span>Sustainable farming resources</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
@@ -109,7 +125,7 @@ export const CryptoInvestmentSection = () => {
             </motion.div>
           </div>
 
-          {/* Model Y */}
+          {/* Tier 2 */}
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -118,21 +134,40 @@ export const CryptoInvestmentSection = () => {
               transition={{ duration: 0.6 }}
               className="order-2 lg:order-1"
             >
-              <h3 className="text-4xl md:text-5xl font-black mb-4">
-                Tesla Model Y
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <Award className="w-8 h-8 text-primary" />
+                <h3 className="text-4xl md:text-5xl font-black">
+                  TIER 2
+                </h3>
+              </div>
+              <div className="text-3xl font-bold mb-6">
+                <span className="text-primary">$85,000</span>
+                <span className="text-lg text-foreground/60 ml-2">Investment Grant</span>
+              </div>
               <p className="text-xl text-foreground/70 mb-6">
-                Upgrade to Model Y and unlock advanced trading tools with portfolio analytics. 
-                Most popular choice for serious crypto investors.
+                Upgrade to Tier 2 for advanced trading tools, higher grant value, and the versatile Tesla Model Y. 
+                Perfect for serious sustainable investors.
               </p>
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
-                  <span>330 miles range</span>
+                  <span>Tesla Model Y vehicle</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
-                  <span>Advanced trading tools & analytics</span>
+                  <span>$85,000 investment grant</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span>Advanced crypto trading tools</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span>Portfolio analytics & insights</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span>Community garden funding</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
@@ -152,13 +187,13 @@ export const CryptoInvestmentSection = () => {
             >
               <img 
                 src={teslaModelY} 
-                alt="Tesla Model Y - Most popular sustainable SUV" 
+                alt="Investment Tier 2 - Tesla Model Y" 
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />
             </motion.div>
           </div>
 
-          {/* Model S */}
+          {/* Tier 3 */}
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -167,8 +202,8 @@ export const CryptoInvestmentSection = () => {
               transition={{ duration: 0.6 }}
             >
               <img 
-                src={teslaModelS} 
-                alt="Tesla Model S - Premium electric sedan" 
+                src={teslaCybertruck} 
+                alt="Investment Tier 3 - Tesla Cybertruck Reward" 
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />
             </motion.div>
@@ -178,17 +213,31 @@ export const CryptoInvestmentSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="text-4xl md:text-5xl font-black mb-4">
-                Tesla Model S
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <Trophy className="w-8 h-8 text-primary" />
+                <h3 className="text-4xl md:text-5xl font-black">
+                  TIER 3
+                </h3>
+              </div>
+              <div className="text-3xl font-bold mb-6">
+                <span className="text-primary">$120,000</span>
+                <span className="text-lg text-foreground/60 ml-2">Investment Grant</span>
+              </div>
+              <div className="inline-block px-4 py-2 bg-gradient-to-r from-primary to-yellow-500 text-white rounded-full text-sm font-bold mb-6">
+                🏆 INCLUDES CYBERTRUCK REWARD
+              </div>
               <p className="text-xl text-foreground/70 mb-6">
-                Premium investment suite with AI-powered trading and dedicated advisor. 
-                The ultimate package for sophisticated investors.
+                The ultimate sustainable investment package. Get AI-powered trading, maximum grants, 
+                and receive both a Tesla Model S and a Cybertruck as your reward.
               </p>
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
-                  <span>405 miles range</span>
+                  <span className="font-semibold">Tesla Model S + Cybertruck reward</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span>$120,000 investment grant</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
@@ -200,7 +249,15 @@ export const CryptoInvestmentSection = () => {
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span>Enterprise farming grants</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
                   <span>Custom API access & 24/7 concierge</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span>Exclusive events & networking</span>
                 </li>
               </ul>
             </motion.div>
