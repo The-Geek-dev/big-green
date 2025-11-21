@@ -12,7 +12,7 @@ const Footer = () => {
       className="w-full py-12 mt-20 bg-black"
     >
       <div className="container px-4 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-12">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -63,6 +63,48 @@ const Footer = () => {
                 <Instagram className="w-4 h-4 text-white" />
               </motion.a>
             </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15 }}
+            className="space-y-4"
+          >
+            <h4 className="font-bold text-white text-sm uppercase tracking-wider">Models</h4>
+            <ul className="space-y-3">
+              <li>
+                <a href="#features" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  Model 3
+                </a>
+              </li>
+              <li>
+                <a href="#features" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  Model Y
+                </a>
+              </li>
+              <li>
+                <a href="#features" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  Model S
+                </a>
+              </li>
+              <li>
+                <a href="#pricing" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  Pricing
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  Charging
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                  Support
+                </a>
+              </li>
+            </ul>
           </motion.div>
 
           <motion.div 
