@@ -15,9 +15,6 @@ const applicationSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().trim().min(10, "Phone number must be at least 10 digits").max(20),
   address: z.string().trim().min(5, "Address is required").max(200),
-  tier: z.enum(["tier1", "tier2", "tier3"], {
-    required_error: "Please select a tier"
-  }),
   message: z.string().trim().max(1000, "Message must be less than 1000 characters").optional()
 });
 type ApplicationForm = z.infer<typeof applicationSchema>;
@@ -30,7 +27,6 @@ const Application = () => {
     email: "",
     phone: "",
     address: "",
-    tier: "tier1",
     message: ""
   });
   useEffect(() => {
@@ -92,19 +88,11 @@ const Application = () => {
     setLoading(true);
     try {
       // Here you would typically send the form data to your backend
-      // For now, we'll just show a success message
       console.log("Form submitted:", formData);
-      toast.success("Application submitted successfully! We'll be in touch soon.");
-
-      // Reset form
-      setFormData({
-        fullName: "",
-        email: userEmail,
-        phone: "",
-        address: "",
-        tier: "tier1",
-        message: ""
-      });
+      toast.success("Application submitted successfully!");
+      
+      // Redirect to dashboard
+      navigate("/dashboard");
     } catch (error) {
       toast.error("Failed to submit application. Please try again.");
     } finally {
@@ -157,20 +145,9 @@ const Application = () => {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number *</Label>
-                  <Input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" value={formData.phone} onChange={handleChange} required disabled={loading} />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="tier">Investment Tier *</Label>
-                  <select id="tier" name="tier" value={formData.tier} onChange={handleChange} required disabled={loading} className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                    <option value="tier1">Tier 1 - The Gateway ($65,000)</option>
-                    <option value="tier2">Tier 2 - The Quantum Leap ($1,000 investment)</option>
-                    <option value="tier3">Tier 3 - The VIP Legacy (Cybertruck included)</option>
-                  </select>
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number *</Label>
+                <Input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" value={formData.phone} onChange={handleChange} required disabled={loading} />
               </div>
 
               <div className="space-y-2">
