@@ -43,7 +43,7 @@ const Index = () => {
             </span>
             <br />
             <span className="text-foreground font-medium">
-              <TextGenerateEffect words="Tesla & Crypto" />
+              <TextGenerateEffect words="Big Green & Crypto" />
             </span>
           </h1>
           
@@ -94,7 +94,7 @@ const Index = () => {
           >
             <motion.img
               src="/lovable-uploads/c32c6788-5e4a-4fee-afee-604b03113c7f.png"
-              alt="Tesla Dashboard"
+              alt="Big Green Dashboard"
               className="w-full h-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -165,9 +165,9 @@ const Index = () => {
                 transition={{ delay: 0.4 }}
                 className="text-xl text-white/90 mb-8 leading-relaxed"
               >
-                Access exclusive government grants and incentives when you combine Tesla ownership with sustainable crypto investments. 
+                Access exclusive government grants and incentives when you combine Big Green vehicle ownership with sustainable crypto investments. 
                 Qualify for federal tax credits on electric vehicles, renewable energy rebates for charging infrastructure, and blockchain 
-                sustainability grants. Our platform connects your Tesla purchase, green crypto portfolio, and eco-friendly practices to 
+                sustainability grants. Our platform connects your Big Green purchase, green crypto portfolio, and eco-friendly practices to 
                 maximize available funding—helping you save while building a sustainable future.
               </motion.p>
 
@@ -311,7 +311,7 @@ const Index = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
           >
-            Join thousands driving Teslas and investing in crypto. Start your journey to sustainable living and smart investing today.
+            Join thousands driving Big Green vehicles and investing in crypto. Start your journey to sustainable living and smart investing today.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}

@@ -82,7 +82,7 @@ export const PricingSection = () => {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="text-lg text-muted-foreground"
         >
-          Tesla vehicles paired with crypto investment tools - select your perfect combination
+          Big Green vehicles paired with crypto investment tools - select your perfect combination
         </motion.p>
       </div>
 
@@ -98,7 +98,7 @@ export const PricingSection = () => {
             price="$40,240"
             description="Model 3 + Basic Crypto Portfolio"
             features={[
-              "Tesla Model 3",
+              "Big Green Model 3",
               "272 miles range",
               "Basic crypto tracking",
               "Email support"
@@ -116,7 +116,7 @@ export const PricingSection = () => {
             price="$52,990"
             description="Model Y + Advanced Trading Tools"
             features={[
-              "Tesla Model Y",
+              "Big Green Model Y",
               "330 miles range",
               "Advanced trading tools",
               "Portfolio analytics",
@@ -136,7 +136,7 @@ export const PricingSection = () => {
             price="$88,490"
             description="Model S + Premium Investment Suite"
             features={[
-              "Tesla Model S",
+              "Big Green Model S",
               "405 miles range",
               "AI-powered trading",
               "Dedicated advisor",

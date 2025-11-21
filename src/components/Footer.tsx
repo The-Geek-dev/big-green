@@ -21,7 +21,7 @@ const Footer = () => {
               transition={{ delay: 0.1 }}
               className="space-y-4"
             >
-              <h3 className="font-medium text-lg text-foreground">Tesla</h3>
+              <h3 className="font-medium text-lg text-foreground">Big Green</h3>
               <p className="text-sm text-muted-foreground">
                 Accelerating the world's transition to sustainable energy.
               </p>
@@ -114,7 +114,7 @@ const Footer = () => {
             className="mt-8 pt-8 border-t border-border"
           >
             <p className="text-sm text-muted-foreground text-center">
-              © {new Date().getFullYear()} Tesla Inc. All rights reserved.
+              © {new Date().getFullYear()} Big Green. All rights reserved.
             </p>
           </motion.div>
         </div>
