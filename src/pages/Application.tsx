@@ -90,7 +90,7 @@ const Application = () => {
       // Here you would typically send the form data to your backend
       console.log("Form submitted:", formData);
       toast.success("Application submitted successfully!");
-      
+
       // Redirect to dashboard
       navigate("/dashboard");
     } catch (error) {
@@ -124,7 +124,7 @@ const Application = () => {
       }}>
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-black mb-4">
-               Application <span className="text-gradient">Application</span>
+               Application <span className="text-gradient">Form</span>
             </h1>
             <p className="text-lg text-muted-foreground">
               Complete the form below to apply for your Big Green    
