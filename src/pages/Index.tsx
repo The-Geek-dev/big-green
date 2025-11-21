@@ -52,7 +52,7 @@ const Index = () => {
           y: 0
         }} transition={{
           delay: 0.3
-        }} className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] mb-12 max-w-5xl">
+        }} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter leading-[0.9] mb-8 md:mb-12 max-w-5xl">
             LET'S GET <span className="highlight-yellow">EVERYONE</span> IN AMERICA GROWING FOOD!
           </motion.h1>
 
@@ -105,10 +105,10 @@ const Index = () => {
             <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
               BIG GREEN BELIEVES
             </span>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-tight max-w-5xl mx-auto mb-8">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-tight max-w-5xl mx-auto mb-6 md:mb-8 px-4">
               GROWING FOOD CHANGES LIVES
             </h2>
-            <p className="text-xl md:text-2xl text-foreground/70 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/70 max-w-4xl mx-auto leading-relaxed px-4">
               Growing food improves nutrition security and mental health, gets us into nature, and opens our eyes to the weather 
               volatility created by climate change. For twelve years, Big Green has helped people grow their own food with school and 
               home-based programs. Our work across the country brings hundreds of thousands of gardens to life in schools, homes, 
@@ -151,10 +151,10 @@ const Index = () => {
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
                 AT SCHOOL
               </span>
-              <h3 className="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-6">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4 md:mb-6">
                 WE GIVE GARDENS AND GRANTS <span className="highlight-yellow">TO SCHOOLS.</span>
               </h3>
-              <p className="text-xl text-foreground/70 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-foreground/70 leading-relaxed">
                 Jumpstart helps educators improve their edible garden programs for healthier students and a healthier planet. 
                 We provide funding, resources, and support to transform outdoor learning spaces into thriving educational gardens.
               </p>
@@ -177,10 +177,10 @@ const Index = () => {
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
                 FOR INDIVIDUALS
               </span>
-              <h3 className="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-6">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4 md:mb-6">
                 PERSONAL GRANTS FOR <span className="highlight-yellow">YOUR GARDEN.</span>
               </h3>
-              <p className="text-xl text-foreground/70 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-foreground/70 leading-relaxed">
                 Whether you're starting your first backyard garden or expanding your urban farming project, we provide grants 
                 to individuals who are passionate about growing their own food and building sustainable communities.
               </p>
@@ -231,10 +231,10 @@ const Index = () => {
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
                 FOR BUSINESSES
               </span>
-              <h3 className="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-6">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4 md:mb-6">
                 BUSINESS FUNDING FOR <span className="highlight-yellow">GREEN INITIATIVES.</span>
               </h3>
-              <p className="text-xl text-foreground/70 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-foreground/70 leading-relaxed">
                 Support your business in creating sustainable food systems. From rooftop gardens to employee wellness programs, 
                 we fund businesses committed to integrating agriculture into their operations and communities.
               </p>
@@ -257,10 +257,10 @@ const Index = () => {
               <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
                 FOR HOUSING
               </span>
-              <h3 className="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-6">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4 md:mb-6">
                 HOUSING GRANTS FOR <span className="highlight-yellow">COMMUNITY GARDENS.</span>
               </h3>
-              <p className="text-xl text-foreground/70 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-foreground/70 leading-relaxed">
                 Transform residential communities with shared garden spaces. We provide funding for apartment complexes, 
                 housing developments, and community centers to create accessible food-growing spaces for all residents.
               </p>
@@ -311,17 +311,17 @@ const Index = () => {
                 </span>
               </motion.div>
 
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 md:mb-6 leading-tight">
                 Green Technology Meets Smart Investment
               </h2>
 
-              <p className="text-lg text-white/90 mb-8 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8 leading-relaxed">
                 Access exclusive government grants and incentives when you combine Big Green vehicle ownership with sustainable crypto investments. 
                 Qualify for federal tax credits on electric vehicles, renewable energy rebates for charging infrastructure, and blockchain 
                 sustainability grants.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
                 {[{
                 value: "$7,500",
                 label: "Federal EV Tax Credit Available",
@@ -351,7 +351,7 @@ const Index = () => {
                   </motion.div>)}
               </div>
 
-              <Button size="lg" className="bg-white text-green-tech hover:bg-white/90 font-semibold">
+              <Button size="lg" className="bg-white text-green-tech hover:bg-white/90 font-semibold text-sm md:text-base px-5 md:px-6 py-4 md:py-5">
                 Check Grant Eligibility
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
@@ -398,10 +398,10 @@ const Index = () => {
         }} transition={{
           duration: 0.6
         }}>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-tight mb-8 max-w-4xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-tight mb-6 md:mb-8 max-w-4xl mx-auto px-4">
               READY TO <span className="highlight-yellow">START GROWING?</span>
             </h2>
-            <p className="text-xl md:text-2xl text-foreground/70 mb-12 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/70 mb-8 md:mb-12 max-w-3xl mx-auto px-4">
               Join thousands driving Big Green vehicles and investing in crypto. Start your journey to sustainable living and smart investing today.
             </p>
             <motion.div whileHover={{
@@ -409,7 +409,7 @@ const Index = () => {
           }} whileTap={{
             scale: 0.95
           }}>
-              <Button size="lg" className="bg-foreground text-white hover:bg-foreground/90 font-semibold px-8 py-6 text-lg">
+              <Button size="lg" className="bg-foreground text-white hover:bg-foreground/90 font-semibold px-6 md:px-8 py-5 md:py-6 text-base md:text-lg">
                 Get Started Now
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>

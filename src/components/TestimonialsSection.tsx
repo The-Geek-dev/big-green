@@ -73,10 +73,10 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl font-normal mb-4 text-foreground">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-3 md:mb-4 text-foreground">
             Real Stories from <span className="text-gradient">Real Members</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-base sm:text-lg text-muted-foreground px-4">
             See what our Tier 1, 2, and 3 members are saying about their grants and rewards
           </p>
         </motion.div>
@@ -92,7 +92,7 @@ const TestimonialsSection = () => {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-8 hover-scale">
+                  <Card className="w-[340px] sm:w-[380px] md:w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-6 md:p-8 hover-scale">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-4">
                         <Avatar className="h-12 w-12">
@@ -124,7 +124,7 @@ const TestimonialsSection = () => {
             </div>
             <div className="animate-marquee flex min-w-full shrink-0 items-stretch gap-8">
               {testimonials.map((testimonial, index) => (
-                <Card key={`${index}-2`} className="w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-8 hover-scale">
+                <Card key={`${index}-2`} className="w-[340px] sm:w-[380px] md:w-[400px] shrink-0 glass border-border hover:border-primary/50 transition-all duration-300 p-6 md:p-8 hover-scale">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-4">
                       <Avatar className="h-12 w-12">
