@@ -21,7 +21,7 @@ export const features = [
   },
   {
     title: "Unified Platform",
-    description: "Seamlessly manage Tesla ownership and crypto investments all in one powerful ecosystem.",
+    description: "Seamlessly manage Big Green vehicle ownership and crypto investments all in one powerful ecosystem.",
     icon: <Battery className="w-6 h-6" />,
     image: "/lovable-uploads/79f2b901-8a4e-42a5-939f-fae0828e0aef.png"
   }

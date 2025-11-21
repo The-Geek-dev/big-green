@@ -9,37 +9,37 @@ const testimonials = [
     name: "Michael Chen",
     role: "Model 3 Owner & Crypto Investor",
     image: "https://avatars.githubusercontent.com/u/1234567?v=4",
-    content: "Switching to Tesla and using their crypto platform was brilliant. I charge my car, track my portfolio, and enjoy zero emissions - all seamlessly integrated!"
+    content: "Switching to Big Green and using their crypto platform was brilliant. I charge my car, track my portfolio, and enjoy zero emissions - all seamlessly integrated!"
   },
   {
     name: "Sarah Johnson",
     role: "Model Y Owner & Day Trader",
     image: "https://avatars.githubusercontent.com/u/2345678?v=4",
-    content: "The unified platform is genius. I can manage my Tesla's energy costs and optimize my crypto investments from the same dashboard. Pure innovation!"
+    content: "The unified platform is genius. I can manage my Big Green vehicle's energy costs and optimize my crypto investments from the same dashboard. Pure innovation!"
   },
   {
     name: "David Wilson",
     role: "Model S Owner & Blockchain Enthusiast",
     image: "https://avatars.githubusercontent.com/u/3456789?v=4",
-    content: "Tesla's autopilot frees up my commute time to monitor markets. The integration between sustainable transport and digital assets is the future!"
+    content: "Big Green's autopilot frees up my commute time to monitor markets. The integration between sustainable transport and digital assets is the future!"
   },
   {
     name: "Emily Zhang",
     role: "Tech Investor",
     image: "https://avatars.githubusercontent.com/u/4567890?v=4",
-    content: "I've saved thousands on fuel and made smart crypto moves through their platform. Tesla isn't just about cars - it's a complete lifestyle ecosystem."
+    content: "I've saved thousands on fuel and made smart crypto moves through their platform. Big Green isn't just about cars - it's a complete lifestyle ecosystem."
   },
   {
     name: "James Rodriguez",
     role: "Model X Owner & Portfolio Manager",
     image: "https://avatars.githubusercontent.com/u/5678901?v=4",
-    content: "The security features for both vehicle and crypto wallet are top-tier. Tesla understands that modern wealth management requires innovation."
+    content: "The security features for both vehicle and crypto wallet are top-tier. Big Green understands that modern wealth management requires innovation."
   },
   {
     name: "Lisa Thompson",
     role: "Early Adopter",
     image: "https://avatars.githubusercontent.com/u/6789012?v=4",
-    content: "From supercharging to crypto yields, everything earns returns. Tesla has redefined what it means to invest in your future, literally and figuratively."
+    content: "From supercharging to crypto yields, everything earns returns. Big Green has redefined what it means to invest in your future, literally and figuratively."
   }
 ];
 
@@ -58,7 +58,7 @@ const TestimonialsSection = () => {
             Loved by <span className="text-gradient">Innovators</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Join thousands driving Teslas and investing in crypto worldwide
+            Join thousands driving Big Green vehicles and investing in crypto worldwide
           </p>
         </motion.div>
 

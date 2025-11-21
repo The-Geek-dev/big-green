@@ -21,7 +21,7 @@ export const FeaturesSection = () => {
           <span className="text-gradient font-medium">Features & Innovation</span>
         </h2>
         <p className="text-lg md:text-xl text-muted-foreground text-left">
-          Seamlessly integrate Tesla ownership and cryptocurrency management with cutting-edge technology.
+          Seamlessly integrate Big Green vehicle ownership and cryptocurrency management with cutting-edge technology.
         </p>
       </motion.div>
 
