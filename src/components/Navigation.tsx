@@ -3,57 +3,60 @@ import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import logoColor from "@/assets/logo-color.png";
-
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
   const scrollToSection = (sectionId: string) => {
     if (sectionId === 'testimonials') {
       const testimonialSection = document.querySelector('.animate-marquee');
       if (testimonialSection) {
         const yOffset = -100; // Offset to account for the fixed header
         const y = testimonialSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
+        window.scrollTo({
+          top: y,
+          behavior: 'smooth'
+        });
       }
     } else if (sectionId === 'cta') {
       const ctaSection = document.querySelector('.button-gradient');
       if (ctaSection) {
         const yOffset = -100;
         const y = ctaSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
+        window.scrollTo({
+          top: y,
+          behavior: 'smooth'
+        });
       }
     } else {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({
+          behavior: 'smooth'
+        });
       }
     }
   };
-
-  const navItems = [
-    { name: "What we do", href: "#features", onClick: () => scrollToSection('features') },
-    { name: "Packages", href: "#pricing", onClick: () => scrollToSection('pricing') },
-    { name: "Reviews", href: "#testimonials", onClick: () => scrollToSection('testimonials') },
-  ];
-
-  return (
-    <header
-      className={`fixed top-3.5 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 rounded-full ${
-        isScrolled 
-          ? "h-14 glass backdrop-blur-xl border border-border scale-95 w-[90%] max-w-2xl" 
-          : "h-14 bg-card/80 backdrop-blur-sm w-[95%] max-w-3xl"
-      }`}
-    >
+  const navItems = [{
+    name: "Features",
+    href: "#features",
+    onClick: () => scrollToSection('features')
+  }, {
+    name: "Packages",
+    href: "#pricing",
+    onClick: () => scrollToSection('pricing')
+  }, {
+    name: "Reviews",
+    href: "#testimonials",
+    onClick: () => scrollToSection('testimonials')
+  }];
+  return <header className={`fixed top-3.5 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 rounded-full ${isScrolled ? "h-14 glass backdrop-blur-xl border border-border scale-95 w-[90%] max-w-2xl" : "h-14 bg-card/80 backdrop-blur-sm w-[95%] max-w-3xl"}`}>
       <div className="mx-auto h-full px-6">
         <nav className="flex items-center justify-between h-full">
           <div className="flex items-center">
@@ -62,27 +65,16 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (item.onClick) {
-                    item.onClick();
-                  }
-                }}
-                className="text-sm text-muted-foreground hover:text-foreground transition-all duration-300"
-              >
+            {navItems.map(item => <a key={item.name} href={item.href} onClick={e => {
+            e.preventDefault();
+            if (item.onClick) {
+              item.onClick();
+            }
+          }} className="text-sm text-muted-foreground hover:text-foreground transition-all duration-300">
                 {item.name}
-              </a>
-            ))}
-            <Button 
-              onClick={() => scrollToSection('cta')}
-              size="sm"
-              className="button-gradient hover-scale"
-            >
-              Get Started
+              </a>)}
+            <Button onClick={() => scrollToSection('cta')} size="sm" className="button-gradient hover-scale">
+              ​DONATE NOW  
             </Button>
           </div>
 
@@ -96,29 +88,19 @@ const Navigation = () => {
               </SheetTrigger>
               <SheetContent className="bg-[#1B1B1B]">
                 <div className="flex flex-col gap-4 mt-8">
-                  {navItems.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="text-lg text-muted-foreground hover:text-foreground transition-colors"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsMobileMenuOpen(false);
-                        if (item.onClick) {
-                          item.onClick();
-                        }
-                      }}
-                    >
+                  {navItems.map(item => <a key={item.name} href={item.href} className="text-lg text-muted-foreground hover:text-foreground transition-colors" onClick={e => {
+                  e.preventDefault();
+                  setIsMobileMenuOpen(false);
+                  if (item.onClick) {
+                    item.onClick();
+                  }
+                }}>
                       {item.name}
-                    </a>
-                  ))}
-                  <Button 
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      scrollToSection('cta');
-                    }}
-                    className="button-gradient mt-4 hover-scale"
-                  >
+                    </a>)}
+                  <Button onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  scrollToSection('cta');
+                }} className="button-gradient mt-4 hover-scale">
                     Get Started
                   </Button>
                 </div>
@@ -127,8 +109,6 @@ const Navigation = () => {
           </div>
         </nav>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Navigation;
