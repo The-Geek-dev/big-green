@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import logoColor from "@/assets/logo-color.png";
 const Navigation = () => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   useEffect(() => {
@@ -73,8 +75,8 @@ const Navigation = () => {
           }} className="text-sm text-muted-foreground hover:text-foreground transition-all duration-300">
                 {item.name}
               </a>)}
-            <Button onClick={() => scrollToSection('cta')} size="sm" className="button-gradient hover-scale">
-              ​DONATE NOW  
+            <Button onClick={() => navigate("/auth")} size="sm" className="button-gradient hover-scale">
+              ​APPLY NOW  
             </Button>
           </div>
 
@@ -99,9 +101,9 @@ const Navigation = () => {
                     </a>)}
                   <Button onClick={() => {
                   setIsMobileMenuOpen(false);
-                  scrollToSection('cta');
+                  navigate("/auth");
                 }} className="button-gradient mt-4 hover-scale">
-                    Get Started
+                    Apply Now
                   </Button>
                 </div>
               </SheetContent>
