@@ -33,6 +33,7 @@
     --green-tech: 130 50% 55%;
     --green-tech-light: 130 50% 95%;
     --green-tech-dark: 130 50% 35%;
+    --highlight-yellow: 48 100% 67%;
   }
 }
 
@@ -85,4 +86,14 @@
 
 .story-link {
   @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+}
+
+.highlight-yellow {
+  @apply relative inline-block;
+  background: linear-gradient(180deg, transparent 60%, hsl(var(--highlight-yellow)) 60%);
+  padding: 0 0.2em;
+}
+
+.text-bold-impact {
+  @apply text-6xl md:text-8xl font-black tracking-tighter leading-none;
 }

@@ -65,6 +65,7 @@ export default {
           DEFAULT: "hsl(var(--navy))",
           light: "hsl(var(--navy-light))",
         },
+        "highlight-yellow": "hsl(var(--highlight-yellow))",
       },
       keyframes: {
         marquee: {
