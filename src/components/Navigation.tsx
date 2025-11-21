@@ -41,7 +41,7 @@ const Navigation = () => {
   };
 
   const navItems = [
-    { name: "Features", href: "#features", onClick: () => scrollToSection('features') },
+    { name: "What we do", href: "#features", onClick: () => scrollToSection('features') },
     { name: "Packages", href: "#pricing", onClick: () => scrollToSection('pricing') },
     { name: "Reviews", href: "#testimonials", onClick: () => scrollToSection('testimonials') },
   ];
