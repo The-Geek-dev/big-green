@@ -114,9 +114,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Impact Section */}
+      {/* Impact Sections - Alternating Layouts */}
       <section className="relative bg-background py-24">
-        <div className="container max-w-7xl px-4">
+        <div className="container max-w-7xl px-4 space-y-32">
+          {/* Schools & Gardens */}
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{
             opacity: 0,
@@ -153,6 +154,126 @@ const Index = () => {
                 Jumpstart helps educators improve their edible garden programs for healthier students and a healthier planet. 
                 We provide funding, resources, and support to transform outdoor learning spaces into thriving educational gardens.
               </p>
+            </motion.div>
+          </div>
+
+          {/* Individual Grants */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div initial={{
+            opacity: 0,
+            x: -40
+          }} whileInView={{
+            opacity: 1,
+            x: 0
+          }} viewport={{
+            once: true
+          }} transition={{
+            duration: 0.6
+          }} className="order-2 lg:order-1">
+              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
+                FOR INDIVIDUALS
+              </span>
+              <h3 className="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-6">
+                PERSONAL GRANTS FOR <span className="highlight-yellow">YOUR GARDEN.</span>
+              </h3>
+              <p className="text-xl text-foreground/70 leading-relaxed">
+                Whether you're starting your first backyard garden or expanding your urban farming project, we provide grants 
+                to individuals who are passionate about growing their own food and building sustainable communities.
+              </p>
+            </motion.div>
+
+            <motion.div initial={{
+            opacity: 0,
+            x: 40
+          }} whileInView={{
+            opacity: 1,
+            x: 0
+          }} viewport={{
+            once: true
+          }} transition={{
+            duration: 0.6
+          }} className="order-1 lg:order-2">
+              <img src={greenFarming1} alt="Individual home gardening" className="w-full h-auto rounded-2xl shadow-2xl" />
+            </motion.div>
+          </div>
+
+          {/* Business Funding */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div initial={{
+            opacity: 0,
+            x: -40
+          }} whileInView={{
+            opacity: 1,
+            x: 0
+          }} viewport={{
+            once: true
+          }} transition={{
+            duration: 0.6
+          }}>
+              <img src={greenFarming3} alt="Sustainable business and farming" className="w-full h-auto rounded-2xl shadow-2xl" />
+            </motion.div>
+
+            <motion.div initial={{
+            opacity: 0,
+            x: 40
+          }} whileInView={{
+            opacity: 1,
+            x: 0
+          }} viewport={{
+            once: true
+          }} transition={{
+            duration: 0.6
+          }}>
+              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
+                FOR BUSINESSES
+              </span>
+              <h3 className="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-6">
+                BUSINESS FUNDING FOR <span className="highlight-yellow">GREEN INITIATIVES.</span>
+              </h3>
+              <p className="text-xl text-foreground/70 leading-relaxed">
+                Support your business in creating sustainable food systems. From rooftop gardens to employee wellness programs, 
+                we fund businesses committed to integrating agriculture into their operations and communities.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Housing Grants */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div initial={{
+            opacity: 0,
+            x: -40
+          }} whileInView={{
+            opacity: 1,
+            x: 0
+          }} viewport={{
+            once: true
+          }} transition={{
+            duration: 0.6
+          }} className="order-2 lg:order-1">
+              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
+                FOR HOUSING
+              </span>
+              <h3 className="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-6">
+                HOUSING GRANTS FOR <span className="highlight-yellow">COMMUNITY GARDENS.</span>
+              </h3>
+              <p className="text-xl text-foreground/70 leading-relaxed">
+                Transform residential communities with shared garden spaces. We provide funding for apartment complexes, 
+                housing developments, and community centers to create accessible food-growing spaces for all residents.
+              </p>
+            </motion.div>
+
+            <motion.div initial={{
+            opacity: 0,
+            x: 40
+          }} whileInView={{
+            opacity: 1,
+            x: 0
+          }} viewport={{
+            once: true
+          }} transition={{
+            duration: 0.6
+          }} className="order-1 lg:order-2">
+              <img src={greenFarming2} alt="Community housing gardens" className="w-full h-auto rounded-2xl shadow-2xl" />
             </motion.div>
           </div>
         </div>
