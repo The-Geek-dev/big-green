@@ -9,9 +9,11 @@ import { LogOut, Home } from "lucide-react";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  
   useEffect(() => {
     // Check if user is logged in
-    supabase.auth.getSession().then(({
+    supabase.auth.getSession().then(async ({
       data: {
         session
       }
@@ -20,6 +22,16 @@ const Dashboard = () => {
         navigate("/auth");
       } else {
         setUserEmail(session.user.email || "");
+        
+        // Check if user is admin
+        const { data: roleData } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", session.user.id)
+          .eq("role", "admin")
+          .maybeSingle();
+        
+        setIsAdmin(!!roleData);
       }
     });
 
@@ -45,6 +57,16 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <img src={logoColor} alt="Big Green" className="h-10 w-auto" />
           <div className="flex gap-2">
+            {isAdmin && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/admin")}
+                className="gap-2"
+              >
+                Admin Panel
+              </Button>
+            )}
             <Button variant="outline" size="sm" onClick={() => navigate("/")} className="gap-2">
               <Home className="w-4 h-4" />
               Home

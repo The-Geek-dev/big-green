@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+
 import { toast } from "sonner";
 import { z } from "zod";
 import logoColor from "@/assets/logo-color.png";
@@ -15,7 +15,10 @@ const applicationSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().trim().min(10, "Phone number must be at least 10 digits").max(20),
   address: z.string().trim().min(5, "Address is required").max(200),
-  message: z.string().trim().max(1000, "Message must be less than 1000 characters").optional()
+  city: z.string().trim().min(2, "City is required").max(100),
+  state: z.string().trim().min(2, "State is required").max(50),
+  zipCode: z.string().trim().min(5, "ZIP code is required").max(10),
+  applicationType: z.string().min(1, "Please select an application type")
 });
 type ApplicationForm = z.infer<typeof applicationSchema>;
 const Application = () => {
@@ -27,7 +30,10 @@ const Application = () => {
     email: "",
     phone: "",
     address: "",
-    message: ""
+    city: "",
+    state: "",
+    zipCode: "",
+    applicationType: ""
   });
   useEffect(() => {
     // Check if user is logged in
@@ -85,13 +91,41 @@ const Application = () => {
         return;
       }
     }
+    
     setLoading(true);
     try {
-      // Here you would typically send the form data to your backend
-      console.log("Form submitted:", formData);
-      toast.success("Application submitted successfully!");
+      // Get current user
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        toast.error("You must be logged in to submit an application");
+        navigate("/auth");
+        return;
+      }
 
-      // Redirect to dashboard
+      // Save to database
+      const { error } = await supabase
+        .from("applications")
+        .insert({
+          user_id: session.user.id,
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zip_code: formData.zipCode,
+          application_type: formData.applicationType,
+          status: "pending"
+        });
+
+      if (error) {
+        console.error("Error submitting application:", error);
+        toast.error("Failed to submit application. Please try again.");
+        return;
+      }
+
+      toast.success("Application submitted successfully!");
       navigate("/dashboard");
     } catch (error) {
       toast.error("Failed to submit application. Please try again.");
@@ -151,13 +185,44 @@ const Application = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="address">Address *</Label>
-                <Input id="address" name="address" type="text" placeholder="123 Main St, City, State, ZIP" value={formData.address} onChange={handleChange} required disabled={loading} />
+                <Label htmlFor="address">Street Address *</Label>
+                <Input id="address" name="address" type="text" placeholder="123 Main St" value={formData.address} onChange={handleChange} required disabled={loading} />
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="city">City *</Label>
+                  <Input id="city" name="city" type="text" placeholder="City" value={formData.city} onChange={handleChange} required disabled={loading} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="state">State *</Label>
+                  <Input id="state" name="state" type="text" placeholder="State" value={formData.state} onChange={handleChange} required disabled={loading} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="zipCode">ZIP Code *</Label>
+                  <Input id="zipCode" name="zipCode" type="text" placeholder="12345" value={formData.zipCode} onChange={handleChange} required disabled={loading} />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="message">Additional Information (Optional)</Label>
-                <Textarea id="message" name="message" placeholder="Tell us more about your interest in Big Green and sustainable investing..." value={formData.message} onChange={handleChange} disabled={loading} rows={5} maxLength={1000} />
+                <Label htmlFor="applicationType">Application Type *</Label>
+                <select
+                  id="applicationType"
+                  name="applicationType"
+                  value={formData.applicationType}
+                  onChange={handleChange}
+                  required
+                  disabled={loading}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <option value="">Select an option</option>
+                  <option value="green-farming">Green Farming Initiative</option>
+                  <option value="housing-grant">Housing Grant</option>
+                  <option value="business-funding">Business Funding</option>
+                  <option value="education-program">Education Program</option>
+                </select>
               </div>
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
