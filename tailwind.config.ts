@@ -61,6 +61,10 @@ export default {
           light: "hsl(var(--green-tech-light))",
           dark: "hsl(var(--green-tech-dark))",
         },
+        "navy": {
+          DEFAULT: "hsl(var(--navy))",
+          light: "hsl(var(--navy-light))",
+        },
       },
       keyframes: {
         marquee: {

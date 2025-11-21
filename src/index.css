@@ -7,30 +7,32 @@
 
 @layer base {
   :root {
-    --background: 36 44% 92%;
-    --foreground: 25 25% 15%;
-    --card: 36 44% 95%;
-    --card-foreground: 25 25% 15%;
-    --popover: 36 44% 95%;
-    --popover-foreground: 25 25% 15%;
-    --primary: 0 79% 54%;
+    --background: 0 0% 98%;
+    --foreground: 215 30% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 30% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 30% 20%;
+    --primary: 130 50% 55%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 30 25% 75%;
-    --secondary-foreground: 25 25% 15%;
-    --muted: 36 20% 85%;
-    --muted-foreground: 25 15% 40%;
-    --accent: 35 55% 65%;
-    --accent-foreground: 25 25% 15%;
+    --secondary: 215 30% 25%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 210 15% 92%;
+    --muted-foreground: 215 15% 45%;
+    --accent: 130 50% 65%;
+    --accent-foreground: 215 30% 20%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 30 15% 75%;
-    --input: 30 15% 75%;
-    --ring: 0 79% 54%;
+    --border: 210 15% 85%;
+    --input: 210 15% 85%;
+    --ring: 130 50% 55%;
     --radius: 0.75rem;
     
-    --green-tech: 142 71% 45%;
-    --green-tech-light: 142 71% 95%;
-    --green-tech-dark: 142 71% 25%;
+    --navy: 215 30% 25%;
+    --navy-light: 215 30% 35%;
+    --green-tech: 130 50% 55%;
+    --green-tech-light: 130 50% 95%;
+    --green-tech-dark: 130 50% 35%;
   }
 }
 
@@ -57,7 +59,7 @@
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(225deg, rgba(139,90,43,0.3), rgba(139,90,43,0.1));
+  background: linear-gradient(225deg, hsl(var(--primary) / 0.3), hsl(var(--navy) / 0.2));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -70,11 +72,11 @@
 }
 
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#8B5A2B];
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
 }
 
 .button-gradient {
-  @apply bg-gradient-to-r from-primary to-[#8B5A2B] hover:opacity-90 transition-opacity rounded-full;
+  @apply bg-gradient-to-r from-primary to-green-tech-dark hover:opacity-90 transition-opacity rounded-full;
 }
 
 .hover-scale {
