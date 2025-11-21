@@ -15,12 +15,12 @@ export const FeaturesSection = () => {
         transition={{ duration: 0.6 }}
         className="max-w-2xl mb-20"
       >
-        <h2 className="text-5xl md:text-6xl font-normal mb-6 tracking-tight text-left text-foreground">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal mb-4 md:mb-6 tracking-tight text-left text-foreground">
           Revolutionary
           <br />
           <span className="text-gradient font-medium">Features & Innovation</span>
         </h2>
-        <p className="text-lg md:text-xl text-muted-foreground text-left">
+        <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-left">
           Seamlessly integrate Big Green vehicle ownership and cryptocurrency management with cutting-edge technology.
         </p>
       </motion.div>

@@ -21,10 +21,10 @@ export const CryptoInvestmentSection = () => {
           <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
             BIG GREEN × TESLA PARTNERSHIP
           </span>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-tight mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-tight mb-6 md:mb-8 px-4">
             DRIVE GREEN, <span className="highlight-yellow">INVEST SMART</span>
           </h2>
-          <p className="text-xl md:text-2xl text-foreground/70 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/70 max-w-4xl mx-auto leading-relaxed px-4">
             Big Green partners with Tesla to offer exclusive crypto investment opportunities 
             for sustainable vehicle owners. Get started with growing food and smart investing.
           </p>
@@ -55,11 +55,11 @@ export const CryptoInvestmentSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 * index }}
-              className="bg-white border-2 border-border rounded-2xl p-8 hover:border-primary transition-all duration-300"
+              className="bg-white border-2 border-border rounded-2xl p-6 md:p-8 hover:border-primary transition-all duration-300"
             >
-              <div className="text-primary mb-4">{benefit.icon}</div>
-              <h3 className="text-2xl font-bold mb-3 text-foreground">{benefit.title}</h3>
-              <p className="text-foreground/70">{benefit.description}</p>
+              <div className="text-primary mb-3 md:mb-4">{benefit.icon}</div>
+              <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3 text-foreground">{benefit.title}</h3>
+              <p className="text-sm md:text-base text-foreground/70">{benefit.description}</p>
             </motion.div>
           ))}
         </div>
@@ -86,21 +86,21 @@ export const CryptoInvestmentSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="flex items-center gap-3 mb-4">
-                <Star className="w-8 h-8 text-primary" />
-                <h3 className="text-4xl md:text-5xl font-black">
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                <Star className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black">
                   TIER 1: THE GATEWAY
                 </h3>
               </div>
-              <div className="text-3xl font-bold mb-2">
+              <div className="text-2xl sm:text-2xl md:text-3xl font-bold mb-2">
                 <span className="text-primary">$65,000</span>
-                <span className="text-lg text-foreground/60 ml-2">Total Grant</span>
+                <span className="text-sm md:text-lg text-foreground/60 ml-2">Total Grant</span>
               </div>
-              <div className="text-2xl font-semibold mb-6">
+              <div className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">
                 <span className="text-primary">+$20</span>
-                <span className="text-base text-foreground/60 ml-2">Daily Bonus</span>
+                <span className="text-sm md:text-base text-foreground/60 ml-2">Daily Bonus</span>
               </div>
-              <p className="text-xl text-foreground/70 mb-6">
+              <p className="text-base sm:text-lg md:text-xl text-foreground/70 mb-4 md:mb-6">
                 Your journey begins not with a small gesture, but with a monumental one. 
                 You instantly become eligible for a massive $65,000 total grant. This isn't a future 
                 possibility; it's an immediate reality.
@@ -139,24 +139,24 @@ export const CryptoInvestmentSection = () => {
               transition={{ duration: 0.6 }}
               className="order-2 lg:order-1"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <Award className="w-8 h-8 text-primary" />
-                <h3 className="text-4xl md:text-5xl font-black">
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                <Award className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black">
                   TIER 2: THE QUANTUM LEAP
                 </h3>
               </div>
-              <div className="inline-block px-4 py-2 bg-gradient-to-r from-primary to-purple-600 text-white rounded-full text-sm font-bold mb-4">
+              <div className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-primary to-purple-600 text-white rounded-full text-xs md:text-sm font-bold mb-3 md:mb-4">
                 One-time $1,000 Investment Required
               </div>
-              <div className="text-3xl font-bold mb-2">
+              <div className="text-2xl md:text-3xl font-bold mb-2">
                 <span className="text-primary">$100</span>
-                <span className="text-lg text-foreground/60 ml-2">Daily Rewards</span>
+                <span className="text-sm md:text-lg text-foreground/60 ml-2">Daily Rewards</span>
               </div>
-              <div className="text-2xl font-semibold mb-6">
+              <div className="text-xl md:text-2xl font-semibold mb-4 md:mb-6">
                 <span className="text-primary">$50,000</span>
-                <span className="text-base text-foreground/60 ml-2">Withdrawal Capacity</span>
+                <span className="text-sm md:text-base text-foreground/60 ml-2">Withdrawal Capacity</span>
               </div>
-              <p className="text-xl text-foreground/70 mb-6">
+              <p className="text-base sm:text-lg md:text-xl text-foreground/70 mb-4 md:mb-6">
                 This is where you make the pivotal decision to turn this immense potential into tangible wealth. 
                 Your entire experience accelerates with this single, one-time investment of just $1,000.
               </p>
@@ -225,23 +225,23 @@ export const CryptoInvestmentSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="flex items-center gap-3 mb-4">
-                <Trophy className="w-8 h-8 text-primary" />
-                <h3 className="text-4xl md:text-5xl font-black">
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
+                <Trophy className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black">
                   TIER 3: THE VIP LEGACY
                 </h3>
               </div>
-              <div className="text-3xl font-bold mb-2">
+              <div className="text-2xl md:text-3xl font-bold mb-2">
                 <span className="text-primary">$500</span>
-                <span className="text-lg text-foreground/60 ml-2">Daily Rewards</span>
+                <span className="text-sm md:text-lg text-foreground/60 ml-2">Daily Rewards</span>
               </div>
-              <div className="text-base text-foreground/70 mb-4 font-medium">
+              <div className="text-sm md:text-base text-foreground/70 mb-3 md:mb-4 font-medium">
                 Claimable Every 4 Hours
               </div>
-              <div className="inline-block px-4 py-2 bg-gradient-to-r from-primary to-yellow-500 text-white rounded-full text-sm font-bold mb-6">
+              <div className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-primary to-yellow-500 text-white rounded-full text-xs md:text-sm font-bold mb-4 md:mb-6">
                 🏆 COMPLIMENTARY CYBERTRUCK INCLUDED
               </div>
-              <p className="text-xl text-foreground/70 mb-6">
+              <p className="text-base sm:text-lg md:text-xl text-foreground/70 mb-4 md:mb-6">
                 This is the pinnacle. This tier is for those who are ready to claim their place among the elite. 
                 As a VIP member, you gain ultimate financial freedom with unlimited, instant withdrawals. 
                 The wait is over. The funds are yours, on your terms.
@@ -276,8 +276,8 @@ export const CryptoInvestmentSection = () => {
                   <span>VIP exclusive events & networking</span>
                 </li>
               </ul>
-              <div className="bg-gradient-to-r from-primary/10 to-yellow-500/10 border-2 border-primary/20 rounded-xl p-4 mt-6">
-                <p className="text-sm text-foreground/80 italic">
+              <div className="bg-gradient-to-r from-primary/10 to-yellow-500/10 border-2 border-primary/20 rounded-xl p-3 md:p-4 mt-4 md:mt-6">
+                <p className="text-xs md:text-sm text-foreground/80 italic">
                   "We're not just offering rewards; we're offering a legacy."
                 </p>
               </div>
@@ -291,9 +291,9 @@ export const CryptoInvestmentSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mt-20"
+          className="text-center mt-16 md:mt-20"
         >
-          <Button size="lg" className="button-gradient text-lg px-8 py-6">
+          <Button size="lg" className="button-gradient text-base md:text-lg px-6 md:px-8 py-5 md:py-6">
             Start Your Investment Journey
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
