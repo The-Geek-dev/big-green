@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Command } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import { FeaturesSection } from "@/components/features/FeaturesSection";
@@ -16,6 +17,8 @@ import personalGarden from "@/assets/personal-garden.jpg";
 import schoolClassroom from "@/assets/school-classroom.jpg";
 import businessFunding from "@/assets/business-funding.jpg";
 const Index = () => {
+  const navigate = useNavigate();
+  
   return <div className="min-h-screen bg-background text-foreground">
       <Navigation />
       
@@ -409,7 +412,7 @@ const Index = () => {
           }} whileTap={{
             scale: 0.95
           }}>
-              <Button size="lg" className="bg-foreground text-white hover:bg-foreground/90 font-semibold px-6 md:px-8 py-5 md:py-6 text-base md:text-lg">
+              <Button onClick={() => navigate("/auth")} size="lg" className="bg-foreground text-white hover:bg-foreground/90 font-semibold px-6 md:px-8 py-5 md:py-6 text-base md:text-lg">
                 Get Started Now
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>

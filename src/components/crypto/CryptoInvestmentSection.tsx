@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { TrendingUp, Shield, Zap, ArrowRight, Trophy, Award, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import teslaModel3 from "@/assets/tesla-model-3.jpg";
 import teslaModelY from "@/assets/tesla-model-y.jpg";
@@ -7,6 +8,8 @@ import teslaModelS from "@/assets/tesla-model-s.jpg";
 import teslaCybertruck from "@/assets/tesla-cybertruck.jpg";
 
 export const CryptoInvestmentSection = () => {
+  const navigate = useNavigate();
+  
   return (
     <section className="container px-4 py-24">
       <div className="max-w-7xl mx-auto">
@@ -293,7 +296,7 @@ export const CryptoInvestmentSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mt-16 md:mt-20"
         >
-          <Button size="lg" className="button-gradient text-base md:text-lg px-6 md:px-8 py-5 md:py-6">
+          <Button onClick={() => navigate("/auth")} size="lg" className="button-gradient text-base md:text-lg px-6 md:px-8 py-5 md:py-6">
             Start Your Investment Journey
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
