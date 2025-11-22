@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import logoColor from "@/assets/logo-color.png";
 import { LogOut, Home } from "lucide-react";
-const Dashboard = () => {
+
+const DashboardVerification = () => {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
   
   useEffect(() => {
     // Check if user is logged in
@@ -23,15 +24,21 @@ const Dashboard = () => {
       } else {
         setUserEmail(session.user.email || "");
         
-        // Check if user is admin
-        const { data: roleData } = await supabase
-          .from("user_roles")
-          .select("role")
+        // Check application status
+        const { data: applicationData } = await supabase
+          .from("applications")
+          .select("status")
           .eq("user_id", session.user.id)
-          .eq("role", "admin")
           .maybeSingle();
         
-        setIsAdmin(!!roleData);
+        if (applicationData) {
+          setApplicationStatus(applicationData.status);
+          
+          // Redirect to main dashboard if approved
+          if (applicationData.status === "approved") {
+            navigate("/user-dashboard");
+          }
+        }
       }
     });
 
@@ -47,26 +54,18 @@ const Dashboard = () => {
     });
     return () => subscription.unsubscribe();
   }, [navigate]);
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     toast.success("Signed out successfully");
   };
+
   return <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-border py-4 px-4 md:px-8 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <img src={logoColor} alt="Big Green" className="h-10 w-auto" />
           <div className="flex gap-2">
-            {isAdmin && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate("/admin")}
-                className="gap-2"
-              >
-                Admin Panel
-              </Button>
-            )}
             <Button variant="outline" size="sm" onClick={() => navigate("/")} className="gap-2">
               <Home className="w-4 h-4" />
               Home
@@ -92,7 +91,7 @@ const Dashboard = () => {
       }}>
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-black mb-4">
-              Welcome to Your <span className="text-gradient">Big Green</span> Dashboard
+              <span className="text-gradient">Dashboard Verification</span>
             </h1>
             <p className="text-lg text-muted-foreground">
               {userEmail}
@@ -114,7 +113,7 @@ const Dashboard = () => {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-bold">Application Status</h3>
                 <span className="px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full">
-                  Pending
+                  {applicationStatus || "Pending"}
                 </span>
               </div>
               <p className="text-muted-foreground text-sm">
@@ -197,9 +196,9 @@ const Dashboard = () => {
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold mb-2">3. Onboarding</h4>
+                <h4 className="font-semibold mb-2">3. Dashboard Access</h4>
                 <p className="text-muted-foreground text-sm">
-                  If approved, we'll guide you through the onboarding process and next steps.
+                  If approved, you'll be automatically redirected to your full dashboard.
                 </p>
               </div>
               <div>
@@ -214,4 +213,5 @@ const Dashboard = () => {
       </div>
     </div>;
 };
-export default Dashboard;
+
+export default DashboardVerification;
