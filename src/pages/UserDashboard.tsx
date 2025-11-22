@@ -115,113 +115,110 @@ const UserDashboard = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            {/* Quick Actions Card */}
-            <motion.div initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.5,
-            delay: 0.1
-          }} className="bg-white border-2 border-primary/20 rounded-2xl p-6 shadow-lg">
-              <h3 className="text-lg font-bold mb-4">Quick Actions</h3>
-              <div className="space-y-2">
-                <Button variant="outline" className="w-full justify-start">
-                  View Programs
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  Track Progress
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  View Resources
-                </Button>
-              </div>
+          {/* Impact Stats Grid */}
+          <div className="grid md:grid-cols-4 gap-6 mb-12">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} 
+              className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl p-6 shadow-lg">
+              <p className="text-sm opacity-90 mb-2">CO₂ Offset</p>
+              <p className="text-4xl font-black mb-1">2.4</p>
+              <p className="text-sm opacity-90">Tons</p>
             </motion.div>
 
-            {/* Stats Card */}
-            <motion.div initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.5,
-            delay: 0.2
-          }} className="bg-white border-2 border-border rounded-2xl p-6 shadow-lg">
-              <h3 className="text-lg font-bold mb-4">Your Impact</h3>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-sm text-muted-foreground">Programs Enrolled</p>
-                  <p className="text-2xl font-bold text-primary">0</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Resources Accessed</p>
-                  <p className="text-2xl font-bold text-primary">0</p>
-                </div>
-              </div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} 
+              className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl p-6 shadow-lg">
+              <p className="text-sm opacity-90 mb-2">Trees Planted</p>
+              <p className="text-4xl font-black mb-1">47</p>
+              <p className="text-sm opacity-90">Trees</p>
             </motion.div>
 
-            {/* Support Card */}
-            <motion.div initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.5,
-            delay: 0.3
-          }} className="bg-white border-2 border-border rounded-2xl p-6 shadow-lg">
-              <h3 className="text-lg font-bold mb-4">Need Help?</h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Our support team is here to assist you with any questions.
-              </p>
-              <Button className="button-gradient w-full">
-                Contact Support
-              </Button>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} 
+              className="bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl p-6 shadow-lg">
+              <p className="text-sm opacity-90 mb-2">Energy Saved</p>
+              <p className="text-4xl font-black mb-1">1.2k</p>
+              <p className="text-sm opacity-90">kWh</p>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} 
+              className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl p-6 shadow-lg">
+              <p className="text-sm opacity-90 mb-2">Community Impact</p>
+              <p className="text-4xl font-black mb-1">89</p>
+              <p className="text-sm opacity-90">People</p>
             </motion.div>
           </div>
 
-          {/* Recent Activity */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.5,
-          delay: 0.4
-        }} className="bg-white border-2 border-border rounded-2xl p-8 shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">Getting Started</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold mb-2">Explore Programs</h4>
-                <p className="text-muted-foreground text-sm">
-                  Discover available programs and opportunities tailored to your needs.
-                </p>
+          {/* Projects Section */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }}>
+            <h2 className="text-3xl font-black mb-6">Projects You Can Support</h2>
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-white border-2 border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <img src="/lovable-uploads/1e2a48dc-059b-4919-a1ed-44685d771a32.png" alt="Urban Farming Initiative" className="w-full h-48 object-cover" />
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">Urban Farming Initiative</h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Transform vacant city lots into thriving community gardens and urban farms.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-primary">$12,450 / $15,000</span>
+                    <Button size="sm" className="button-gradient">Support</Button>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h4 className="font-semibold mb-2">Access Resources</h4>
-                <p className="text-muted-foreground text-sm">
-                  Browse educational materials and tools to help you succeed.
-                </p>
+
+              <div className="bg-white border-2 border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <img src="/lovable-uploads/21f3edfb-62b5-4e35-9d03-7339d803b980.png" alt="Solar Education Program" className="w-full h-48 object-cover" />
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">Solar Education Program</h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Bring renewable energy education to schools and communities nationwide.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-primary">$8,200 / $10,000</span>
+                    <Button size="sm" className="button-gradient">Support</Button>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h4 className="font-semibold mb-2">Track Your Progress</h4>
-                <p className="text-muted-foreground text-sm">
-                  Monitor your journey and see the impact you're making.
-                </p>
+
+              <div className="bg-white border-2 border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <img src="/lovable-uploads/5830bd79-3511-41dc-af6c-8db32d91fc2c.png" alt="Reforestation Drive" className="w-full h-48 object-cover" />
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">Reforestation Drive</h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Plant native trees and restore ecosystems in deforested areas.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-primary">$18,900 / $20,000</span>
+                    <Button size="sm" className="button-gradient">Support</Button>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h4 className="font-semibold mb-2">Connect With Community</h4>
-                <p className="text-muted-foreground text-sm">
-                  Join others in making a sustainable difference together.
-                </p>
+            </div>
+          </motion.div>
+
+          {/* Activities Section */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }} 
+            className="bg-white border-2 border-border rounded-2xl p-8 shadow-lg">
+            <h2 className="text-2xl font-bold mb-6">Your Recent Activities</h2>
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 p-4 bg-primary/5 rounded-xl">
+                <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">✓</div>
+                <div className="flex-1">
+                  <h4 className="font-semibold">Completed Carbon Footprint Assessment</h4>
+                  <p className="text-sm text-muted-foreground">2 days ago</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 p-4 bg-primary/5 rounded-xl">
+                <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">🌱</div>
+                <div className="flex-1">
+                  <h4 className="font-semibold">Joined Urban Farming Community</h4>
+                  <p className="text-sm text-muted-foreground">5 days ago</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 p-4 bg-primary/5 rounded-xl">
+                <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold">☀️</div>
+                <div className="flex-1">
+                  <h4 className="font-semibold">Downloaded Solar Energy Guide</h4>
+                  <p className="text-sm text-muted-foreground">1 week ago</p>
+                </div>
               </div>
             </div>
           </motion.div>
