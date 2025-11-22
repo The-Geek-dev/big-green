@@ -6,7 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Application from "./pages/Application";
-import Dashboard from "./pages/Dashboard";
+import DashboardVerification from "./pages/DashboardVerification";
+import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
@@ -22,7 +23,8 @@ const App = () => (
       <Route path="/" element={<Index />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/application" element={<Application />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard" element={<DashboardVerification />} />
+      <Route path="/user-dashboard" element={<UserDashboard />} />
       <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </BrowserRouter>
