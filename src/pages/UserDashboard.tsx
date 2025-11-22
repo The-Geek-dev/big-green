@@ -18,20 +18,20 @@ import {
 } from "@/components/ui/table";
 
 const chartData = [
-  { time: "2:00pm", value: 8000 },
-  { time: "3:00pm", value: 8200 },
-  { time: "4:00pm", value: 8100 },
-  { time: "5:00pm", value: 8420 },
-  { time: "6:00pm", value: 8500 },
-  { time: "7:00pm", value: 8350 },
-  { time: "8:00pm", value: 8420 },
-  { time: "9:00pm", value: 8500 },
+  { time: "Jan", value: 45 },
+  { time: "Feb", value: 52 },
+  { time: "Mar", value: 48 },
+  { time: "Apr", value: 61 },
+  { time: "May", value: 55 },
+  { time: "Jun", value: 67 },
+  { time: "Jul", value: 73 },
+  { time: "Aug", value: 89 },
 ];
 
 const transactions = [
-  { name: "Urban Farming Grant", change: "-8.43%", date: "12 Jun, 2024", amount: "$14,092.33", status: "Success" },
-  { name: "Solar Initiative", change: "+2.34%", date: "16 May, 2024", amount: "$2,439.00", status: "Success" },
-  { name: "Tree Planting Fund", change: "+16.84", date: "21 Feb, 2024", amount: "$687.00", status: "Success" },
+  { name: "Urban Farming Grant", change: "+12 gardens", date: "12 Jun, 2024", amount: "47 trees", status: "Active" },
+  { name: "Solar Education Program", change: "+5 schools", date: "16 May, 2024", amount: "1.2k kWh", status: "Active" },
+  { name: "Community Garden Setup", change: "+8 members", date: "21 Feb, 2024", amount: "2.1 tons CO₂", status: "Completed" },
 ];
 
 const UserDashboard = () => {
@@ -126,7 +126,7 @@ const UserDashboard = () => {
         <header className="bg-black border-b border-white/10 px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-8">
-              {["Dashboard", "Reports", "Projects", "Community"].map((tab) => (
+              {["Dashboard", "My Gardens", "Projects", "Community"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -160,16 +160,16 @@ const UserDashboard = () => {
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h1 className="text-3xl font-bold mb-1">Welcome back, {userEmail.split('@')[0]}</h1>
-                <p className="text-white/50">Here's a look at your performance and analytics.</p>
+                <p className="text-white/50">Here's your environmental impact and garden analytics.</p>
               </div>
               <div className="flex items-center gap-3">
                 <Button variant="outline" size="sm" className="bg-white/5 border-white/10 text-white hover:bg-white/10">
                   <Calendar className="w-4 h-4 mr-2" />
-                  January 2024 - May 2024
+                  January 2024 - August 2024
                 </Button>
                 <Button size="sm" className="bg-green-500 hover:bg-green-600 text-black font-medium">
                   <Plus className="w-4 h-4 mr-2" />
-                  Add new coin
+                  Start New Project
                 </Button>
               </div>
             </div>
@@ -180,24 +180,24 @@ const UserDashboard = () => {
               <div className="space-y-6">
                 <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                   <CardContent className="p-6">
-                    <p className="text-xs text-white/50 uppercase tracking-wide mb-2">Spent This Month</p>
-                    <p className="text-4xl font-bold mb-2">$5,950<span className="text-2xl text-white/50">.64</span></p>
+                    <p className="text-xs text-white/50 uppercase tracking-wide mb-2">Impact This Month</p>
+                    <p className="text-4xl font-bold mb-2">89<span className="text-2xl text-white/50"> people</span></p>
                     <div className="space-y-3 mt-4">
                       <div>
-                        <p className="text-xs text-white/50 mb-1">24HR CHANGE</p>
-                        <p className="text-green-400 text-sm font-medium">+ 2.34%</p>
+                        <p className="text-xs text-white/50 mb-1">MONTHLY GROWTH</p>
+                        <p className="text-green-400 text-sm font-medium">+ 12.4%</p>
                       </div>
                       <div>
-                        <p className="text-xs text-white/50 mb-1">VOLUME (24H)</p>
-                        <p className="text-sm font-medium">$84.42B</p>
+                        <p className="text-xs text-white/50 mb-1">ACTIVE GARDENS</p>
+                        <p className="text-sm font-medium">47 gardens</p>
                       </div>
                       <div>
-                        <p className="text-xs text-white/50 mb-1">MARKET CAP</p>
-                        <p className="text-sm font-medium">$804.42B</p>
+                        <p className="text-xs text-white/50 mb-1">TOTAL CO₂ OFFSET</p>
+                        <p className="text-sm font-medium">2.4 tons</p>
                       </div>
                       <div>
-                        <p className="text-xs text-white/50 mb-1">AVG MONTHLY GROWING</p>
-                        <p className="text-sm font-medium">$804.42B</p>
+                        <p className="text-xs text-white/50 mb-1">ENERGY SAVED</p>
+                        <p className="text-sm font-medium">1.2k kWh</p>
                       </div>
                     </div>
                     <Button className="w-full mt-6 bg-green-500 hover:bg-green-600 text-black font-medium">
@@ -212,7 +212,7 @@ const UserDashboard = () => {
               <Card className="bg-white/5 border-white/10 backdrop-blur-sm lg:col-span-1">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">Active credit</CardTitle>
+                    <CardTitle className="text-lg">Community Impact</CardTitle>
                     <Button variant="ghost" size="icon" className="h-8 w-8">
                       <Download className="w-4 h-4" />
                     </Button>
@@ -251,13 +251,13 @@ const UserDashboard = () => {
                   <div className="flex items-center gap-4 mt-4">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                      <span className="text-xs text-white/50">1 BTC</span>
-                      <span className="text-sm font-bold">$8,420.04</span>
+                      <span className="text-xs text-white/50">Gardens</span>
+                      <span className="text-sm font-bold">47</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                      <span className="text-xs text-white/50">1 ETH</span>
-                      <span className="text-sm font-bold">$2,980.81</span>
+                      <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
+                      <span className="text-xs text-white/50">Members</span>
+                      <span className="text-sm font-bold">89</span>
                     </div>
                   </div>
                 </CardContent>
@@ -265,10 +265,10 @@ const UserDashboard = () => {
 
               {/* Right Column */}
               <div className="space-y-6">
-                {/* Credit Score */}
+                {/* Impact Score */}
                 <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                   <CardContent className="p-6">
-                    <p className="text-sm text-white/50 mb-4">Your credit score</p>
+                    <p className="text-sm text-white/50 mb-4">Your impact score</p>
                     <div className="relative w-40 h-40 mx-auto mb-4">
                       <svg className="w-full h-full transform -rotate-90">
                         <circle
@@ -286,50 +286,50 @@ const UserDashboard = () => {
                           stroke="#10b981"
                           strokeWidth="12"
                           fill="none"
-                          strokeDasharray={`${70 * 2 * Math.PI * 0.8} ${70 * 2 * Math.PI}`}
+                          strokeDasharray={`${70 * 2 * Math.PI * 0.85} ${70 * 2 * Math.PI}`}
                           strokeLinecap="round"
                         />
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <div className="text-sm text-white/50 mb-1">80%</div>
-                        <div className="text-5xl font-bold">660</div>
-                        <div className="text-green-400 text-xs mt-1">+2.34%</div>
+                        <div className="text-sm text-white/50 mb-1">85%</div>
+                        <div className="text-5xl font-bold">A</div>
+                        <div className="text-green-400 text-xs mt-1">+12.4%</div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/50 text-center">Last Check on 21 Apr</p>
-                    <p className="text-sm text-center mt-2">Your credit score is average</p>
+                    <p className="text-xs text-white/50 text-center">Last updated 2 days ago</p>
+                    <p className="text-sm text-center mt-2">Your impact is excellent</p>
                   </CardContent>
                 </Card>
 
-                {/* Bitcoin Card */}
+                {/* Garden Stats Card */}
                 <Card className="bg-gradient-to-br from-green-500/20 to-green-600/10 border-green-500/20 backdrop-blur-sm">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
-                          <span className="text-white font-bold">₿</span>
+                        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
+                          <span className="text-white text-lg">🌱</span>
                         </div>
                         <div>
-                          <p className="font-medium">Bitcoin</p>
-                          <p className="text-xs text-white/50">BTC</p>
+                          <p className="font-medium">Active Gardens</p>
+                          <p className="text-xs text-white/50">Your Projects</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-xs text-white/50">Reward Rate</p>
-                        <p className="text-sm font-bold text-green-400">14.7%</p>
+                        <p className="text-xs text-white/50">Growth Rate</p>
+                        <p className="text-sm font-bold text-green-400">+18.3%</p>
                       </div>
                     </div>
-                    <p className="text-3xl font-bold mt-4">$52,291</p>
-                    <p className="text-green-400 text-xs">+9.06%</p>
+                    <p className="text-3xl font-bold mt-4">47</p>
+                    <p className="text-green-400 text-xs">+12 this month</p>
                   </CardContent>
                 </Card>
               </div>
             </div>
 
-            {/* Payment History */}
+            {/* Activity History */}
             <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-xl">Payment History</CardTitle>
+                <CardTitle className="text-xl">Recent Activity</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
