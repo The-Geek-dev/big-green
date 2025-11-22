@@ -13,6 +13,8 @@ const DashboardVerification = () => {
   const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
   
   useEffect(() => {
+    let channel: ReturnType<typeof supabase.channel> | null = null;
+    
     // Check if user is logged in
     supabase.auth.getSession().then(async ({
       data: {
@@ -37,8 +39,34 @@ const DashboardVerification = () => {
           // Redirect to main dashboard if approved
           if (applicationData.status === "approved") {
             navigate("/user-dashboard");
+            return;
           }
         }
+        
+        // Set up real-time subscription for application status changes
+        channel = supabase
+          .channel('application-changes')
+          .on(
+            'postgres_changes',
+            {
+              event: 'UPDATE',
+              schema: 'public',
+              table: 'applications',
+              filter: `user_id=eq.${session.user.id}`
+            },
+            (payload) => {
+              console.log('Application updated:', payload);
+              const newStatus = payload.new.status;
+              setApplicationStatus(newStatus);
+              
+              // Automatically redirect when approved
+              if (newStatus === 'approved') {
+                toast.success("Application approved! Redirecting to dashboard...");
+                setTimeout(() => navigate("/user-dashboard"), 1500);
+              }
+            }
+          )
+          .subscribe();
       }
     });
 
@@ -52,7 +80,13 @@ const DashboardVerification = () => {
         navigate("/auth");
       }
     });
-    return () => subscription.unsubscribe();
+    
+    return () => {
+      subscription.unsubscribe();
+      if (channel) {
+        supabase.removeChannel(channel);
+      }
+    };
   }, [navigate]);
 
   const handleSignOut = async () => {
