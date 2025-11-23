@@ -18,7 +18,8 @@ const applicationSchema = z.object({
   city: z.string().trim().min(2, "City is required").max(100),
   state: z.string().trim().min(2, "State is required").max(50),
   zipCode: z.string().trim().min(5, "ZIP code is required").max(10),
-  applicationType: z.string().min(1, "Please select an application type")
+  applicationType: z.string().min(1, "Please select an application type"),
+  notes: z.string().optional()
 });
 type ApplicationForm = z.infer<typeof applicationSchema>;
 const Application = () => {
@@ -33,7 +34,8 @@ const Application = () => {
     city: "",
     state: "",
     zipCode: "",
-    applicationType: ""
+    applicationType: "",
+    notes: ""
   });
   useEffect(() => {
     // Check if user is logged in
@@ -116,6 +118,7 @@ const Application = () => {
           state: formData.state,
           zip_code: formData.zipCode,
           application_type: formData.applicationType,
+          notes: formData.notes,
           status: "pending"
         });
 
@@ -218,11 +221,25 @@ const Application = () => {
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <option value="">Select an option</option>
-                  <option value="green-farming">Green Farming Initiative</option>
-                  <option value="housing-grant">Housing Grant</option>
-                  <option value="business-funding">Business Funding</option>
-                  <option value="education-program">Education Program</option>
+                  <option value="grant application">Grant Application</option>
+                  <option value="investment">Investment</option>
+                  <option value="business funding">Business Funding</option>
+                  <option value="donation">Donation</option>
                 </select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="notes">Token / Additional Information</Label>
+                <textarea
+                  id="notes"
+                  name="notes"
+                  placeholder="Enter your token or any additional information that links to your purpose..."
+                  value={formData.notes}
+                  onChange={handleChange}
+                  disabled={loading}
+                  rows={4}
+                  className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                />
               </div>
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
