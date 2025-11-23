@@ -6,6 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Application from "./pages/Application";
+import GrantApplication from "./pages/GrantApplication";
+import InvestmentDashboard from "./pages/InvestmentDashboard";
+import BusinessFunding from "./pages/BusinessFunding";
+import DonationForm from "./pages/DonationForm";
 import DashboardVerification from "./pages/DashboardVerification";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -23,6 +27,10 @@ const App = () => (
       <Route path="/" element={<Index />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/application" element={<Application />} />
+      <Route path="/grant-application" element={<GrantApplication />} />
+      <Route path="/investment" element={<InvestmentDashboard />} />
+      <Route path="/business-funding" element={<BusinessFunding />} />
+      <Route path="/donation" element={<DonationForm />} />
       <Route path="/dashboard" element={<DashboardVerification />} />
       <Route path="/user-dashboard" element={<UserDashboard />} />
       <Route path="/admin" element={<AdminDashboard />} />
