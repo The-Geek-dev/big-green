@@ -10,6 +10,9 @@ import { DashboardView } from "@/components/dashboard/DashboardView";
 import { MyGardensView } from "@/components/dashboard/MyGardensView";
 import { ProjectsView } from "@/components/dashboard/ProjectsView";
 import { CommunityView } from "@/components/dashboard/CommunityView";
+import { DocumentsView } from "@/components/dashboard/DocumentsView";
+import { AnalyticsView } from "@/components/dashboard/AnalyticsView";
+import { TransfersView } from "@/components/dashboard/TransfersView";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -93,27 +96,35 @@ const UserDashboard = () => {
           </button>
           <button 
             onClick={() => handleSidebarNavigation("Documents")}
-            className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+              activeSidebarSection === "Documents" ? "bg-white" : "bg-white/5 hover:bg-white/10"
+            }`}
           >
-            <FileText className="w-5 h-5 text-white" />
+            <FileText className={`w-5 h-5 ${activeSidebarSection === "Documents" ? "text-black" : "text-white"}`} />
           </button>
           <button 
             onClick={() => handleSidebarNavigation("Analytics")}
-            className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+              activeSidebarSection === "Analytics" ? "bg-white" : "bg-white/5 hover:bg-white/10"
+            }`}
           >
-            <TrendingUp className="w-5 h-5 text-white" />
+            <TrendingUp className={`w-5 h-5 ${activeSidebarSection === "Analytics" ? "text-black" : "text-white"}`} />
           </button>
           <button 
             onClick={() => handleSidebarNavigation("Transfers")}
-            className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+              activeSidebarSection === "Transfers" ? "bg-white" : "bg-white/5 hover:bg-white/10"
+            }`}
           >
-            <ArrowLeftRight className="w-5 h-5 text-white" />
+            <ArrowLeftRight className={`w-5 h-5 ${activeSidebarSection === "Transfers" ? "text-black" : "text-white"}`} />
           </button>
           <button 
             onClick={() => handleSidebarNavigation("Community")}
-            className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+              activeSidebarSection === "Community" ? "bg-white" : "bg-white/5 hover:bg-white/10"
+            }`}
           >
-            <Users className="w-5 h-5 text-white" />
+            <Users className={`w-5 h-5 ${activeSidebarSection === "Community" ? "text-black" : "text-white"}`} />
           </button>
         </div>
       </aside>
@@ -158,6 +169,9 @@ const UserDashboard = () => {
             {activeTab === "My Gardens" && <MyGardensView />}
             {activeTab === "Projects" && <ProjectsView />}
             {activeTab === "Community" && <CommunityView />}
+            {activeTab === "Documents" && <DocumentsView />}
+            {activeTab === "Analytics" && <AnalyticsView />}
+            {activeTab === "Transfers" && <TransfersView />}
           </motion.div>
         </div>
       </div>
