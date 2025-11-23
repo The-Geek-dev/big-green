@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import logoColor from "@/assets/logo-color.png";
-import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award } from "lucide-react";
 import { DashboardView } from "@/components/dashboard/DashboardView";
 import { MyGardensView } from "@/components/dashboard/MyGardensView";
 import { ProjectsView } from "@/components/dashboard/ProjectsView";
@@ -13,6 +13,8 @@ import { CommunityView } from "@/components/dashboard/CommunityView";
 import { DocumentsView } from "@/components/dashboard/DocumentsView";
 import { AnalyticsView } from "@/components/dashboard/AnalyticsView";
 import { TransfersView } from "@/components/dashboard/TransfersView";
+import { DonateView } from "@/components/dashboard/DonateView";
+import { GrantsView } from "@/components/dashboard/GrantsView";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -90,9 +92,11 @@ const UserDashboard = () => {
         <div className="flex flex-col gap-3">
           <button 
             onClick={() => handleSidebarNavigation("Dashboard")}
-            className="w-12 h-12 rounded-xl bg-white flex items-center justify-center hover:bg-white/90 transition-colors"
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+              activeSidebarSection === "Dashboard" ? "bg-white" : "bg-white/5 hover:bg-white/10"
+            }`}
           >
-            <LayoutDashboard className="w-5 h-5 text-black" />
+            <LayoutDashboard className={`w-5 h-5 ${activeSidebarSection === "Dashboard" ? "text-black" : "text-white"}`} />
           </button>
           <button 
             onClick={() => handleSidebarNavigation("Documents")}
@@ -126,6 +130,22 @@ const UserDashboard = () => {
           >
             <Users className={`w-5 h-5 ${activeSidebarSection === "Community" ? "text-black" : "text-white"}`} />
           </button>
+          <button 
+            onClick={() => handleSidebarNavigation("Donate")}
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+              activeSidebarSection === "Donate" ? "bg-white" : "bg-white/5 hover:bg-white/10"
+            }`}
+          >
+            <Heart className={`w-5 h-5 ${activeSidebarSection === "Donate" ? "text-black" : "text-white"}`} />
+          </button>
+          <button 
+            onClick={() => handleSidebarNavigation("Grants")}
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+              activeSidebarSection === "Grants" ? "bg-white" : "bg-white/5 hover:bg-white/10"
+            }`}
+          >
+            <Award className={`w-5 h-5 ${activeSidebarSection === "Grants" ? "text-black" : "text-white"}`} />
+          </button>
         </div>
       </aside>
 
@@ -135,7 +155,7 @@ const UserDashboard = () => {
         <header className="bg-black border-b border-white/10 px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-8">
-              {["Dashboard", "My Gardens", "Projects", "Community"].map((tab) => (
+              {["Dashboard", "My Gardens", "Projects", "Community", "Donate", "Grants"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -172,6 +192,8 @@ const UserDashboard = () => {
             {activeTab === "Documents" && <DocumentsView />}
             {activeTab === "Analytics" && <AnalyticsView />}
             {activeTab === "Transfers" && <TransfersView />}
+            {activeTab === "Donate" && <DonateView />}
+            {activeTab === "Grants" && <GrantsView />}
           </motion.div>
         </div>
       </div>
