@@ -296,7 +296,7 @@ export const CryptoInvestmentSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mt-16 md:mt-20"
         >
-          <Button onClick={() => navigate("/auth")} size="lg" className="button-gradient text-base md:text-lg px-6 md:px-8 py-5 md:py-6">
+          <Button onClick={() => navigate("/application")} size="lg" className="button-gradient text-base md:text-lg px-6 md:px-8 py-5 md:py-6">
             Start Your Investment Journey
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
