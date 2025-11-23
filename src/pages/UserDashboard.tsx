@@ -18,27 +18,32 @@ import {
 } from "@/components/ui/table";
 
 const chartData = [
-  { time: "Jan", value: 45 },
-  { time: "Feb", value: 52 },
-  { time: "Mar", value: 48 },
-  { time: "Apr", value: 61 },
-  { time: "May", value: 55 },
-  { time: "Jun", value: 67 },
-  { time: "Jul", value: 73 },
-  { time: "Aug", value: 89 },
+  { time: "Jan", value: 0 },
+  { time: "Feb", value: 0 },
+  { time: "Mar", value: 0 },
+  { time: "Apr", value: 0 },
+  { time: "May", value: 0 },
+  { time: "Jun", value: 0 },
+  { time: "Jul", value: 0 },
+  { time: "Aug", value: 0 },
 ];
 
-const transactions = [
-  { name: "Urban Farming Grant", change: "+12 gardens", date: "12 Jun, 2024", amount: "47 trees", status: "Active" },
-  { name: "Solar Education Program", change: "+5 schools", date: "16 May, 2024", amount: "1.2k kWh", status: "Active" },
-  { name: "Community Garden Setup", change: "+8 members", date: "21 Feb, 2024", amount: "2.1 tons CO₂", status: "Completed" },
-];
+const transactions: Array<{ name: string; change: string; date: string; amount: string; status: string }> = [];
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [activeTab, setActiveTab] = useState("Dashboard");
+
+  const handleStartNewProject = () => {
+    navigate("/application");
+  };
+
+  const handleSidebarNavigation = (section: string) => {
+    console.log(`Navigating to ${section}`);
+    // You can implement navigation logic here
+  };
   
   useEffect(() => {
     // Check if user is logged in and verified
@@ -102,19 +107,34 @@ const UserDashboard = () => {
           P
         </div>
         <div className="flex flex-col gap-3">
-          <button className="w-12 h-12 rounded-xl bg-white flex items-center justify-center hover:bg-white/90 transition-colors">
+          <button 
+            onClick={() => handleSidebarNavigation("Dashboard")}
+            className="w-12 h-12 rounded-xl bg-white flex items-center justify-center hover:bg-white/90 transition-colors"
+          >
             <LayoutDashboard className="w-5 h-5 text-black" />
           </button>
-          <button className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+          <button 
+            onClick={() => handleSidebarNavigation("Documents")}
+            className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+          >
             <FileText className="w-5 h-5 text-white" />
           </button>
-          <button className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+          <button 
+            onClick={() => handleSidebarNavigation("Analytics")}
+            className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+          >
             <TrendingUp className="w-5 h-5 text-white" />
           </button>
-          <button className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+          <button 
+            onClick={() => handleSidebarNavigation("Transfers")}
+            className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+          >
             <ArrowLeftRight className="w-5 h-5 text-white" />
           </button>
-          <button className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+          <button 
+            onClick={() => handleSidebarNavigation("Community")}
+            className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+          >
             <Users className="w-5 h-5 text-white" />
           </button>
         </div>
@@ -167,7 +187,11 @@ const UserDashboard = () => {
                   <Calendar className="w-4 h-4 mr-2" />
                   January 2024 - August 2024
                 </Button>
-                <Button size="sm" className="bg-green-500 hover:bg-green-600 text-black font-medium">
+                <Button 
+                  size="sm" 
+                  className="bg-green-500 hover:bg-green-600 text-black font-medium"
+                  onClick={handleStartNewProject}
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   Start New Project
                 </Button>
@@ -181,26 +205,29 @@ const UserDashboard = () => {
                 <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
                   <CardContent className="p-6">
                     <p className="text-xs text-white/50 uppercase tracking-wide mb-2">Impact This Month</p>
-                    <p className="text-4xl font-bold mb-2">89<span className="text-2xl text-white/50"> people</span></p>
+                    <p className="text-4xl font-bold mb-2">0<span className="text-2xl text-white/50"> people</span></p>
                     <div className="space-y-3 mt-4">
                       <div>
                         <p className="text-xs text-white/50 mb-1">MONTHLY GROWTH</p>
-                        <p className="text-green-400 text-sm font-medium">+ 12.4%</p>
+                        <p className="text-white/70 text-sm font-medium">0%</p>
                       </div>
                       <div>
                         <p className="text-xs text-white/50 mb-1">ACTIVE GARDENS</p>
-                        <p className="text-sm font-medium">47 gardens</p>
+                        <p className="text-sm font-medium">0 gardens</p>
                       </div>
                       <div>
                         <p className="text-xs text-white/50 mb-1">TOTAL CO₂ OFFSET</p>
-                        <p className="text-sm font-medium">2.4 tons</p>
+                        <p className="text-sm font-medium">0 tons</p>
                       </div>
                       <div>
                         <p className="text-xs text-white/50 mb-1">ENERGY SAVED</p>
-                        <p className="text-sm font-medium">1.2k kWh</p>
+                        <p className="text-sm font-medium">0 kWh</p>
                       </div>
                     </div>
-                    <Button className="w-full mt-6 bg-green-500 hover:bg-green-600 text-black font-medium">
+                    <Button 
+                      className="w-full mt-6 bg-green-500 hover:bg-green-600 text-black font-medium"
+                      onClick={() => toast.info("No data available to download yet")}
+                    >
                       <Download className="w-4 h-4 mr-2" />
                       Download Report
                     </Button>
@@ -252,12 +279,12 @@ const UserDashboard = () => {
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-green-500"></div>
                       <span className="text-xs text-white/50">Gardens</span>
-                      <span className="text-sm font-bold">47</span>
+                      <span className="text-sm font-bold">0</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
                       <span className="text-xs text-white/50">Members</span>
-                      <span className="text-sm font-bold">89</span>
+                      <span className="text-sm font-bold">0</span>
                     </div>
                   </div>
                 </CardContent>
@@ -291,13 +318,13 @@ const UserDashboard = () => {
                         />
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <div className="text-sm text-white/50 mb-1">85%</div>
-                        <div className="text-5xl font-bold">A</div>
-                        <div className="text-green-400 text-xs mt-1">+12.4%</div>
+                        <div className="text-sm text-white/50 mb-1">0%</div>
+                        <div className="text-5xl font-bold">-</div>
+                        <div className="text-white/50 text-xs mt-1">No data</div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/50 text-center">Last updated 2 days ago</p>
-                    <p className="text-sm text-center mt-2">Your impact is excellent</p>
+                    <p className="text-xs text-white/50 text-center">No activity yet</p>
+                    <p className="text-sm text-center mt-2">Start your first project to begin tracking impact</p>
                   </CardContent>
                 </Card>
 
@@ -316,11 +343,11 @@ const UserDashboard = () => {
                       </div>
                       <div className="text-right">
                         <p className="text-xs text-white/50">Growth Rate</p>
-                        <p className="text-sm font-bold text-green-400">+18.3%</p>
+                        <p className="text-sm font-bold text-white/50">0%</p>
                       </div>
                     </div>
-                    <p className="text-3xl font-bold mt-4">47</p>
-                    <p className="text-green-400 text-xs">+12 this month</p>
+                    <p className="text-3xl font-bold mt-4">0</p>
+                    <p className="text-white/50 text-xs">No gardens yet</p>
                   </CardContent>
                 </Card>
               </div>
@@ -342,29 +369,37 @@ const UserDashboard = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {transactions.map((transaction, index) => (
-                      <TableRow key={index} className="border-white/10 hover:bg-white/5">
-                        <TableCell>
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500"></div>
-                            <div>
-                              <p className="font-medium">{transaction.name}</p>
-                              <p className={`text-xs ${transaction.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
-                                {transaction.change}
-                              </p>
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-white/70">{transaction.date}</TableCell>
-                        <TableCell className="text-white/70">{transaction.amount}</TableCell>
-                        <TableCell>
-                          <span className="inline-flex items-center gap-1 text-xs text-green-400">
-                            <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                            {transaction.status}
-                          </span>
+                    {transactions.length === 0 ? (
+                      <TableRow className="border-white/10">
+                        <TableCell colSpan={4} className="text-center text-white/50 py-8">
+                          No activity yet. Start your first project to see your impact!
                         </TableCell>
                       </TableRow>
-                    ))}
+                    ) : (
+                      transactions.map((transaction, index) => (
+                        <TableRow key={index} className="border-white/10 hover:bg-white/5">
+                          <TableCell>
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500"></div>
+                              <div>
+                                <p className="font-medium">{transaction.name}</p>
+                                <p className={`text-xs ${transaction.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
+                                  {transaction.change}
+                                </p>
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-white/70">{transaction.date}</TableCell>
+                          <TableCell className="text-white/70">{transaction.amount}</TableCell>
+                          <TableCell>
+                            <span className="inline-flex items-center gap-1 text-xs text-green-400">
+                              <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+                              {transaction.status}
+                            </span>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </CardContent>
