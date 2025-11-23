@@ -5,7 +5,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import logoColor from "@/assets/logo-color.png";
-import { LogOut, Home, CheckCircle, XCircle, Clock } from "lucide-react";
+import { LogOut, Home, CheckCircle, XCircle, Clock, FileText, Key } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TokenManagement } from "@/components/admin/TokenManagement";
 import {
   Table,
   TableBody,
@@ -176,81 +178,100 @@ const AdminDashboard = () => {
               Admin <span className="text-gradient">Dashboard</span>
             </h1>
             <p className="text-lg text-muted-foreground">
-              Manage and review all applications
+              Manage applications and access tokens
             </p>
           </div>
 
-          <div className="bg-white border-2 border-border rounded-2xl p-6 shadow-lg">
-            {loading ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">Loading applications...</p>
+          <Tabs defaultValue="applications" className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+              <TabsTrigger value="applications" className="gap-2">
+                <FileText className="w-4 h-4" />
+                Applications
+              </TabsTrigger>
+              <TabsTrigger value="tokens" className="gap-2">
+                <Key className="w-4 h-4" />
+                Tokens
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="applications">
+              <div className="bg-white border-2 border-border rounded-2xl p-6 shadow-lg">
+                {loading ? (
+                  <div className="text-center py-12">
+                    <p className="text-muted-foreground">Loading applications...</p>
+                  </div>
+                ) : applications.length === 0 ? (
+                  <div className="text-center py-12">
+                    <p className="text-muted-foreground">No applications found</p>
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Phone</TableHead>
+                        <TableHead>Type</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {applications.map((app) => (
+                        <TableRow key={app.id}>
+                          <TableCell className="font-medium">
+                            {app.full_name}
+                          </TableCell>
+                          <TableCell>{app.email}</TableCell>
+                          <TableCell>{app.phone}</TableCell>
+                          <TableCell className="capitalize">
+                            {app.application_type.replace("-", " ")}
+                          </TableCell>
+                          <TableCell>
+                            {new Date(app.created_at).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              {getStatusIcon(app.status)}
+                              <span
+                                className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                                  app.status
+                                )}`}
+                              >
+                                {app.status}
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <Select
+                              value={app.status}
+                              onValueChange={(value) =>
+                                updateApplicationStatus(app.id, value)
+                              }
+                            >
+                              <SelectTrigger className="w-32">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="pending">Pending</SelectItem>
+                                <SelectItem value="approved">Approved</SelectItem>
+                                <SelectItem value="rejected">Rejected</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
               </div>
-            ) : applications.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">No applications found</p>
-              </div>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Phone</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {applications.map((app) => (
-                    <TableRow key={app.id}>
-                      <TableCell className="font-medium">
-                        {app.full_name}
-                      </TableCell>
-                      <TableCell>{app.email}</TableCell>
-                      <TableCell>{app.phone}</TableCell>
-                      <TableCell className="capitalize">
-                        {app.application_type.replace("-", " ")}
-                      </TableCell>
-                      <TableCell>
-                        {new Date(app.created_at).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          {getStatusIcon(app.status)}
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusColor(
-                              app.status
-                            )}`}
-                          >
-                            {app.status}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Select
-                          value={app.status}
-                          onValueChange={(value) =>
-                            updateApplicationStatus(app.id, value)
-                          }
-                        >
-                          <SelectTrigger className="w-32">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="pending">Pending</SelectItem>
-                            <SelectItem value="approved">Approved</SelectItem>
-                            <SelectItem value="rejected">Rejected</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </div>
+            </TabsContent>
+
+            <TabsContent value="tokens">
+              <TokenManagement />
+            </TabsContent>
+          </Tabs>
         </motion.div>
       </div>
     </div>
