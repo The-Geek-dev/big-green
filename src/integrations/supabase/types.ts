@@ -27,6 +27,7 @@ export type Database = {
           phone: string
           state: string
           status: string
+          token_code: string | null
           updated_at: string | null
           user_id: string
           zip_code: string
@@ -43,6 +44,7 @@ export type Database = {
           phone: string
           state: string
           status?: string
+          token_code?: string | null
           updated_at?: string | null
           user_id: string
           zip_code: string
@@ -59,9 +61,46 @@ export type Database = {
           phone?: string
           state?: string
           status?: string
+          token_code?: string | null
           updated_at?: string | null
           user_id?: string
           zip_code?: string
+        }
+        Relationships: []
+      }
+      tokens: {
+        Row: {
+          application_type: string
+          created_at: string
+          created_by: string | null
+          current_uses: number
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          max_uses: number | null
+          token_code: string
+        }
+        Insert: {
+          application_type: string
+          created_at?: string
+          created_by?: string | null
+          current_uses?: number
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          token_code: string
+        }
+        Update: {
+          application_type?: string
+          created_at?: string
+          created_by?: string | null
+          current_uses?: number
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          token_code?: string
         }
         Relationships: []
       }
@@ -96,6 +135,10 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      validate_and_consume_token: {
+        Args: { _application_type: string; _token_code: string }
         Returns: boolean
       }
     }

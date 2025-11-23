@@ -19,7 +19,7 @@ const applicationSchema = z.object({
   state: z.string().trim().min(2, "State is required").max(50),
   zipCode: z.string().trim().min(5, "ZIP code is required").max(10),
   applicationType: z.string().min(1, "Please select an application type"),
-  notes: z.string().optional()
+  notes: z.string().trim().min(1, "Access token is required").max(100)
 });
 type ApplicationForm = z.infer<typeof applicationSchema>;
 const Application = () => {
@@ -105,6 +105,19 @@ const Application = () => {
         return;
       }
 
+      // Validate token with the database function
+      const { data: isValid, error: tokenError } = await supabase
+        .rpc('validate_and_consume_token', {
+          _token_code: formData.notes?.trim() || '',
+          _application_type: formData.applicationType
+        });
+
+      if (tokenError || !isValid) {
+        toast.error("The token you entered is invalid, expired, or doesn't match your application type");
+        setLoading(false);
+        return;
+      }
+
       // Save to database
       const { error } = await supabase
         .from("applications")
@@ -118,6 +131,7 @@ const Application = () => {
           state: formData.state,
           zip_code: formData.zipCode,
           application_type: formData.applicationType,
+          token_code: formData.notes?.trim(),
           notes: formData.notes,
           status: "pending"
         });
@@ -229,17 +243,21 @@ const Application = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="notes">Token / Additional Information</Label>
+                <Label htmlFor="notes">Access Token *</Label>
                 <textarea
                   id="notes"
                   name="notes"
-                  placeholder="Enter your token or any additional information that links to your purpose..."
+                  placeholder="Enter your access token for this application type..."
                   value={formData.notes}
                   onChange={handleChange}
                   disabled={loading}
+                  required
                   rows={4}
                   className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 />
+                <p className="text-xs text-muted-foreground">
+                  Each application type requires a unique access token. Contact support if you don't have one.
+                </p>
               </div>
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
