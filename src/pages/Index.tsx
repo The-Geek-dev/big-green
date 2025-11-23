@@ -354,7 +354,7 @@ const Index = () => {
                   </motion.div>)}
               </div>
 
-              <Button size="lg" className="bg-white text-green-tech hover:bg-white/90 font-semibold text-sm md:text-base px-5 md:px-6 py-4 md:py-5">
+              <Button onClick={() => navigate("/application")} size="lg" className="bg-white text-green-tech hover:bg-white/90 font-semibold text-sm md:text-base px-5 md:px-6 py-4 md:py-5">
                 Check Grant Eligibility
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
