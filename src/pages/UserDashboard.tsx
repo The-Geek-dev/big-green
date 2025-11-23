@@ -20,7 +20,7 @@ const UserDashboard = () => {
 
   const handleSidebarNavigation = (section: string) => {
     setActiveSidebarSection(section);
-    toast.info(`Switched to ${section}`);
+    setActiveTab(section);
   };
   
   useEffect(() => {
