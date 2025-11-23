@@ -140,7 +140,7 @@ const UserDashboard = () => {
               <div className="flex items-center gap-2 bg-white/5 rounded-full px-3 py-1.5">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-green-600"></div>
                 <div className="text-right">
-                  <p className="text-xs font-medium">Admin User</p>
+                  <p className="text-xs font-medium">{isAdmin ? "Admin User" : "User"}</p>
                   <p className="text-xs text-white/50">{userEmail}</p>
                 </div>
               </div>
