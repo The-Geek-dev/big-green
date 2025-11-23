@@ -42,7 +42,7 @@ export const GrantsView = () => {
     if (locked) {
       return;
     }
-    navigate("/application");
+    navigate("/grant-application");
   };
 
   return (
