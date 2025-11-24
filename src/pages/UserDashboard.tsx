@@ -29,6 +29,8 @@ const UserDashboard = () => {
   };
   
   useEffect(() => {
+    let channel: ReturnType<typeof supabase.channel> | null = null;
+    
     // Check if user is logged in and verified
     supabase.auth.getSession().then(async ({
       data: {
@@ -41,14 +43,23 @@ const UserDashboard = () => {
         setUserEmail(session.user.email || "");
         
         // Check application status
-        const { data: applicationData } = await supabase
+        const { data: applicationData, error } = await supabase
           .from("applications")
           .select("status")
           .eq("user_id", session.user.id)
           .maybeSingle();
         
-        // Redirect to verification page if not approved
-        if (!applicationData || applicationData.status !== "approved") {
+        console.log("Application check:", { applicationData, error, userId: session.user.id });
+        
+        // Only redirect if we're sure the application doesn't exist or is not approved
+        if (error) {
+          console.error("Error checking application:", error);
+        } else if (!applicationData) {
+          console.log("No application found, redirecting to verification");
+          navigate("/dashboard");
+          return;
+        } else if (applicationData.status !== "approved") {
+          console.log("Application status:", applicationData.status);
           navigate("/dashboard");
           return;
         }
@@ -62,6 +73,30 @@ const UserDashboard = () => {
           .maybeSingle();
         
         setIsAdmin(!!roleData);
+        
+        // Set up real-time subscription for application status changes
+        channel = supabase
+          .channel('user-application-changes')
+          .on(
+            'postgres_changes',
+            {
+              event: 'UPDATE',
+              schema: 'public',
+              table: 'applications',
+              filter: `user_id=eq.${session.user.id}`
+            },
+            (payload) => {
+              console.log('Application status updated:', payload);
+              const newStatus = payload.new.status;
+              
+              // If application is no longer approved, redirect back
+              if (newStatus !== 'approved') {
+                toast.error("Your application status has changed");
+                navigate("/dashboard");
+              }
+            }
+          )
+          .subscribe();
       }
     });
 
@@ -75,7 +110,13 @@ const UserDashboard = () => {
         navigate("/auth");
       }
     });
-    return () => subscription.unsubscribe();
+    
+    return () => {
+      subscription.unsubscribe();
+      if (channel) {
+        supabase.removeChannel(channel);
+      }
+    };
   }, [navigate]);
 
   const handleSignOut = async () => {
