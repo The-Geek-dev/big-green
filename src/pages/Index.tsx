@@ -9,6 +9,7 @@ import LogoCarousel from "@/components/LogoCarousel";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Footer from "@/components/Footer";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { InspirationalQuote } from "@/components/InspirationalQuote";
 import greenFarming1 from "@/assets/green-farming-1.jpg";
 import greenFarming2 from "@/assets/green-farming-2.jpg";
 import greenFarming3 from "@/assets/green-farming-3.jpg";
@@ -386,6 +387,14 @@ const Index = () => {
       <div className="bg-background">
         <TestimonialsSection />
       </div>
+
+      {/* Inspirational Quote Section */}
+      <InspirationalQuote
+        quote="When you grow your own food, you're not just planting seeds in the ground. You're planting seeds of independence, sustainability, and hope for future generations."
+        highlightedWords={["independence", "sustainability", "hope"]}
+        author="Big Green Community Member"
+        location="Colorado"
+      />
 
       {/* CTA Section */}
       <section className="relative py-24 bg-white">
