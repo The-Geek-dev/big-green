@@ -10,6 +10,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import Footer from "@/components/Footer";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { InspirationalQuote } from "@/components/InspirationalQuote";
+import CommunityPhotoCarousel from "@/components/CommunityPhotoCarousel";
 import greenFarming1 from "@/assets/green-farming-1.jpg";
 import greenFarming2 from "@/assets/green-farming-2.jpg";
 import greenFarming3 from "@/assets/green-farming-3.jpg";
@@ -382,6 +383,9 @@ const Index = () => {
       <div id="investment" className="bg-background">
         <CryptoInvestmentSection />
       </div>
+
+      {/* Community Photo Carousel */}
+      <CommunityPhotoCarousel />
 
       {/* Testimonials Section */}
       <div className="bg-background">
