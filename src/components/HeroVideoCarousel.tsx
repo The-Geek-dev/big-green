@@ -9,18 +9,8 @@ import {
 const videos = [
   {
     id: 1,
-    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    title: "Community Garden Success Story"
-  },
-  {
-    id: 2,
-    url: "https://www.youtube.com/embed/jNQXAC9IVRw",
-    title: "School Garden Program"
-  },
-  {
-    id: 3,
-    url: "https://www.youtube.com/embed/9bZkp7q19f0",
-    title: "Urban Farming Initiative"
+    url: "/videos/big-green-hero-1.mp4",
+    title: "Big Green Hero"
   }
 ];
 
@@ -42,12 +32,14 @@ export const HeroVideoCarousel = () => {
         {videos.map((video) => (
           <CarouselItem key={video.id}>
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20">
-              <iframe
+              <video
                 src={video.url}
                 title={video.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
               />
             </div>
           </CarouselItem>
