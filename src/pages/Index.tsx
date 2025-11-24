@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { InspirationalQuote } from "@/components/InspirationalQuote";
 import CommunityPhotoCarousel from "@/components/CommunityPhotoCarousel";
+import { HeroVideoCarousel } from "@/components/HeroVideoCarousel";
 import greenFarming1 from "@/assets/green-farming-1.jpg";
 import greenFarming2 from "@/assets/green-farming-2.jpg";
 import greenFarming3 from "@/assets/green-farming-3.jpg";
@@ -80,8 +81,8 @@ const Index = () => {
         opacity: 1
       }} transition={{
         delay: 0.8
-      }} className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-full hidden lg:block">
-          
+      }} className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-full hidden lg:flex items-center px-8">
+          <HeroVideoCarousel />
         </motion.div>
       </motion.section>
 
