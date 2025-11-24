@@ -61,47 +61,16 @@ const Index = () => {
             LET'S GET <span className="highlight-yellow">EVERYONE</span> IN AMERICA GROWING FOOD!
           </motion.h1>
 
-          {/* Community Photos with Swipe Indicator */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="mt-16"
-          >
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
-              {[
-                { src: personalGarden, alt: "Community garden" },
-                { src: schoolClassroom, alt: "School gardens" },
-                { src: greenFarming2, alt: "Growing together" },
-                { src: greenFarming1, alt: "Fresh produce" },
-                { src: greenFarming3, alt: "Community volunteers" },
-              ].map((photo, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
-                  className="relative overflow-hidden rounded-xl aspect-square"
-                >
-                  <img
-                    src={photo.src}
-                    alt={photo.alt}
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-              ))}
-            </div>
-            
-            {/* Swipe Indicator */}
-            <motion.div 
-              className="flex items-center justify-center gap-3"
-              animate={{ x: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <ArrowRight className="w-8 h-8 text-foreground/40" />
-              <span className="text-sm font-medium text-foreground/60 tracking-wide">SWIPE TO EXPLORE</span>
-              <ArrowRight className="w-8 h-8 text-foreground/40" />
-            </motion.div>
+          <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          delay: 0.5
+        }} className="flex items-center justify-center mt-16">
+            <ArrowRight className="w-16 h-16 text-foreground animate-bounce" />
           </motion.div>
         </div>
 
