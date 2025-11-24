@@ -34,8 +34,20 @@ const Index = () => {
       y: 0
     }} transition={{
       duration: 0.5
-    }} className="relative bg-white px-4 pt-32 pb-24 overflow-hidden">
-        <div className="container max-w-7xl">
+    }} className="relative bg-white px-4 pt-32 pb-24 overflow-hidden min-h-[600px] lg:min-h-[700px]">
+        {/* Background Video Carousel */}
+        <motion.div initial={{
+        opacity: 0
+      }} animate={{
+        opacity: 1
+      }} transition={{
+        delay: 0.6
+      }} className="absolute inset-0 w-full h-full">
+          <HeroVideoCarousel />
+        </motion.div>
+
+        {/* Text Content Overlay */}
+        <div className="container max-w-7xl relative z-10">
           <motion.div initial={{
           opacity: 0,
           y: 20
@@ -74,16 +86,6 @@ const Index = () => {
             <ArrowRight className="w-16 h-16 text-foreground animate-bounce" />
           </motion.div>
         </div>
-
-        <motion.div initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        delay: 0.8
-      }} className="absolute right-0 top-1/2 -translate-y-1/2 w-1/2 h-full hidden lg:flex items-center px-8">
-          <HeroVideoCarousel />
-        </motion.div>
       </motion.section>
 
       {/* Logo Carousel */}
