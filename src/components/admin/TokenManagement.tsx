@@ -62,16 +62,29 @@ export const TokenManagement = () => {
 
   const fetchTokens = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("tokens")
-      .select("*")
-      .order("created_at", { ascending: false });
+    try {
+      // Check if user is authenticated
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error("You must be logged in as an admin to manage tokens");
+        setLoading(false);
+        return;
+      }
 
-    if (error) {
-      toast.error("Failed to fetch tokens");
-      console.error(error);
-    } else {
-      setTokens(data || []);
+      const { data, error } = await supabase
+        .from("tokens")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Token fetch error:", error);
+        toast.error(`Failed to fetch tokens: ${error.message}`);
+      } else {
+        setTokens(data || []);
+      }
+    } catch (err: any) {
+      console.error("Unexpected error:", err);
+      toast.error(`Error: ${err.message || "Failed to fetch tokens"}`);
     }
     setLoading(false);
   };
@@ -103,8 +116,15 @@ export const TokenManagement = () => {
     }
 
     try {
+      // Check authentication
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error("You must be logged in to manage tokens");
+        return;
+      }
+
       const tokenData = {
-        token_code: formData.token_code,
+        token_code: formData.token_code.trim().toUpperCase(),
         application_type: formData.application_type,
         is_active: formData.is_active,
         max_uses: formData.max_uses ? parseInt(formData.max_uses) : null,
@@ -117,14 +137,20 @@ export const TokenManagement = () => {
           .update(tokenData)
           .eq("id", editingToken.id);
 
-        if (error) throw error;
+        if (error) {
+          console.error("Update error:", error);
+          throw error;
+        }
         toast.success("Token updated successfully");
       } else {
         const { error } = await supabase
           .from("tokens")
           .insert([tokenData]);
 
-        if (error) throw error;
+        if (error) {
+          console.error("Insert error:", error);
+          throw error;
+        }
         toast.success("Token created successfully");
       }
 
@@ -132,8 +158,8 @@ export const TokenManagement = () => {
       resetForm();
       fetchTokens();
     } catch (error: any) {
+      console.error("Submit error:", error);
       toast.error(error.message || "Failed to save token");
-      console.error(error);
     }
   };
 
