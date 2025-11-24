@@ -18,20 +18,20 @@ export const HeroVideoCarousel = () => {
   return (
     <Carousel
       opts={{
-        align: "start",
+        align: "center",
         loop: true,
       }}
       plugins={[
         Autoplay({
-          delay: 5000,
+          delay: 4000,
         }),
       ]}
-      className="w-full"
+      className="w-full h-full"
     >
-      <CarouselContent>
+      <CarouselContent className="h-full">
         {videos.map((video) => (
-          <CarouselItem key={video.id}>
-            <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20">
+          <CarouselItem key={video.id} className="h-full">
+            <div className="relative w-full h-full">
               <video
                 src={video.url}
                 title={video.title}
@@ -41,6 +41,7 @@ export const HeroVideoCarousel = () => {
                 playsInline
                 className="w-full h-full object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/40 to-transparent" />
             </div>
           </CarouselItem>
         ))}
