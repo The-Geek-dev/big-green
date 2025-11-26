@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Command } from "lucide-react";
+import { ArrowRight, ArrowDown, Command } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
@@ -83,7 +83,7 @@ const Index = () => {
         }} transition={{
           delay: 0.5
         }} className="flex items-center justify-center mt-16">
-            <ArrowRight className="w-16 h-16 text-foreground animate-bounce" />
+            <ArrowDown className="w-16 h-16 text-foreground animate-bounce" />
           </motion.div>
         </div>
       </motion.section>
