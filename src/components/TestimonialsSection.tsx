@@ -69,8 +69,7 @@ const TestimonialsSection = () => {
         duration: 0.8,
         ease: "easeOut"
       }} className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-3 md:mb-4 text-foreground">
-              Stories from Our Family <span className="text-gradient">Our Family </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-3 md:mb-4 text-foreground">  Stories from Our Family<span className="text-gradient">Our Family </span>
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground px-4">
             See what our Tier 1, 2, and 3 members are saying about their grants and rewards
