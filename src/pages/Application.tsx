@@ -86,10 +86,16 @@ const Application = () => {
       value
     } = e.target;
     
-    // Immediately redirect to donation page if donation is selected
+    // Immediately redirect based on application type
     if (name === "applicationType" && value === "donation") {
       toast.success("Redirecting to donation page...");
       navigate("/donation");
+      return;
+    }
+    
+    if (name === "applicationType" && value === "grant application") {
+      toast.success("Redirecting to grant application page...");
+      navigate("/grant-application");
       return;
     }
     
