@@ -5,9 +5,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import logoColor from "@/assets/logo-color.png";
-import { LogOut, Home, CheckCircle, XCircle, Clock, FileText, Key } from "lucide-react";
+import { LogOut, Home, CheckCircle, XCircle, Clock, FileText, Key, Bitcoin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TokenManagement } from "@/components/admin/TokenManagement";
+import CryptoTransactionsManagement from "@/components/admin/CryptoTransactionsManagement";
 import {
   Table,
   TableBody,
@@ -183,10 +184,14 @@ const AdminDashboard = () => {
           </div>
 
           <Tabs defaultValue="applications" className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8">
               <TabsTrigger value="applications" className="gap-2">
                 <FileText className="w-4 h-4" />
                 Applications
+              </TabsTrigger>
+              <TabsTrigger value="crypto" className="gap-2">
+                <Bitcoin className="w-4 h-4" />
+                Crypto Payments
               </TabsTrigger>
               <TabsTrigger value="tokens" className="gap-2">
                 <Key className="w-4 h-4" />
@@ -266,6 +271,10 @@ const AdminDashboard = () => {
                   </Table>
                 )}
               </div>
+            </TabsContent>
+
+            <TabsContent value="crypto">
+              <CryptoTransactionsManagement />
             </TabsContent>
 
             <TabsContent value="tokens">
