@@ -134,7 +134,7 @@ const BusinessFunding = () => {
       }
 
       toast.success("Business funding application submitted successfully!");
-      navigate("/dashboard");
+      navigate("/funding-application");
     } catch (error) {
       toast.error("Failed to submit application. Please try again.");
     } finally {
