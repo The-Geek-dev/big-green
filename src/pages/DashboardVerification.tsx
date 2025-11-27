@@ -11,6 +11,7 @@ const DashboardVerification = () => {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
+  const [applicationType, setApplicationType] = useState<string | null>(null);
   
   useEffect(() => {
     let channel: ReturnType<typeof supabase.channel> | null = null;
@@ -29,16 +30,26 @@ const DashboardVerification = () => {
         // Check application status
         const { data: applicationData } = await supabase
           .from("applications")
-          .select("status")
+          .select("status, application_type")
           .eq("user_id", session.user.id)
           .maybeSingle();
         
         if (applicationData) {
           setApplicationStatus(applicationData.status);
+          setApplicationType(applicationData.application_type);
           
-          // Redirect to main dashboard if approved
+          // Redirect based on application type if approved
           if (applicationData.status === "approved") {
-            navigate("/user-dashboard");
+            switch (applicationData.application_type) {
+              case "business_funding":
+                navigate("/funding-application");
+                break;
+              case "grant":
+                navigate("/user-dashboard");
+                break;
+              default:
+                navigate("/user-dashboard");
+            }
             return;
           }
         }
@@ -57,12 +68,25 @@ const DashboardVerification = () => {
             (payload) => {
               console.log('Application updated:', payload);
               const newStatus = payload.new.status;
+              const appType = payload.new.application_type;
               setApplicationStatus(newStatus);
+              setApplicationType(appType);
               
-              // Automatically redirect when approved
+              // Automatically redirect when approved based on type
               if (newStatus === 'approved') {
-                toast.success("Application approved! Redirecting to dashboard...");
-                setTimeout(() => navigate("/user-dashboard"), 1500);
+                toast.success("Application approved! Redirecting...");
+                setTimeout(() => {
+                  switch (appType) {
+                    case "business_funding":
+                      navigate("/funding-application");
+                      break;
+                    case "grant":
+                      navigate("/user-dashboard");
+                      break;
+                    default:
+                      navigate("/user-dashboard");
+                  }
+                }, 1500);
               }
             }
           )
