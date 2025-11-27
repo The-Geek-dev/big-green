@@ -44,6 +44,9 @@ const DashboardVerification = () => {
               case "business_funding":
                 navigate("/funding-application");
                 break;
+              case "donation":
+                navigate("/donation");
+                break;
               case "grant":
                 navigate("/user-dashboard");
                 break;
@@ -79,6 +82,9 @@ const DashboardVerification = () => {
                   switch (appType) {
                     case "business_funding":
                       navigate("/funding-application");
+                      break;
+                    case "donation":
+                      navigate("/donation");
                       break;
                     case "grant":
                       navigate("/user-dashboard");
