@@ -130,7 +130,7 @@ const Application = () => {
         }
       }
 
-      // Save to database
+      // Save to database - auto-approve donations
       const { error } = await supabase
         .from("applications")
         .insert({
@@ -145,7 +145,7 @@ const Application = () => {
           application_type: formData.applicationType,
           token_code: formData.notes?.trim(),
           notes: formData.notes,
-          status: "pending"
+          status: formData.applicationType === "donation" ? "approved" : "pending"
         });
 
       if (error) {
