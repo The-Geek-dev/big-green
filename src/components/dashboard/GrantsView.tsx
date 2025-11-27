@@ -3,10 +3,41 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 export const GrantsView = () => {
   const navigate = useNavigate();
-  const currentImpactScore = 0; // This should come from user data
+  const [currentImpactScore, setCurrentImpactScore] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchImpactScore = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('impact_score')
+            .eq('user_id', user.id)
+            .single();
+          
+          if (error) {
+            console.error('Error fetching impact score:', error);
+          } else if (data) {
+            setCurrentImpactScore(data.impact_score);
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchImpactScore();
+  }, []);
 
   const grants = [
     {
@@ -64,11 +95,17 @@ export const GrantsView = () => {
             <p className="text-white/60 text-sm">Complete projects to increase your score and unlock new grants</p>
           </div>
           <div className="text-right">
-            <div className="text-3xl font-bold text-white">{currentImpactScore}</div>
-            <div className="text-xs text-white/60">points</div>
+            {loading ? (
+              <div className="text-white/60">Loading...</div>
+            ) : (
+              <>
+                <div className="text-3xl font-bold text-white">{currentImpactScore}</div>
+                <div className="text-xs text-white/60">points</div>
+              </>
+            )}
           </div>
         </div>
-        <Progress value={0} className="h-3 bg-white/10" />
+        <Progress value={(currentImpactScore / 500) * 100} className="h-3 bg-white/10" />
         <div className="flex justify-between mt-2 text-xs text-white/60">
           <span>Getting Started</span>
           <span>500+ points for top grants</span>

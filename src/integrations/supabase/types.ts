@@ -124,6 +124,30 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          created_at: string
+          id: string
+          impact_score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          impact_score?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          impact_score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       tokens: {
         Row: {
           application_type: string
