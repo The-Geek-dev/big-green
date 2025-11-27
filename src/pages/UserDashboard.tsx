@@ -15,6 +15,7 @@ import { AnalyticsView } from "@/components/dashboard/AnalyticsView";
 import { TransfersView } from "@/components/dashboard/TransfersView";
 import { DonateView } from "@/components/dashboard/DonateView";
 import { GrantsView } from "@/components/dashboard/GrantsView";
+import { TierStatusView } from "@/components/dashboard/TierStatusView";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -199,7 +200,7 @@ const UserDashboard = () => {
         <header className="bg-black border-b border-white/10 px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-8">
-              {["Dashboard", "My Gardens", "Projects", "Community", "Donate", "Grants"].map((tab) => (
+              {["Dashboard", "My Gardens", "Projects", "Community", "Donate", "Grants", "Tier Status"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -238,6 +239,7 @@ const UserDashboard = () => {
             {activeTab === "Transfers" && <TransfersView />}
             {activeTab === "Donate" && <DonateView />}
             {activeTab === "Grants" && <GrantsView />}
+            {activeTab === "Tier Status" && <TierStatusView />}
           </motion.div>
         </div>
       </div>
