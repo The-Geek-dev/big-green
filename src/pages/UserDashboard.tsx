@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import logoColor from "@/assets/logo-color.png";
+import Navigation from "@/components/Navigation";
 import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award } from "lucide-react";
 import { DashboardView } from "@/components/dashboard/DashboardView";
 import { MyGardensView } from "@/components/dashboard/MyGardensView";
@@ -124,7 +124,10 @@ const UserDashboard = () => {
     toast.success("Signed out successfully");
   };
 
-  return <div className="min-h-screen bg-black text-white flex">
+  return <div className="min-h-screen bg-black text-white flex flex-col">
+      <Navigation />
+      
+      <div className="flex flex-1 mt-20">
       {/* Sidebar */}
       <aside className="w-20 bg-black border-r border-white/10 flex flex-col items-center py-8 gap-6">
         <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-2xl font-bold">
@@ -237,6 +240,7 @@ const UserDashboard = () => {
             {activeTab === "Grants" && <GrantsView />}
           </motion.div>
         </div>
+      </div>
       </div>
     </div>;
 };

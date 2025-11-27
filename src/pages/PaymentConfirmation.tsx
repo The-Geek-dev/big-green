@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { z } from "zod";
-import logoColor from "@/assets/logo-color.png";
+import Navigation from "@/components/Navigation";
 import { ArrowLeft, CheckCircle2, Clock, XCircle, Send } from "lucide-react";
 
 const transactionSchema = z.object({
@@ -151,17 +151,9 @@ const PaymentConfirmation = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-white border-b border-border py-4 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <img src={logoColor} alt="Big Green" className="h-10 w-auto" />
-          <Button variant="outline" size="sm" onClick={() => navigate(-1)} className="gap-2">
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </Button>
-        </div>
-      </header>
+      <Navigation />
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto px-4 py-12 mt-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
