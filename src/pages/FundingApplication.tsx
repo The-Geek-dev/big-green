@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import logoColor from "@/assets/logo-color.png";
+import Navigation from "@/components/Navigation";
 import { CheckCircle2, Clock, Home, LogOut, DollarSign, Building2 } from "lucide-react";
 
 const FundingApplication = () => {
@@ -114,23 +114,9 @@ const FundingApplication = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-white border-b border-border py-4 px-4 md:px-8">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <img src={logoColor} alt="Big Green" className="h-10 w-auto" />
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => navigate("/")} className="gap-2">
-              <Home className="w-4 h-4" />
-              Home
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
-              <LogOut className="w-4 h-4" />
-              Sign Out
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Navigation />
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-12 mt-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

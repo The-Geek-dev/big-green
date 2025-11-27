@@ -8,8 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { z } from "zod";
-import logoColor from "@/assets/logo-color.png";
-import { LogOut, Heart, Sprout, Users, School } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import { Heart, Sprout, Users, School } from "lucide-react";
 
 const donationSchema = z.object({
   fullName: z.string().trim().min(2, "Full name must be at least 2 characters").max(100),
@@ -60,11 +60,6 @@ const DonationForm = () => {
     });
     return () => subscription.unsubscribe();
   }, [navigate]);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    toast.success("Signed out successfully");
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -142,17 +137,9 @@ const DonationForm = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-white border-b border-border py-4 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <img src={logoColor} alt="Big Green" className="h-10 w-auto" />
-          <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
-            <LogOut className="w-4 h-4" />
-            Sign Out
-          </Button>
-        </div>
-      </header>
+      <Navigation />
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto px-4 py-12 mt-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <div className="text-center mb-12">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-red-500 flex items-center justify-center mx-auto mb-4">

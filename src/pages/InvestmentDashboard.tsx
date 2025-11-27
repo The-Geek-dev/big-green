@@ -5,8 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import logoColor from "@/assets/logo-color.png";
-import { LogOut, TrendingUp, DollarSign, PieChart, Activity, ArrowUpRight } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import { TrendingUp, DollarSign, PieChart, Activity, ArrowUpRight } from "lucide-react";
 
 const InvestmentDashboard = () => {
   const navigate = useNavigate();
@@ -28,11 +28,6 @@ const InvestmentDashboard = () => {
     });
     return () => subscription.unsubscribe();
   }, [navigate]);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    toast.success("Signed out successfully");
-  };
 
   const investmentOptions = [
     {
@@ -63,17 +58,9 @@ const InvestmentDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-white border-b border-border py-4 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <img src={logoColor} alt="Big Green" className="h-10 w-auto" />
-          <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-2">
-            <LogOut className="w-4 h-4" />
-            Sign Out
-          </Button>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <Navigation />
+      
+      <div className="max-w-7xl mx-auto px-4 py-12 mt-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <div className="mb-12">
             <h1 className="text-4xl md:text-5xl font-black mb-4">
