@@ -85,6 +85,14 @@ const Application = () => {
       name,
       value
     } = e.target;
+    
+    // Immediately redirect to donation page if donation is selected
+    if (name === "applicationType" && value === "donation") {
+      toast.success("Redirecting to donation page...");
+      navigate("/donation");
+      return;
+    }
+    
     setFormData(prev => ({
       ...prev,
       [name]: value
