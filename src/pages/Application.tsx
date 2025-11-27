@@ -154,8 +154,16 @@ const Application = () => {
         return;
       }
 
-      toast.success("Application submitted successfully!");
-      navigate("/dashboard");
+      // Different success handling for donations
+      if (formData.applicationType === "donation") {
+        toast.success("Donation application approved! Redirecting to payment...");
+        setTimeout(() => {
+          navigate("/donation");
+        }, 1500);
+      } else {
+        toast.success("Application submitted successfully!");
+        navigate("/dashboard");
+      }
     } catch (error) {
       toast.error("Failed to submit application. Please try again.");
     } finally {
