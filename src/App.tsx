@@ -12,6 +12,7 @@ import InvestmentDashboard from "./pages/InvestmentDashboard";
 import BusinessFunding from "./pages/BusinessFunding";
 import FundingApplication from "./pages/FundingApplication";
 import DonationForm from "./pages/DonationForm";
+import CryptoPayment from "./pages/CryptoPayment";
 import DashboardVerification from "./pages/DashboardVerification";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -35,6 +36,7 @@ const App = () => (
       <Route path="/business-funding" element={<BusinessFunding />} />
       <Route path="/funding-application" element={<FundingApplication />} />
       <Route path="/donation" element={<DonationForm />} />
+      <Route path="/crypto-payment" element={<CryptoPayment />} />
       <Route path="/dashboard" element={<DashboardVerification />} />
       <Route path="/user-dashboard" element={<UserDashboard />} />
       <Route path="/admin" element={<AdminDashboard />} />
