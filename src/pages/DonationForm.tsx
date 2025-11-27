@@ -131,8 +131,8 @@ const DonationForm = () => {
         return;
       }
 
-      toast.success("Thank you for your generous donation!");
-      navigate("/dashboard");
+      toast.success("Donation recorded! Choose your crypto payment method.");
+      navigate("/crypto-payment", { state: { amount: formData.donationAmount } });
     } catch (error) {
       toast.error("Failed to submit donation. Please try again.");
     } finally {
