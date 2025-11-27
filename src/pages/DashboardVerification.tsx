@@ -47,6 +47,9 @@ const DashboardVerification = () => {
               case "donation":
                 navigate("/donation");
                 break;
+              case "investment":
+                navigate("/investment");
+                break;
               case "grant":
                 navigate("/user-dashboard");
                 break;
@@ -85,6 +88,9 @@ const DashboardVerification = () => {
                       break;
                     case "donation":
                       navigate("/donation");
+                      break;
+                    case "investment":
+                      navigate("/investment");
                       break;
                     case "grant":
                       navigate("/user-dashboard");
