@@ -86,7 +86,8 @@ const CryptoTransactionsManagement = () => {
       
       const newStatus = dialogAction === "approve" ? "verified" : "rejected";
       
-      const { error } = await supabase
+      // Update transaction in database
+      const { error: updateError } = await supabase
         .from("crypto_transactions")
         .update({
           verification_status: newStatus,
@@ -96,7 +97,43 @@ const CryptoTransactionsManagement = () => {
         })
         .eq("id", selectedTransaction.id);
 
-      if (error) throw error;
+      if (updateError) throw updateError;
+
+      // Get user email for notification
+      const { data: userData, error: userError } = await supabase.auth.admin.getUserById(
+        selectedTransaction.user_id
+      );
+
+      if (userError) {
+        console.error("Failed to get user email:", userError);
+      }
+
+      // Send email notification
+      if (userData?.user?.email) {
+        try {
+          const { error: emailError } = await supabase.functions.invoke(
+            "send-crypto-notification",
+            {
+              body: {
+                userEmail: userData.user.email,
+                status: newStatus,
+                transactionHash: selectedTransaction.transaction_hash,
+                cryptoType: selectedTransaction.crypto_type,
+                amountUsd: selectedTransaction.amount_usd,
+                cryptoAmount: selectedTransaction.crypto_amount,
+                adminNotes: adminNotes || undefined,
+              },
+            }
+          );
+
+          if (emailError) {
+            console.error("Failed to send email notification:", emailError);
+            toast.error("Transaction updated but email notification failed");
+          }
+        } catch (emailError) {
+          console.error("Email notification error:", emailError);
+        }
+      }
 
       toast.success(`Transaction ${dialogAction === "approve" ? "approved" : "rejected"} successfully`);
       setDialogOpen(false);

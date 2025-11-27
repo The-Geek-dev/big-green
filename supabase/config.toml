@@ -1,1 +1,4 @@
 project_id = "xhpvshnftocsdrifrsvf"
+
+[functions.send-crypto-notification]
+verify_jwt = false
