@@ -13,6 +13,7 @@ import BusinessFunding from "./pages/BusinessFunding";
 import FundingApplication from "./pages/FundingApplication";
 import DonationForm from "./pages/DonationForm";
 import CryptoPayment from "./pages/CryptoPayment";
+import PaymentConfirmation from "./pages/PaymentConfirmation";
 import DashboardVerification from "./pages/DashboardVerification";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -37,6 +38,7 @@ const App = () => (
       <Route path="/funding-application" element={<FundingApplication />} />
       <Route path="/donation" element={<DonationForm />} />
       <Route path="/crypto-payment" element={<CryptoPayment />} />
+      <Route path="/payment-confirmation" element={<PaymentConfirmation />} />
       <Route path="/dashboard" element={<DashboardVerification />} />
       <Route path="/user-dashboard" element={<UserDashboard />} />
       <Route path="/admin" element={<AdminDashboard />} />

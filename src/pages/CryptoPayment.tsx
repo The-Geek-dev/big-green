@@ -184,15 +184,36 @@ const CryptoPayment = () => {
             })}
           </div>
 
-          <div className="mt-8 p-6 bg-amber-50 border-2 border-amber-200 rounded-xl">
-            <h4 className="font-bold mb-2">Important Information</h4>
-            <ul className="text-sm space-y-1 text-muted-foreground">
-              <li>• Send the exact amount or more to the wallet address</li>
-              <li>• Double-check the wallet address before sending</li>
-              <li>• Transactions are irreversible once sent</li>
-              <li>• Processing may take a few minutes to confirm</li>
-              <li>• Contact support if you need assistance</li>
-            </ul>
+          <div className="mt-8 space-y-4">
+            <Card className="p-6 bg-green-50 border-2 border-green-200">
+              <h4 className="font-bold mb-3">After Sending Payment</h4>
+              <p className="text-sm text-muted-foreground mb-4">
+                Once you've sent the cryptocurrency, submit your transaction hash to verify your payment.
+              </p>
+              <Button
+                className="button-gradient"
+                onClick={() => navigate("/payment-confirmation", {
+                  state: {
+                    amount: donationAmount,
+                    cryptoType: "BTC",
+                    cryptoAmount: calculateCryptoAmount("bitcoin")
+                  }
+                })}
+              >
+                Submit Transaction Hash
+              </Button>
+            </Card>
+
+            <div className="p-6 bg-amber-50 border-2 border-amber-200 rounded-xl">
+              <h4 className="font-bold mb-2">Important Information</h4>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>• Send the exact amount or more to the wallet address</li>
+                <li>• Double-check the wallet address before sending</li>
+                <li>• Transactions are irreversible once sent</li>
+                <li>• Processing may take a few minutes to confirm</li>
+                <li>• Contact support if you need assistance</li>
+              </ul>
+            </div>
           </div>
         </motion.div>
       </div>
