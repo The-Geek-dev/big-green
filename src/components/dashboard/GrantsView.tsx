@@ -28,6 +28,30 @@ export const GrantsView = () => {
           } else if (data) {
             setCurrentImpactScore(data.impact_score);
           }
+
+          // Set up realtime subscription
+          const channel = supabase
+            .channel('grants-profile-changes')
+            .on(
+              'postgres_changes',
+              {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'profiles',
+                filter: `user_id=eq.${user.id}`
+              },
+              (payload) => {
+                console.log('Grants: Impact score updated:', payload);
+                if (payload.new && 'impact_score' in payload.new) {
+                  setCurrentImpactScore(payload.new.impact_score as number);
+                }
+              }
+            )
+            .subscribe();
+
+          return () => {
+            supabase.removeChannel(channel);
+          };
         }
       } catch (error) {
         console.error('Error:', error);

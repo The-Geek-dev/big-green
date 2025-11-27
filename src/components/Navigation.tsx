@@ -35,6 +35,30 @@ const Navigation = () => {
         if (data && !error) {
           setImpactScore(data.impact_score);
         }
+
+        // Set up realtime subscription for impact score changes
+        const channel = supabase
+          .channel('profile-changes')
+          .on(
+            'postgres_changes',
+            {
+              event: 'UPDATE',
+              schema: 'public',
+              table: 'profiles',
+              filter: `user_id=eq.${user.id}`
+            },
+            (payload) => {
+              console.log('Impact score updated:', payload);
+              if (payload.new && 'impact_score' in payload.new) {
+                setImpactScore(payload.new.impact_score as number);
+              }
+            }
+          )
+          .subscribe();
+
+        return () => {
+          supabase.removeChannel(channel);
+        };
       } else {
         setIsAuthenticated(false);
       }
