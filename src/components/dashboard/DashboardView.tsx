@@ -43,6 +43,30 @@ export const DashboardView = ({ userEmail }: { userEmail: string }) => {
           } else if (data) {
             setImpactScore(data.impact_score);
           }
+
+          // Set up realtime subscription
+          const channel = supabase
+            .channel('dashboard-profile-changes')
+            .on(
+              'postgres_changes',
+              {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'profiles',
+                filter: `user_id=eq.${user.id}`
+              },
+              (payload) => {
+                console.log('Dashboard: Impact score updated:', payload);
+                if (payload.new && 'impact_score' in payload.new) {
+                  setImpactScore(payload.new.impact_score as number);
+                }
+              }
+            )
+            .subscribe();
+
+          return () => {
+            supabase.removeChannel(channel);
+          };
         }
       } catch (error) {
         console.error('Error:', error);
