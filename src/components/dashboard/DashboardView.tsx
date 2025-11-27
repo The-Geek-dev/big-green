@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Download, Calendar, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 const chartData = [
   { time: "Jan", value: 0 },
@@ -21,6 +23,36 @@ const transactions: Array<{ name: string; change: string; date: string; amount: 
 
 export const DashboardView = ({ userEmail }: { userEmail: string }) => {
   const navigate = useNavigate();
+  const [impactScore, setImpactScore] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchImpactScore = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('impact_score')
+            .eq('user_id', user.id)
+            .single();
+          
+          if (error) {
+            console.error('Error fetching impact score:', error);
+          } else if (data) {
+            setImpactScore(data.impact_score);
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchImpactScore();
+  }, []);
 
   const handleStartNewProject = () => {
     navigate("/application");
@@ -147,16 +179,28 @@ export const DashboardView = ({ userEmail }: { userEmail: string }) => {
               <div className="relative w-40 h-40 mx-auto mb-4">
                 <svg className="w-full h-full transform -rotate-90">
                   <circle cx="80" cy="80" r="70" stroke="#ffffff10" strokeWidth="12" fill="none" />
-                  <circle cx="80" cy="80" r="70" stroke="#10b981" strokeWidth="12" fill="none" strokeDasharray={`${70 * 2 * Math.PI * 0} ${70 * 2 * Math.PI}`} strokeLinecap="round" />
+                  <circle cx="80" cy="80" r="70" stroke="#10b981" strokeWidth="12" fill="none" strokeDasharray={`${70 * 2 * Math.PI * (impactScore / 500)} ${70 * 2 * Math.PI}`} strokeLinecap="round" />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="text-sm text-white/50 mb-1">0%</div>
-                  <div className="text-5xl font-bold">-</div>
-                  <div className="text-white/50 text-xs mt-1">No data</div>
+                  {loading ? (
+                    <div className="text-white/50">Loading...</div>
+                  ) : (
+                    <>
+                      <div className="text-sm text-white/50 mb-1">{Math.round((impactScore / 500) * 100)}%</div>
+                      <div className="text-5xl font-bold">{impactScore}</div>
+                      <div className="text-white/50 text-xs mt-1">points</div>
+                    </>
+                  )}
                 </div>
               </div>
-              <p className="text-xs text-white/50 text-center">No activity yet</p>
-              <p className="text-sm text-center mt-2">Start your first project to begin tracking impact</p>
+              <p className="text-xs text-white/50 text-center">
+                {impactScore === 0 ? "No activity yet" : "Keep up the great work!"}
+              </p>
+              <p className="text-sm text-center mt-2">
+                {impactScore === 0 
+                  ? "Start your first project to begin tracking impact" 
+                  : `${500 - impactScore} points to reach next milestone`}
+              </p>
             </CardContent>
           </Card>
 
