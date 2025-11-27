@@ -68,6 +68,62 @@ export type Database = {
         }
         Relationships: []
       }
+      crypto_transactions: {
+        Row: {
+          admin_notes: string | null
+          amount_usd: number
+          application_id: string | null
+          created_at: string
+          crypto_amount: string
+          crypto_type: string
+          id: string
+          transaction_hash: string
+          updated_at: string
+          user_id: string
+          verification_status: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount_usd: number
+          application_id?: string | null
+          created_at?: string
+          crypto_amount: string
+          crypto_type: string
+          id?: string
+          transaction_hash: string
+          updated_at?: string
+          user_id: string
+          verification_status?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          amount_usd?: number
+          application_id?: string | null
+          created_at?: string
+          crypto_amount?: string
+          crypto_type?: string
+          id?: string
+          transaction_hash?: string
+          updated_at?: string
+          user_id?: string
+          verification_status?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crypto_transactions_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tokens: {
         Row: {
           application_type: string
