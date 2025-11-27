@@ -59,7 +59,7 @@ const CryptoPayment = () => {
       name: "Bitcoin (BTC)",
       cryptoId: "bitcoin" as const,
       icon: Bitcoin,
-      address: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+      address: "1152hrFxyzpKT9y4mRb5nbRjKbKrUmsPpd",
       color: "from-orange-400 to-orange-600"
     },
     {
@@ -67,7 +67,7 @@ const CryptoPayment = () => {
       name: "USDT (TRC20)",
       cryptoId: "tether" as const,
       icon: Wallet,
-      address: "TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT",
+      address: "TQHm39utDGnAWprFyAceHuUCkyRbQvM9zP",
       color: "from-green-400 to-green-600"
     },
     {
@@ -75,7 +75,7 @@ const CryptoPayment = () => {
       name: "Ethereum (ETH)",
       cryptoId: "ethereum" as const,
       icon: Wallet,
-      address: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+      address: "0x289205aa6594228cf623c7eabe1abfa9ea6ca770",
       color: "from-blue-400 to-purple-600"
     }
   ];
