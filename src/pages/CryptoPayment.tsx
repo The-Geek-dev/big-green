@@ -1,22 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import logoColor from "@/assets/logo-color.png";
-import { Copy, Check, Bitcoin, Wallet, ArrowLeft } from "lucide-react";
+import { Copy, Check, Bitcoin, Wallet, ArrowLeft, TrendingUp } from "lucide-react";
+
+interface CryptoPrices {
+  bitcoin: number;
+  ethereum: number;
+  tether: number;
+}
 
 const CryptoPayment = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const donationAmount = location.state?.amount || "0";
   const [copiedWallet, setCopiedWallet] = useState<string | null>(null);
+  const [prices, setPrices] = useState<CryptoPrices | null>(null);
+  const [loadingPrices, setLoadingPrices] = useState(true);
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const response = await fetch(
+          'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether&vs_currencies=usd'
+        );
+        const data = await response.json();
+        setPrices({
+          bitcoin: data.bitcoin.usd,
+          ethereum: data.ethereum.usd,
+          tether: data.tether.usd
+        });
+        setLoadingPrices(false);
+      } catch (error) {
+        console.error('Error fetching crypto prices:', error);
+        toast.error('Failed to fetch current crypto prices');
+        setLoadingPrices(false);
+      }
+    };
+
+    fetchPrices();
+    const interval = setInterval(fetchPrices, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }, []);
+
+  const calculateCryptoAmount = (cryptoId: 'bitcoin' | 'ethereum' | 'tether') => {
+    if (!prices || !donationAmount) return '0.00000000';
+    const amount = parseFloat(donationAmount);
+    const cryptoAmount = amount / prices[cryptoId];
+    return cryptoAmount.toFixed(8);
+  };
 
   const wallets = [
     {
       id: "btc",
       name: "Bitcoin (BTC)",
+      cryptoId: "bitcoin" as const,
       icon: Bitcoin,
       address: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
       color: "from-orange-400 to-orange-600"
@@ -24,6 +65,7 @@ const CryptoPayment = () => {
     {
       id: "usdt",
       name: "USDT (TRC20)",
+      cryptoId: "tether" as const,
       icon: Wallet,
       address: "TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT",
       color: "from-green-400 to-green-600"
@@ -31,6 +73,7 @@ const CryptoPayment = () => {
     {
       id: "eth",
       name: "Ethereum (ETH)",
+      cryptoId: "ethereum" as const,
       icon: Wallet,
       address: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
       color: "from-blue-400 to-purple-600"
@@ -76,9 +119,16 @@ const CryptoPayment = () => {
             <p className="text-lg text-muted-foreground mb-2">
               Send your donation of <span className="font-bold text-foreground">${donationAmount}</span> to any of these wallets
             </p>
-            <p className="text-sm text-muted-foreground">
-              Your transaction will be processed once we receive the payment
-            </p>
+            {loadingPrices ? (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <TrendingUp className="w-4 h-4 animate-pulse" />
+                Loading current crypto prices...
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Your transaction will be processed once we receive the payment
+              </p>
+            )}
           </div>
 
           <div className="space-y-6">
@@ -94,7 +144,17 @@ const CryptoPayment = () => {
                     </div>
                     
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-lg mb-2">{wallet.name}</h3>
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-bold text-lg">{wallet.name}</h3>
+                        {!loadingPrices && prices && (
+                          <div className="text-right">
+                            <p className="text-xs text-muted-foreground">Amount to send</p>
+                            <p className="font-bold text-sm">
+                              {calculateCryptoAmount(wallet.cryptoId)} {wallet.id.toUpperCase()}
+                            </p>
+                          </div>
+                        )}
+                      </div>
                       <div className="bg-muted rounded-lg p-3 mb-3">
                         <p className="text-sm font-mono break-all">{wallet.address}</p>
                       </div>
