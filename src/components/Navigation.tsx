@@ -1,19 +1,55 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, Award } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import logoColor from "@/assets/logo-color.png";
+import { supabase } from "@/integrations/supabase/client";
 const Navigation = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [impactScore, setImpactScore] = useState<number>(0);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const checkAuthAndFetchScore = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        setIsAuthenticated(true);
+        
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('impact_score')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (data && !error) {
+          setImpactScore(data.impact_score);
+        }
+      } else {
+        setIsAuthenticated(false);
+      }
+    };
+
+    checkAuthAndFetchScore();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
+      checkAuthAndFetchScore();
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
   const scrollToSection = (sectionId: string) => {
     if (sectionId === 'testimonials') {
@@ -75,9 +111,19 @@ const Navigation = () => {
           }} className="text-sm text-muted-foreground hover:text-foreground transition-all duration-300">
                 {item.name}
               </a>)}
-            <Button onClick={() => navigate("/auth")} size="sm" className="button-gradient hover-scale">
-              ​APPLY NOW  
-            </Button>
+            {isAuthenticated ? (
+              <button
+                onClick={() => navigate("/dashboard")}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-black rounded-full hover:scale-105 transition-all duration-300 font-semibold"
+              >
+                <Award className="w-4 h-4" />
+                <span>{impactScore}</span>
+              </button>
+            ) : (
+              <Button onClick={() => navigate("/auth")} size="sm" className="button-gradient hover-scale">
+                ​APPLY NOW  
+              </Button>
+            )}
           </div>
 
           {/* Mobile Navigation */}
@@ -99,12 +145,25 @@ const Navigation = () => {
                 }}>
                       {item.name}
                     </a>)}
-                  <Button onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  navigate("/auth");
-                }} className="button-gradient mt-4 hover-scale">
-                    Apply Now
-                  </Button>
+                  {isAuthenticated ? (
+                    <button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        navigate("/dashboard");
+                      }}
+                      className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-black rounded-full hover:scale-105 transition-all duration-300 font-semibold mt-4"
+                    >
+                      <Award className="w-5 h-5" />
+                      <span>Impact Score: {impactScore}</span>
+                    </button>
+                  ) : (
+                    <Button onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    navigate("/auth");
+                  }} className="button-gradient mt-4 hover-scale">
+                      Apply Now
+                    </Button>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>
