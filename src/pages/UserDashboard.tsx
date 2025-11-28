@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award, Bot } from "lucide-react";
 import { DashboardView } from "@/components/dashboard/DashboardView";
 import { MyGardensView } from "@/components/dashboard/MyGardensView";
 import { ProjectsView } from "@/components/dashboard/ProjectsView";
@@ -16,6 +16,7 @@ import { TransfersView } from "@/components/dashboard/TransfersView";
 import { DonateView } from "@/components/dashboard/DonateView";
 import { GrantsView } from "@/components/dashboard/GrantsView";
 import { TierStatusView } from "@/components/dashboard/TierStatusView";
+import { AIChat } from "@/components/AIChat";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -191,6 +192,14 @@ const UserDashboard = () => {
           >
             <Award className={`w-5 h-5 ${activeSidebarSection === "Grants" ? "text-black" : "text-white"}`} />
           </button>
+          <button 
+            onClick={() => handleSidebarNavigation("AI Assistant")}
+            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+              activeSidebarSection === "AI Assistant" ? "bg-white" : "bg-white/5 hover:bg-white/10"
+            }`}
+          >
+            <Bot className={`w-5 h-5 ${activeSidebarSection === "AI Assistant" ? "text-black" : "text-white"}`} />
+          </button>
         </div>
       </aside>
 
@@ -200,7 +209,7 @@ const UserDashboard = () => {
         <header className="bg-black border-b border-white/10 px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-8">
-              {["Dashboard", "My Gardens", "Projects", "Community", "Donate", "Grants", "Tier Status"].map((tab) => (
+              {["Dashboard", "My Gardens", "Projects", "Community", "Donate", "Grants", "Tier Status", "AI Assistant"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -240,6 +249,7 @@ const UserDashboard = () => {
             {activeTab === "Donate" && <DonateView />}
             {activeTab === "Grants" && <GrantsView />}
             {activeTab === "Tier Status" && <TierStatusView />}
+            {activeTab === "AI Assistant" && <AIChat />}
           </motion.div>
         </div>
       </div>
