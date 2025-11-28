@@ -129,6 +129,8 @@ export type Database = {
           created_at: string
           id: string
           impact_score: number
+          tier_level: number
+          total_investment: number
           updated_at: string
           user_id: string
         }
@@ -136,6 +138,8 @@ export type Database = {
           created_at?: string
           id?: string
           impact_score?: number
+          tier_level?: number
+          total_investment?: number
           updated_at?: string
           user_id: string
         }
@@ -143,6 +147,8 @@ export type Database = {
           created_at?: string
           id?: string
           impact_score?: number
+          tier_level?: number
+          total_investment?: number
           updated_at?: string
           user_id?: string
         }
@@ -210,6 +216,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      calculate_tier: { Args: { investment_amount: number }; Returns: number }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
