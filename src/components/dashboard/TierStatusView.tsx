@@ -2,13 +2,81 @@ import { motion } from "framer-motion";
 import { Star, Award, Trophy, ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
-interface TierStatusViewProps {
-  currentTier?: number;
-}
-
-export const TierStatusView = ({ currentTier = 1 }: TierStatusViewProps) => {
+export const TierStatusView = () => {
   const navigate = useNavigate();
+  const [currentTier, setCurrentTier] = useState(1);
+  const [totalInvestment, setTotalInvestment] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTierData = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const { data: profile, error } = await supabase
+          .from("profiles")
+          .select("tier_level, total_investment")
+          .eq("user_id", user.id)
+          .single();
+
+        if (error) throw error;
+
+        if (profile) {
+          setCurrentTier(profile.tier_level);
+          setTotalInvestment(profile.total_investment);
+        }
+      } catch (error) {
+        console.error("Error fetching tier data:", error);
+        toast.error("Failed to load tier information");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTierData();
+
+    // Set up real-time subscription for tier updates
+    const setupRealtimeSubscription = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const channel = supabase
+        .channel("tier-updates")
+        .on(
+          "postgres_changes",
+          {
+            event: "UPDATE",
+            schema: "public",
+            table: "profiles",
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            if (payload.new) {
+              setCurrentTier(payload.new.tier_level);
+              setTotalInvestment(payload.new.total_investment);
+              toast.success("Your tier has been updated!");
+            }
+          }
+        )
+        .subscribe();
+
+      return channel;
+    };
+
+    let channel: any;
+    setupRealtimeSubscription().then(ch => channel = ch);
+
+    return () => {
+      if (channel) {
+        supabase.removeChannel(channel);
+      }
+    };
+  }, []);
 
   const tiers = [
     {
@@ -68,6 +136,14 @@ export const TierStatusView = ({ currentTier = 1 }: TierStatusViewProps) => {
   const currentTierData = tiers.find(t => t.id === currentTier) || tiers[0];
   const TierIcon = currentTierData.icon;
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Current Tier Status Card */}
@@ -83,7 +159,7 @@ export const TierStatusView = ({ currentTier = 1 }: TierStatusViewProps) => {
             </div>
             <div>
               <h3 className="text-2xl font-bold text-white">{currentTierData.name}</h3>
-              <p className="text-white/60">Your Current Status</p>
+              <p className="text-white/60">Total Investment: ${totalInvestment.toLocaleString()}</p>
             </div>
           </div>
           {currentTierData.badge && (
