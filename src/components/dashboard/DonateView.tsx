@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export const DonateView = () => {
+  const navigate = useNavigate();
   const [amount, setAmount] = useState("");
   const presetAmounts = [10, 25, 50, 100, 250];
 
@@ -38,8 +40,7 @@ export const DonateView = () => {
       toast.error("Please enter a donation amount");
       return;
     }
-    toast.success(`Thank you for your pledge of $${amount}!`);
-    setAmount("");
+    navigate(`/crypto-payment?amount=${amount}`);
   };
 
   return (
