@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, Bot, User, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -98,15 +99,53 @@ async function streamChat({
 }
 
 export const AIChat = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Hi! I'm your BigGreen environmental assistant. I can help you with gardening tips, eco-friendly living advice, and sustainability questions. How can I help you today?",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Load chat history on mount
+  useEffect(() => {
+    const loadChatHistory = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const { data, error } = await supabase
+          .from('chat_messages')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: true });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          setMessages(data.map(msg => ({
+            role: msg.role as "user" | "assistant",
+            content: msg.content
+          })));
+        } else {
+          // Set welcome message if no history
+          setMessages([{
+            role: "assistant",
+            content: "Hi! I'm your BigGreen environmental assistant. I can help you with gardening tips, eco-friendly living advice, and sustainability questions. How can I help you today?",
+          }]);
+        }
+      } catch (error) {
+        console.error('Error loading chat history:', error);
+        // Set welcome message on error
+        setMessages([{
+          role: "assistant",
+          content: "Hi! I'm your BigGreen environmental assistant. I can help you with gardening tips, eco-friendly living advice, and sustainability questions. How can I help you today?",
+        }]);
+      } finally {
+        setIsLoadingHistory(false);
+      }
+    };
+
+    loadChatHistory();
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -121,6 +160,20 @@ export const AIChat = () => {
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsLoading(true);
+
+    // Save user message to database
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await supabase.from('chat_messages').insert({
+          user_id: user.id,
+          role: 'user',
+          content: userInput
+        });
+      }
+    } catch (error) {
+      console.error('Error saving user message:', error);
+    }
 
     let assistantSoFar = "";
     const upsertAssistant = (nextChunk: string) => {
@@ -140,7 +193,22 @@ export const AIChat = () => {
       await streamChat({
         messages: [...messages, userMsg],
         onDelta: (chunk) => upsertAssistant(chunk),
-        onDone: () => setIsLoading(false),
+        onDone: async () => {
+          setIsLoading(false);
+          // Save assistant message to database
+          try {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user && assistantSoFar) {
+              await supabase.from('chat_messages').insert({
+                user_id: user.id,
+                role: 'assistant',
+                content: assistantSoFar
+              });
+            }
+          } catch (error) {
+            console.error('Error saving assistant message:', error);
+          }
+        },
       });
     } catch (e) {
       console.error(e);
@@ -170,7 +238,12 @@ export const AIChat = () => {
 
       <ScrollArea className="flex-1 p-4" ref={scrollRef}>
         <div className="space-y-4">
-          {messages.map((msg, idx) => (
+          {isLoadingHistory ? (
+            <div className="flex items-center justify-center p-8">
+              <Loader2 className="w-6 h-6 text-green-400 animate-spin" />
+            </div>
+          ) : (
+            messages.map((msg, idx) => (
             <div
               key={idx}
               className={`flex gap-3 ${
@@ -197,7 +270,8 @@ export const AIChat = () => {
                 </div>
               )}
             </div>
-          ))}
+            ))
+          )}
           {isLoading && messages[messages.length - 1]?.role === "user" && (
             <div className="flex gap-3 justify-start">
               <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
