@@ -1,8 +1,10 @@
 import { ArrowUpRight, ArrowDownLeft, Clock, CheckCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const TransfersView = () => {
+  const navigate = useNavigate();
   const transfers = [
     { 
       type: "incoming", 
@@ -20,7 +22,10 @@ export const TransfersView = () => {
           <h2 className="text-2xl font-bold text-white">Transfers</h2>
           <p className="text-white/60 mt-1">Manage your transactions and payments</p>
         </div>
-        <Button className="bg-white text-black hover:bg-white/90">
+        <Button 
+          onClick={() => navigate('/crypto-payment')}
+          className="bg-white text-black hover:bg-white/90"
+        >
           New Transfer
         </Button>
       </div>
