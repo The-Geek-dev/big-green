@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,6 +20,7 @@ import { AIChat } from "@/components/AIChat";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
+  const contentRef = useRef<HTMLDivElement>(null);
   const [userEmail, setUserEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -120,6 +121,16 @@ const UserDashboard = () => {
       }
     };
   }, [navigate]);
+
+  // Smooth scroll to top when tab changes
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  }, [activeTab]);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -237,8 +248,16 @@ const UserDashboard = () => {
         </header>
 
         {/* Dashboard Content */}
-        <div className="flex-1 p-8 overflow-auto bg-gradient-to-br from-black via-black to-green-950/20">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <div 
+          ref={contentRef}
+          className="flex-1 p-8 overflow-auto bg-gradient-to-br from-black via-black to-green-950/20 scroll-smooth"
+        >
+          <motion.div 
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5 }}
+          >
             {activeTab === "Dashboard" && <DashboardView userEmail={userEmail} />}
             {activeTab === "My Gardens" && <MyGardensView />}
             {activeTab === "Projects" && <ProjectsView />}
