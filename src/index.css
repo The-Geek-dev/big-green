@@ -47,6 +47,15 @@
   }
 }
 
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .glass {
   @apply bg-white/40 backdrop-blur-lg;
   border: 1px solid transparent;
