@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FloatingAIChat } from "@/components/FloatingAIChat";
+import { WelcomeTour } from "@/components/WelcomeTour";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
@@ -45,6 +46,7 @@ const App = () => (
       <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
           <FloatingAIChat />
+          <WelcomeTour />
         </BrowserRouter>
       </div>
     </TooltipProvider>
