@@ -2,12 +2,14 @@ import { Award, Lock, CheckCircle, Clock, TrendingUp, Zap } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 
-export const GrantsView = () => {
-  const navigate = useNavigate();
+interface GrantsViewProps {
+  onNavigateToTab: (tab: string) => void;
+}
+
+export const GrantsView = ({ onNavigateToTab }: GrantsViewProps) => {
   const [currentImpactScore, setCurrentImpactScore] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
@@ -97,7 +99,7 @@ export const GrantsView = () => {
     if (locked) {
       return;
     }
-    navigate("/grant-application");
+    onNavigateToTab("Tier Status");
   };
 
   return (

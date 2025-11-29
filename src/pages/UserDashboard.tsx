@@ -247,7 +247,7 @@ const UserDashboard = () => {
             {activeTab === "Analytics" && <AnalyticsView />}
             {activeTab === "Transfers" && <TransfersView />}
             {activeTab === "Donate" && <DonateView />}
-            {activeTab === "Grants" && <GrantsView />}
+            {activeTab === "Grants" && <GrantsView onNavigateToTab={setActiveTab} />}
             {activeTab === "Tier Status" && <TierStatusView />}
             {activeTab === "AI Assistant" && <AIChat />}
           </motion.div>
