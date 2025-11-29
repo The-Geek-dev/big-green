@@ -223,15 +223,15 @@ export const AIChat = () => {
   };
 
   return (
-    <Card className="bg-white/5 border-white/10 flex flex-col h-[600px]">
-      <div className="p-4 border-b border-white/10">
+    <Card className="bg-card border-border flex flex-col h-[600px] shadow-2xl">
+      <div className="p-4 border-b border-border bg-card">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-            <Bot className="w-6 h-6 text-green-400" />
+          <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+            <Bot className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white">BigGreen AI Assistant</h3>
-            <p className="text-sm text-white/60">Powered by Lovable AI</p>
+            <h3 className="text-lg font-semibold text-foreground">BigGreen AI Assistant</h3>
+            <p className="text-sm text-muted-foreground">Powered by Lovable AI</p>
           </div>
         </div>
       </div>
@@ -240,7 +240,7 @@ export const AIChat = () => {
         <div className="space-y-4">
           {isLoadingHistory ? (
             <div className="flex items-center justify-center p-8">
-              <Loader2 className="w-6 h-6 text-green-400 animate-spin" />
+              <Loader2 className="w-6 h-6 text-primary animate-spin" />
             </div>
           ) : (
             messages.map((msg, idx) => (
@@ -251,22 +251,22 @@ export const AIChat = () => {
               }`}
             >
               {msg.role === "assistant" && (
-                <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                  <Bot className="w-4 h-4 text-green-400" />
+                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-4 h-4 text-primary" />
                 </div>
               )}
               <div
                 className={`rounded-lg px-4 py-2 max-w-[80%] ${
                   msg.role === "user"
-                    ? "bg-white text-black"
-                    : "bg-white/10 text-white"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-foreground"
                 }`}
               >
                 <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
               </div>
               {msg.role === "user" && (
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <User className="w-4 h-4 text-white" />
+                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <User className="w-4 h-4 text-primary" />
                 </div>
               )}
             </div>
@@ -274,30 +274,30 @@ export const AIChat = () => {
           )}
           {isLoading && messages[messages.length - 1]?.role === "user" && (
             <div className="flex gap-3 justify-start">
-              <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                <Bot className="w-4 h-4 text-green-400" />
+              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                <Bot className="w-4 h-4 text-primary" />
               </div>
-              <div className="rounded-lg px-4 py-2 bg-white/10">
-                <Loader2 className="w-4 h-4 text-white animate-spin" />
+              <div className="rounded-lg px-4 py-2 bg-muted">
+                <Loader2 className="w-4 h-4 text-foreground animate-spin" />
               </div>
             </div>
           )}
         </div>
       </ScrollArea>
 
-      <form onSubmit={handleSubmit} className="p-4 border-t border-white/10">
+      <form onSubmit={handleSubmit} className="p-4 border-t border-border bg-card">
         <div className="flex gap-2">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask me anything about sustainability..."
             disabled={isLoading}
-            className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
+            className="bg-background border-border text-foreground placeholder:text-muted-foreground"
           />
           <Button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-white text-black hover:bg-white/90"
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
           >
             <Send className="w-4 h-4" />
           </Button>
