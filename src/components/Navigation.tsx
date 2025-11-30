@@ -75,48 +75,19 @@ const Navigation = () => {
       subscription.unsubscribe();
     };
   }, []);
-  const scrollToSection = (sectionId: string) => {
-    if (sectionId === 'testimonials') {
-      const testimonialSection = document.querySelector('.animate-marquee');
-      if (testimonialSection) {
-        const yOffset = -100; // Offset to account for the fixed header
-        const y = testimonialSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({
-          top: y,
-          behavior: 'smooth'
-        });
-      }
-    } else if (sectionId === 'cta') {
-      const ctaSection = document.querySelector('.button-gradient');
-      if (ctaSection) {
-        const yOffset = -100;
-        const y = ctaSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({
-          top: y,
-          behavior: 'smooth'
-        });
-      }
-    } else {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-    }
-  };
+
   const navItems = [{
     name: "Features",
-    href: "#features",
-    onClick: () => scrollToSection('features')
+    href: "/features",
+    onClick: () => navigate("/features")
   }, {
     name: "Packages",
-    href: "#pricing",
-    onClick: () => scrollToSection('pricing')
+    href: "/packages",
+    onClick: () => navigate("/packages")
   }, {
     name: "Reviews",
-    href: "#testimonials",
-    onClick: () => scrollToSection('testimonials')
+    href: "/reviews",
+    onClick: () => navigate("/reviews")
   }];
   return <header className={`fixed top-3 sm:top-3.5 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 rounded-full ${isScrolled ? "h-12 sm:h-14 glass backdrop-blur-xl border border-border scale-95 w-[92%] sm:w-[90%] max-w-2xl" : "h-12 sm:h-14 bg-card/80 backdrop-blur-sm w-[95%] max-w-3xl"}`}>
       <div className="mx-auto h-full px-4 sm:px-6">
