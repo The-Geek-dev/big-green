@@ -1,8 +1,11 @@
 import { Twitter, Facebook, Linkedin, Youtube, Instagram } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import logoWhite from "@/assets/logo-color.png";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  
   return (
     <motion.footer 
       initial={{ opacity: 0, y: 20 }}
@@ -12,7 +15,7 @@ const Footer = () => {
       className="w-full py-12 mt-20 bg-black"
     >
       <div className="container px-4 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -65,49 +68,7 @@ const Footer = () => {
             </div>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="space-y-4"
-          >
-            <h4 className="font-bold text-white text-sm uppercase tracking-wider">Models</h4>
-            <ul className="space-y-3">
-              <li>
-                <a href="#features" className="text-sm text-gray-400 hover:text-primary transition-colors">
-                  Model 3
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="text-sm text-gray-400 hover:text-primary transition-colors">
-                  Model Y
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="text-sm text-gray-400 hover:text-primary transition-colors">
-                  Model S
-                </a>
-              </li>
-              <li>
-                <a href="#pricing" className="text-sm text-gray-400 hover:text-primary transition-colors">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
-                  Charging
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
-                  Support
-                </a>
-              </li>
-            </ul>
-          </motion.div>
-
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -117,24 +78,24 @@ const Footer = () => {
             <h4 className="font-bold text-white text-sm uppercase tracking-wider">What We Do</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/our-impact")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Our Impact
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/jumpstart")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Jumpstart
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/home-gardens")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Home Gardens
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/grantmaking")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Grantmaking
-                </a>
+                </button>
               </li>
             </ul>
           </motion.div>
@@ -149,39 +110,39 @@ const Footer = () => {
             <h4 className="font-bold text-white text-sm uppercase tracking-wider">Big Green</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-sm text-primary hover:text-primary/80 transition-colors">
+                <button onClick={() => navigate("/about-us")} className="text-sm text-primary hover:text-primary/80 transition-colors">
                   About Us
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/partners")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Partners
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/team")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Team
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/careers")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Work at Big Green
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/finances")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Finances
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/blog")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Blog
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/contact")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   Get In Touch
-                </a>
+                </button>
               </li>
             </ul>
           </motion.div>
@@ -196,9 +157,9 @@ const Footer = () => {
             <h4 className="font-bold text-white text-sm uppercase tracking-wider">Resources</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-sm text-gray-400 hover:text-primary transition-colors">
+                <button onClick={() => navigate("/for-educators")} className="text-sm text-gray-400 hover:text-primary transition-colors">
                   For Educators
-                </a>
+                </button>
               </li>
             </ul>
           </motion.div>
@@ -212,12 +173,12 @@ const Footer = () => {
           className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4"
         >
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-gray-400 hover:text-white transition-colors uppercase tracking-wider">
+            <button onClick={() => navigate("/privacy-policy")} className="text-xs text-gray-400 hover:text-white transition-colors uppercase tracking-wider">
               Privacy Policy
-            </a>
-            <a href="#" className="text-xs text-gray-400 hover:text-white transition-colors uppercase tracking-wider">
+            </button>
+            <button onClick={() => navigate("/terms-of-service")} className="text-xs text-gray-400 hover:text-white transition-colors uppercase tracking-wider">
               Terms of Service
-            </a>
+            </button>
           </div>
           <p className="text-xs text-gray-400">
             Copyright © {new Date().getFullYear()} All Rights Reserved.
