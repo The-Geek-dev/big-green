@@ -46,9 +46,6 @@ const Index = () => {
           <HeroVideoCarousel />
         </motion.div>
 
-        {/* Semi-transparent overlay for better text visibility */}
-        <div className="absolute inset-0 bg-black/20 z-[5]" />
-
         {/* Text Content Overlay */}
         <div className="container max-w-7xl relative z-10 px-2 sm:px-4">
           <motion.div initial={{
@@ -60,7 +57,7 @@ const Index = () => {
         }} transition={{
           delay: 0.2
         }} className="mb-4 sm:mb-8">
-            <span className="text-xs sm:text-sm font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-white drop-shadow-lg">
+            <span className="text-xs sm:text-sm font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-foreground/60">
               JOIN US
             </span>
           </motion.div>
@@ -73,8 +70,8 @@ const Index = () => {
           y: 0
         }} transition={{
           delay: 0.3
-        }} className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.95] mb-6 sm:mb-8 md:mb-12 max-w-5xl text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9), -1px -1px 2px rgba(0,0,0,0.5)' }}>
-            LET'S GET <span className="highlight-yellow drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">EVERYONE</span> IN AMERICA GROWING FOOD!
+        }} className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.95] mb-6 sm:mb-8 md:mb-12 max-w-5xl">
+            LET'S GET <span className="highlight-yellow">EVERYONE</span> IN AMERICA GROWING FOOD!
           </motion.h1>
 
           <motion.div initial={{
@@ -86,7 +83,7 @@ const Index = () => {
         }} transition={{
           delay: 0.5
         }} className="flex items-center justify-center mt-8 sm:mt-16">
-            <ArrowDown className="w-12 h-12 sm:w-16 sm:h-16 text-white drop-shadow-lg animate-bounce" />
+            <ArrowDown className="w-12 h-12 sm:w-16 sm:h-16 text-foreground animate-bounce" />
           </motion.div>
         </div>
       </motion.section>
