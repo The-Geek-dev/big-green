@@ -169,6 +169,9 @@ const Application = () => {
         setTimeout(() => {
           navigate("/donation");
         }, 1500);
+      } else if (formData.applicationType === "investment") {
+        toast.success("Investment application submitted! Redirecting to verification...");
+        navigate("/dashboard-verification");
       } else {
         toast.success("Application submitted successfully!");
         navigate("/dashboard");
