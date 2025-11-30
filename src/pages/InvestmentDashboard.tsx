@@ -6,11 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
+import { InvestmentDetailsModal } from "@/components/investment/InvestmentDetailsModal";
 import { TrendingUp, DollarSign, PieChart, Activity, ArrowUpRight } from "lucide-react";
 
 const InvestmentDashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
+  const [selectedInvestment, setSelectedInvestment] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -141,7 +144,13 @@ const InvestmentDashboard = () => {
                         <span className="font-semibold text-white">{option.risk}</span>
                       </div>
                     </div>
-                    <Button className="w-full button-gradient" onClick={() => navigate("/application")}>
+                    <Button 
+                      className="w-full button-gradient" 
+                      onClick={() => {
+                        setSelectedInvestment(option);
+                        setIsModalOpen(true);
+                      }}
+                    >
                       Learn More
                     </Button>
                   </Card>
@@ -169,6 +178,12 @@ const InvestmentDashboard = () => {
           </Card>
         </motion.div>
       </div>
+
+      <InvestmentDetailsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        investment={selectedInvestment}
+      />
     </div>
   );
 };
