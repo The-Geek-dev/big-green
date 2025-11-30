@@ -118,11 +118,11 @@ const Navigation = () => {
     href: "#testimonials",
     onClick: () => scrollToSection('testimonials')
   }];
-  return <header className={`fixed top-3.5 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 rounded-full ${isScrolled ? "h-14 glass backdrop-blur-xl border border-border scale-95 w-[90%] max-w-2xl" : "h-14 bg-card/80 backdrop-blur-sm w-[95%] max-w-3xl"}`}>
-      <div className="mx-auto h-full px-6">
+  return <header className={`fixed top-3 sm:top-3.5 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 rounded-full ${isScrolled ? "h-12 sm:h-14 glass backdrop-blur-xl border border-border scale-95 w-[92%] sm:w-[90%] max-w-2xl" : "h-12 sm:h-14 bg-card/80 backdrop-blur-sm w-[95%] max-w-3xl"}`}>
+      <div className="mx-auto h-full px-4 sm:px-6">
         <nav className="flex items-center justify-between h-full">
           <div className="flex items-center">
-            <img src={logoColor} alt="Big Green" className="h-8 w-auto" />
+            <img src={logoColor} alt="Big Green" className="h-6 sm:h-8 w-auto" />
           </div>
 
           {/* Desktop Navigation */}
@@ -154,8 +154,8 @@ const Navigation = () => {
           <div className="md:hidden">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="glass">
-                  <Menu className="h-5 w-5" />
+                <Button variant="outline" size="icon" className="glass h-9 w-9 sm:h-10 sm:w-10">
+                  <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Button>
               </SheetTrigger>
               <SheetContent className="bg-[#1B1B1B]">
