@@ -19,6 +19,9 @@ import PaymentConfirmation from "./pages/PaymentConfirmation";
 import DashboardVerification from "./pages/DashboardVerification";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import Features from "./pages/Features";
+import Packages from "./pages/Packages";
+import Reviews from "./pages/Reviews";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +34,9 @@ const App = () => (
         <BrowserRouter>
           <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/packages" element={<Packages />} />
+        <Route path="/reviews" element={<Reviews />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/application" element={<Application />} />
