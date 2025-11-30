@@ -6,27 +6,27 @@ import { motion } from "framer-motion";
 
 export const FeaturesSection = () => {
   return (
-    <section className="container px-4 py-24">
+    <section className="container px-3 sm:px-4 py-12 sm:py-16 md:py-24">
       {/* Header Section */}
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
-        className="max-w-2xl mb-20"
+        className="max-w-2xl mb-12 sm:mb-16 md:mb-20"
       >
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal mb-4 md:mb-6 tracking-tight text-left text-foreground">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal mb-3 sm:mb-4 md:mb-6 tracking-tight text-left text-foreground">
           Revolutionary
           <br />
           <span className="text-gradient font-medium">Features & Innovation</span>
         </h2>
-        <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-left">
+        <p className="text-sm sm:text-base md:text-lg text-muted-foreground text-left">
           Seamlessly integrate Big Green vehicle ownership and cryptocurrency management with cutting-edge technology.
         </p>
       </motion.div>
 
       <Tabs defaultValue={features[0].title} className="w-full">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 md:gap-12">
           {/* Left side - Tab triggers */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}

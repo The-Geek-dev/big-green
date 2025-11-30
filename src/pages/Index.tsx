@@ -34,7 +34,7 @@ const Index = () => {
       y: 0
     }} transition={{
       duration: 0.5
-    }} className="relative bg-white px-4 pt-32 pb-24 overflow-hidden min-h-[600px] lg:min-h-[700px]">
+    }} className="relative bg-white px-3 sm:px-4 pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden min-h-[500px] sm:min-h-[600px] lg:min-h-[700px]">
         {/* Background Video Carousel */}
         <motion.div initial={{
         opacity: 0
@@ -47,7 +47,7 @@ const Index = () => {
         </motion.div>
 
         {/* Text Content Overlay */}
-        <div className="container max-w-7xl relative z-10">
+        <div className="container max-w-7xl relative z-10 px-2 sm:px-4">
           <motion.div initial={{
           opacity: 0,
           y: 20
@@ -56,8 +56,8 @@ const Index = () => {
           y: 0
         }} transition={{
           delay: 0.2
-        }} className="mb-8">
-            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60">
+        }} className="mb-4 sm:mb-8">
+            <span className="text-xs sm:text-sm font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-foreground/60">
               JOIN US
             </span>
           </motion.div>
@@ -70,7 +70,7 @@ const Index = () => {
           y: 0
         }} transition={{
           delay: 0.3
-        }} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter leading-[0.9] mb-8 md:mb-12 max-w-5xl">
+        }} className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter leading-[0.95] mb-6 sm:mb-8 md:mb-12 max-w-5xl">
             LET'S GET <span className="highlight-yellow">EVERYONE</span> IN AMERICA GROWING FOOD!
           </motion.h1>
 
@@ -82,8 +82,8 @@ const Index = () => {
           y: 0
         }} transition={{
           delay: 0.5
-        }} className="flex items-center justify-center mt-16">
-            <ArrowDown className="w-16 h-16 text-foreground animate-bounce" />
+        }} className="flex items-center justify-center mt-8 sm:mt-16">
+            <ArrowDown className="w-12 h-12 sm:w-16 sm:h-16 text-foreground animate-bounce" />
           </motion.div>
         </div>
       </motion.section>
@@ -97,8 +97,8 @@ const Index = () => {
       </div>
 
       {/* Mission Section */}
-      <section className="relative py-24 bg-white">
-        <div className="container max-w-7xl px-4">
+      <section className="relative py-12 sm:py-16 md:py-24 bg-white">
+        <div className="container max-w-7xl px-3 sm:px-4">
           <motion.div initial={{
           opacity: 0,
           y: 20
@@ -109,14 +109,14 @@ const Index = () => {
           once: true
         }} transition={{
           duration: 0.6
-        }} className="text-center mb-16">
-            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
+        }} className="text-center mb-12 sm:mb-16">
+            <span className="text-xs sm:text-sm font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-foreground/60 mb-4 sm:mb-6 block">
               BIG GREEN BELIEVES
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-tight max-w-5xl mx-auto mb-6 md:mb-8 px-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-tight max-w-5xl mx-auto mb-4 sm:mb-6 md:mb-8 px-2 sm:px-4">
               GROWING FOOD CHANGES LIVES
             </h2>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/70 max-w-4xl mx-auto leading-relaxed px-4">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-foreground/70 max-w-4xl mx-auto leading-relaxed px-2 sm:px-4">
               Growing food improves nutrition security and mental health, gets us into nature, and opens our eyes to the weather 
               volatility created by climate change. For twelve years, Big Green has helped people grow their own food with school and 
               home-based programs. Our work across the country brings hundreds of thousands of gardens to life in schools, homes, 
@@ -127,10 +127,10 @@ const Index = () => {
       </section>
 
       {/* Impact Sections - Alternating Layouts */}
-      <section className="relative bg-background py-24">
-        <div className="container max-w-7xl px-4 space-y-32">
+      <section className="relative bg-background py-12 sm:py-16 md:py-24">
+        <div className="container max-w-7xl px-3 sm:px-4 space-y-16 sm:space-y-24 md:space-y-32">
           {/* Schools & Gardens */}
-          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-16 items-center">
             <motion.div initial={{
             opacity: 0,
             x: -40
@@ -142,7 +142,7 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-1">
-              <img src={schoolClassroom} alt="Students learning about food and gardening" className="w-full h-auto rounded-2xl shadow-2xl" />
+              <img src={schoolClassroom} alt="Students learning about food and gardening" className="w-full h-auto rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" />
             </motion.div>
 
             <motion.div initial={{
@@ -156,13 +156,13 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-2">
-              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
+              <span className="text-xs sm:text-sm font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-foreground/60 mb-3 sm:mb-4 md:mb-6 block">
                 AT SCHOOL
               </span>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4 md:mb-6">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-4 md:mb-6">
                 WE GIVE GARDENS AND GRANTS <span className="highlight-yellow">TO SCHOOLS.</span>
               </h3>
-              <p className="text-base sm:text-lg md:text-xl text-foreground/70 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-foreground/70 leading-relaxed">
                 Jumpstart helps educators improve their edible garden programs for healthier students and a healthier planet. 
                 We provide funding, resources, and support to transform outdoor learning spaces into thriving educational gardens.
               </p>
@@ -170,7 +170,7 @@ const Index = () => {
           </div>
 
           {/* Individual Grants */}
-          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-16 items-center">
             <motion.div initial={{
             opacity: 0,
             x: -40
@@ -182,13 +182,13 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-2 lg:order-1">
-              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
+              <span className="text-xs sm:text-sm font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-foreground/60 mb-3 sm:mb-4 md:mb-6 block">
                 FOR INDIVIDUALS
               </span>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4 md:mb-6">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-4 md:mb-6">
                 PERSONAL GRANTS FOR <span className="highlight-yellow">YOUR GARDEN.</span>
               </h3>
-              <p className="text-base sm:text-lg md:text-xl text-foreground/70 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-foreground/70 leading-relaxed">
                 Whether you're starting your first backyard garden or expanding your urban farming project, we provide grants 
                 to individuals who are passionate about growing their own food and building sustainable communities.
               </p>
@@ -205,12 +205,12 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-1 lg:order-2">
-              <img src={personalGarden} alt="Individual home gardening" className="w-full h-auto rounded-2xl shadow-2xl" />
+              <img src={personalGarden} alt="Individual home gardening" className="w-full h-auto rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" />
             </motion.div>
           </div>
 
           {/* Business Funding */}
-          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-16 items-center">
             <motion.div initial={{
             opacity: 0,
             x: -40
@@ -222,7 +222,7 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-1">
-              <img src={businessFunding} alt="Sustainable business and farming" className="w-full h-auto rounded-2xl shadow-2xl" />
+              <img src={businessFunding} alt="Sustainable business and farming" className="w-full h-auto rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" />
             </motion.div>
 
             <motion.div initial={{
@@ -236,13 +236,13 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-2">
-              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
+              <span className="text-xs sm:text-sm font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-foreground/60 mb-3 sm:mb-4 md:mb-6 block">
                 FOR BUSINESSES
               </span>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4 md:mb-6">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-4 md:mb-6">
                 BUSINESS FUNDING FOR <span className="highlight-yellow">GREEN INITIATIVES.</span>
               </h3>
-              <p className="text-base sm:text-lg md:text-xl text-foreground/70 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-foreground/70 leading-relaxed">
                 Support your business in creating sustainable food systems. From rooftop gardens to employee wellness programs, 
                 we fund businesses committed to integrating agriculture into their operations and communities.
               </p>
@@ -250,7 +250,7 @@ const Index = () => {
           </div>
 
           {/* Housing Grants */}
-          <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-16 items-center">
             <motion.div initial={{
             opacity: 0,
             x: -40
@@ -262,13 +262,13 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-2 lg:order-1">
-              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground/60 mb-6 block">
+              <span className="text-xs sm:text-sm font-semibold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-foreground/60 mb-3 sm:mb-4 md:mb-6 block">
                 FOR HOUSING
               </span>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4 md:mb-6">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-4 md:mb-6">
                 HOUSING GRANTS FOR <span className="highlight-yellow">COMMUNITY GARDENS.</span>
               </h3>
-              <p className="text-base sm:text-lg md:text-xl text-foreground/70 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-foreground/70 leading-relaxed">
                 Transform residential communities with shared garden spaces. We provide funding for apartment complexes, 
                 housing developments, and community centers to create accessible food-growing spaces for all residents.
               </p>
@@ -285,14 +285,14 @@ const Index = () => {
           }} transition={{
             duration: 0.6
           }} className="order-1 lg:order-2">
-              <img src={housingGrant} alt="Community housing gardens" className="w-full h-auto rounded-2xl shadow-2xl" />
+              <img src={housingGrant} alt="Community housing gardens" className="w-full h-auto rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl" />
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Green Technology Section */}
-      <section className="relative py-24 bg-green-tech overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-24 bg-green-tech overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
           backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
@@ -300,8 +300,8 @@ const Index = () => {
         }} />
         </div>
         
-        <div className="container px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto bg-green-500">
+        <div className="container px-3 sm:px-4 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center max-w-7xl mx-auto bg-green-500">
             <motion.div initial={{
             opacity: 0,
             x: -40
@@ -319,17 +319,17 @@ const Index = () => {
                 </span>
               </motion.div>
 
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 md:mb-6 leading-tight">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-white mb-3 sm:mb-4 md:mb-6 leading-tight">
                 Green Technology Meets Smart Investment
               </h2>
 
-              <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 md:mb-8 leading-relaxed">
+              <p className="text-xs sm:text-sm md:text-base text-white/90 mb-4 sm:mb-6 md:mb-8 leading-relaxed">
                 Access exclusive government grants and incentives when you combine Big Green vehicle ownership with sustainable crypto investments. 
                 Qualify for federal tax credits on electric vehicles, renewable energy rebates for charging infrastructure, and blockchain 
                 sustainability grants.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6 md:mb-8">
                 {[{
                 value: "$7,500",
                 label: "Federal EV Tax Credit Available",
@@ -404,8 +404,8 @@ const Index = () => {
       />
 
       {/* CTA Section */}
-      <section className="relative py-24 bg-white">
-        <div className="container max-w-7xl px-4 text-center">
+      <section className="relative py-12 sm:py-16 md:py-24 bg-white">
+        <div className="container max-w-7xl px-3 sm:px-4 text-center">
           <motion.div initial={{
           opacity: 0,
           y: 20
@@ -417,10 +417,10 @@ const Index = () => {
         }} transition={{
           duration: 0.6
         }}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-tight mb-6 md:mb-8 max-w-4xl mx-auto px-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-tight mb-4 sm:mb-6 md:mb-8 max-w-4xl mx-auto px-2 sm:px-4">
               READY TO <span className="highlight-yellow">START GROWING?</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-foreground/70 mb-8 md:mb-12 max-w-3xl mx-auto px-4">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-foreground/70 mb-6 sm:mb-8 md:mb-12 max-w-3xl mx-auto px-2 sm:px-4">
               Join thousands driving Big Green vehicles and investing in crypto. Start your journey to sustainable living and smart investing today.
             </p>
             <motion.div whileHover={{
@@ -428,9 +428,9 @@ const Index = () => {
           }} whileTap={{
             scale: 0.95
           }}>
-              <Button onClick={() => navigate("/auth")} size="lg" className="bg-foreground text-white hover:bg-foreground/90 font-semibold px-6 md:px-8 py-5 md:py-6 text-base md:text-lg">
+              <Button onClick={() => navigate("/auth")} size="lg" className="bg-foreground text-white hover:bg-foreground/90 font-semibold px-5 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg">
                 Get Started Now
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </motion.div>
           </motion.div>
