@@ -36,9 +36,9 @@ const tourSteps: TourStep[] = [
     title: "Welcome! 👋",
     description: "Let us show you around. This quick tour will highlight the key features to help you get started.",
     spotlightPosition: { x: "50%", y: "50%", radius: "150px" },
-    spotlightPositionMobile: { x: "50%", y: "40%", radius: "100px" },
-    tooltipPosition: { top: "50%", left: "50%", right: "auto", bottom: "auto" },
-    tooltipPositionMobile: { bottom: "20px", left: "50%", right: "auto", top: "auto" },
+    spotlightPositionMobile: { x: "50%", y: "50%", radius: "100px" },
+    tooltipPosition: { top: "50%", left: "50%" },
+    tooltipPositionMobile: { top: "50%", left: "50%" },
   },
   {
     title: "Navigation Menu",
