@@ -22,6 +22,20 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Features from "./pages/Features";
 import Packages from "./pages/Packages";
 import Reviews from "./pages/Reviews";
+import OurImpact from "./pages/OurImpact";
+import Jumpstart from "./pages/Jumpstart";
+import HomeGardens from "./pages/HomeGardens";
+import Grantmaking from "./pages/Grantmaking";
+import AboutUs from "./pages/AboutUs";
+import Partners from "./pages/Partners";
+import Team from "./pages/Team";
+import Careers from "./pages/Careers";
+import Finances from "./pages/Finances";
+import Blog from "./pages/Blog";
+import Contact from "./pages/Contact";
+import ForEducators from "./pages/ForEducators";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +51,20 @@ const App = () => (
         <Route path="/features" element={<Features />} />
         <Route path="/packages" element={<Packages />} />
         <Route path="/reviews" element={<Reviews />} />
+        <Route path="/our-impact" element={<OurImpact />} />
+        <Route path="/jumpstart" element={<Jumpstart />} />
+        <Route path="/home-gardens" element={<HomeGardens />} />
+        <Route path="/grantmaking" element={<Grantmaking />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/partners" element={<Partners />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/finances" element={<Finances />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/for-educators" element={<ForEducators />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/application" element={<Application />} />
