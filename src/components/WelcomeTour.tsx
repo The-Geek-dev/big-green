@@ -133,7 +133,11 @@ export const WelcomeTour = () => {
               top: tooltipPos.top,
               left: tooltipPos.left,
               right: tooltipPos.right,
-              transform: tooltipPos.left === "50%" ? "translateX(-50%)" : undefined,
+              transform: tooltipPos.left === "50%" && tooltipPos.top === "50%" 
+                ? "translate(-50%, -50%)" 
+                : tooltipPos.left === "50%" 
+                ? "translateX(-50%)" 
+                : undefined,
             }}
           >
             <Button
