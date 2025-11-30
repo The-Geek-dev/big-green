@@ -57,88 +57,88 @@ const InvestmentDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-950">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 py-12 mt-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <div className="mb-12">
-            <h1 className="text-4xl md:text-5xl font-black mb-4">
+            <h1 className="text-4xl md:text-5xl font-black text-white mb-4">
               Investment <span className="text-gradient">Dashboard</span>
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-gray-400">
               Invest in sustainable projects and track your impact portfolio
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <Card className="p-6">
+            <Card className="p-6 bg-gray-900 border-gray-800">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
                   <DollarSign className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Investment</p>
-                  <p className="text-2xl font-bold">$0</p>
+                  <p className="text-sm text-gray-400">Total Investment</p>
+                  <p className="text-2xl font-bold text-white">$0</p>
                 </div>
               </div>
-              <p className="text-xs text-muted-foreground">Start investing to see your portfolio grow</p>
+              <p className="text-xs text-gray-500">Start investing to see your portfolio grow</p>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-6 bg-gray-900 border-gray-800">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
                   <TrendingUp className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Returns</p>
-                  <p className="text-2xl font-bold">$0</p>
+                  <p className="text-sm text-gray-400">Total Returns</p>
+                  <p className="text-2xl font-bold text-white">$0</p>
                 </div>
               </div>
-              <p className="text-xs text-green-600 flex items-center gap-1">
+              <p className="text-xs text-green-400 flex items-center gap-1">
                 <ArrowUpRight className="w-3 h-3" />
                 0% growth
               </p>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-6 bg-gray-900 border-gray-800">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
                   <Activity className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Active Projects</p>
-                  <p className="text-2xl font-bold">0</p>
+                  <p className="text-sm text-gray-400">Active Projects</p>
+                  <p className="text-2xl font-bold text-white">0</p>
                 </div>
               </div>
-              <p className="text-xs text-muted-foreground">No active investments yet</p>
+              <p className="text-xs text-gray-500">No active investments yet</p>
             </Card>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-6">Investment Opportunities</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">Investment Opportunities</h2>
             <div className="grid md:grid-cols-3 gap-6">
               {investmentOptions.map((option, index) => {
                 const Icon = option.icon;
                 return (
-                  <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+                  <Card key={index} className="p-6 bg-gray-900 border-gray-800 hover:border-green-600/50 transition-all">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mb-4">
                       <Icon className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold mb-2">{option.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">{option.description}</p>
+                    <h3 className="text-xl font-bold text-white mb-2">{option.title}</h3>
+                    <p className="text-sm text-gray-400 mb-4">{option.description}</p>
                     <div className="space-y-2 mb-6">
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Min. Investment:</span>
-                        <span className="font-semibold">{option.minInvestment}</span>
+                        <span className="text-gray-400">Min. Investment:</span>
+                        <span className="font-semibold text-white">{option.minInvestment}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Expected Return:</span>
-                        <span className="font-semibold text-green-600">{option.expectedReturn}</span>
+                        <span className="text-gray-400">Expected Return:</span>
+                        <span className="font-semibold text-green-400">{option.expectedReturn}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Risk Level:</span>
-                        <span className="font-semibold">{option.risk}</span>
+                        <span className="text-gray-400">Risk Level:</span>
+                        <span className="font-semibold text-white">{option.risk}</span>
                       </div>
                     </div>
                     <Button className="w-full button-gradient" onClick={() => navigate("/application")}>
@@ -150,14 +150,14 @@ const InvestmentDashboard = () => {
             </div>
           </div>
 
-          <Card className="p-8 bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
+          <Card className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border-green-600/30">
             <div className="flex items-start gap-6">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center flex-shrink-0">
                 <DollarSign className="w-8 h-8 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-2">Ready to Start Investing?</h3>
-                <p className="text-muted-foreground mb-4">
+                <h3 className="text-2xl font-bold text-white mb-2">Ready to Start Investing?</h3>
+                <p className="text-gray-400 mb-4">
                   Join thousands of investors making a positive impact on the planet while growing their wealth. 
                   Complete our investment application to get started.
                 </p>
