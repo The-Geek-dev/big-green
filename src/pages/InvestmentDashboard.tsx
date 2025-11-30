@@ -14,15 +14,45 @@ const InvestmentDashboard = () => {
   const [user, setUser] = useState<any>(null);
   const [selectedInvestment, setSelectedInvestment] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasAccess, setHasAccess] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const checkAccess = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
       if (!session) {
         navigate("/auth");
-      } else {
-        setUser(session.user);
+        return;
       }
-    });
+      
+      setUser(session.user);
+      
+      // Check if user has an approved investment application
+      const { data: application } = await supabase
+        .from("applications")
+        .select("status, application_type")
+        .eq("user_id", session.user.id)
+        .eq("application_type", "investment")
+        .maybeSingle();
+      
+      if (!application) {
+        toast.error("No investment application found. Please submit an application first.");
+        navigate("/application");
+        return;
+      }
+      
+      if (application.status !== "approved") {
+        toast.error("Your investment application is still pending approval.");
+        navigate("/dashboard");
+        return;
+      }
+      
+      setHasAccess(true);
+      setLoading(false);
+    };
+    
+    checkAccess();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_OUT' || !session) {
@@ -58,6 +88,18 @@ const InvestmentDashboard = () => {
       icon: PieChart
     }
   ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="text-white text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!hasAccess) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-950">
