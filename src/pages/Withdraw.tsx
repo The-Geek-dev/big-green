@@ -95,11 +95,34 @@ const Withdraw = () => {
     }
 
     setSubmitting(true);
-    // Simulate submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    toast.success("Withdrawal request submitted successfully! Our team will process it within 24-48 hours.");
-    setSubmitting(false);
-    navigate("/user-dashboard");
+    
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error("Please log in to submit a withdrawal request");
+        return;
+      }
+
+      const { error } = await supabase
+        .from("withdrawal_requests")
+        .insert({
+          user_id: user.id,
+          amount: amount,
+          crypto_type: selectedCrypto.toUpperCase(),
+          wallet_address: walletAddress.trim(),
+          status: "pending"
+        });
+
+      if (error) throw error;
+
+      toast.success("Withdrawal request submitted successfully! Our team will process it within 24-48 hours.");
+      navigate("/user-dashboard");
+    } catch (error) {
+      console.error("Error submitting withdrawal:", error);
+      toast.error("Failed to submit withdrawal request. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const cryptoOptions = [
