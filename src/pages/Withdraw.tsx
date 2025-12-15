@@ -277,7 +277,12 @@ const Withdraw = () => {
               </Card>
 
               <Card className="p-6 mb-6">
-                <h3 className="font-bold mb-4">Select Withdrawal Amount</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-bold">Select Withdrawal Amount</h3>
+                  <span className="text-xs px-2 py-1 bg-amber-100 text-amber-700 rounded-full font-medium">
+                    Min: $5,000
+                  </span>
+                </div>
                 <RadioGroup value={selectedAmount} onValueChange={setSelectedAmount} className="space-y-3">
                   {amountOptions.map((option) => (
                     <div
