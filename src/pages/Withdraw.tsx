@@ -58,7 +58,7 @@ const Withdraw = () => {
   }, [navigate]);
 
   const handleUpgrade = () => {
-    navigate("/crypto-payment", { state: { amount: "1000" } });
+    navigate("/crypto-payment", { state: { amount: "1000", purpose: "tier-upgrade" } });
   };
 
   const handleWithdrawSubmit = async () => {

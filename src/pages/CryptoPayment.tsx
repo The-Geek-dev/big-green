@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import { Copy, Check, Bitcoin, Wallet, ArrowLeft, TrendingUp } from "lucide-react";
+import { Copy, Check, Bitcoin, Wallet, ArrowLeft, TrendingUp, Heart, ArrowUpCircle } from "lucide-react";
 
 interface CryptoPrices {
   bitcoin: number;
@@ -13,10 +13,23 @@ interface CryptoPrices {
   tether: number;
 }
 
+type PaymentPurpose = "donation" | "tier-upgrade";
+
 const CryptoPayment = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const donationAmount = location.state?.amount || "0";
+  const [searchParams] = useSearchParams();
+  
+  // Determine payment purpose and amount
+  const queryAmount = searchParams.get("amount");
+  const stateAmount = location.state?.amount;
+  const statePurpose = location.state?.purpose as PaymentPurpose | undefined;
+  
+  // If amount comes from query params (DonateView), it's a donation
+  // If amount comes from state (Withdraw page), it's a tier upgrade
+  const paymentPurpose: PaymentPurpose = statePurpose || (queryAmount ? "donation" : "tier-upgrade");
+  const donationAmount = queryAmount || stateAmount || "0";
+  
   const [copiedWallet, setCopiedWallet] = useState<string | null>(null);
   const [prices, setPrices] = useState<CryptoPrices | null>(null);
   const [loadingPrices, setLoadingPrices] = useState(true);
@@ -42,7 +55,7 @@ const CryptoPayment = () => {
     };
 
     fetchPrices();
-    const interval = setInterval(fetchPrices, 60000); // Update every minute
+    const interval = setInterval(fetchPrices, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -91,6 +104,32 @@ const CryptoPayment = () => {
     }
   };
 
+  const isDonation = paymentPurpose === "donation";
+  
+  const headerConfig = {
+    donation: {
+      icon: Heart,
+      iconGradient: "from-pink-400 to-red-500",
+      title: "Complete Your",
+      highlight: "Crypto Donation",
+      subtitle: `Send your donation of`,
+      bgAccent: "bg-green-50 border-green-200",
+      infoBg: "bg-pink-50 border-pink-200"
+    },
+    "tier-upgrade": {
+      icon: ArrowUpCircle,
+      iconGradient: "from-yellow-400 to-orange-500",
+      title: "Upgrade to",
+      highlight: "Tier 2 Quantum Leap",
+      subtitle: `Send the upgrade fee of`,
+      bgAccent: "bg-yellow-50 border-yellow-200",
+      infoBg: "bg-amber-50 border-amber-200"
+    }
+  };
+
+  const config = headerConfig[paymentPurpose];
+  const HeaderIcon = config.icon;
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -102,23 +141,26 @@ const CryptoPayment = () => {
           transition={{ duration: 0.5 }}
         >
           <div className="text-center mb-12">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-purple-600 flex items-center justify-center mx-auto mb-4">
-              <Bitcoin className="w-8 h-8 text-white" />
+            <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${config.iconGradient} flex items-center justify-center mx-auto mb-4`}>
+              <HeaderIcon className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-black mb-4">
-              Complete Your <span className="text-gradient">Crypto Donation</span>
+              {config.title} <span className="text-gradient">{config.highlight}</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-2">
-              Send your donation of <span className="font-bold text-foreground">${donationAmount}</span> to any of these wallets
+              {config.subtitle} <span className="font-bold text-foreground">${donationAmount}</span> to any of these wallets
             </p>
             {loadingPrices ? (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                 <TrendingUp className="w-4 h-4 animate-pulse" />
                 Loading current crypto prices...
               </div>
             ) : (
               <p className="text-sm text-muted-foreground">
-                Your transaction will be processed once we receive the payment
+                {isDonation 
+                  ? "Your transaction will be processed once we receive the payment"
+                  : "Your tier will be upgraded once we verify your payment"
+                }
               </p>
             )}
           </div>
@@ -177,10 +219,13 @@ const CryptoPayment = () => {
           </div>
 
           <div className="mt-8 space-y-4">
-            <Card className="p-6 bg-green-50 border-2 border-green-200">
+            <Card className={`p-6 ${config.bgAccent} border-2`}>
               <h4 className="font-bold mb-3">After Sending Payment</h4>
               <p className="text-sm text-muted-foreground mb-4">
-                Once you've sent the cryptocurrency, submit your transaction hash to verify your payment.
+                {isDonation 
+                  ? "Once you've sent your donation, submit your transaction hash to verify your payment."
+                  : "Once you've sent the upgrade fee, submit your transaction hash to complete your tier upgrade."
+                }
               </p>
               <Button
                 className="button-gradient"
@@ -188,7 +233,8 @@ const CryptoPayment = () => {
                   state: {
                     amount: donationAmount,
                     cryptoType: "BTC",
-                    cryptoAmount: calculateCryptoAmount("bitcoin")
+                    cryptoAmount: calculateCryptoAmount("bitcoin"),
+                    purpose: paymentPurpose
                   }
                 })}
               >
@@ -196,13 +242,18 @@ const CryptoPayment = () => {
               </Button>
             </Card>
 
-            <div className="p-6 bg-amber-50 border-2 border-amber-200 rounded-xl">
+            <div className={`p-6 ${config.infoBg} border-2 rounded-xl`}>
               <h4 className="font-bold mb-2">Important Information</h4>
               <ul className="text-sm space-y-1 text-muted-foreground">
                 <li>• Send the exact amount or more to the wallet address</li>
                 <li>• Double-check the wallet address before sending</li>
                 <li>• Transactions are irreversible once sent</li>
                 <li>• Processing may take a few minutes to confirm</li>
+                {isDonation ? (
+                  <li>• Your donation is tax-deductible</li>
+                ) : (
+                  <li>• Your tier benefits will activate after verification</li>
+                )}
                 <li>• Contact support if you need assistance</li>
               </ul>
             </div>
