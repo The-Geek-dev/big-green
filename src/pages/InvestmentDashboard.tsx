@@ -28,12 +28,14 @@ const InvestmentDashboard = () => {
       
       setUser(session.user);
       
-      // Check if user has an approved investment application
+      // Check if user has an approved investment application (get the most recent one)
       const { data: application } = await supabase
         .from("applications")
         .select("status, application_type")
         .eq("user_id", session.user.id)
         .eq("application_type", "investment")
+        .order("created_at", { ascending: false })
+        .limit(1)
         .maybeSingle();
       
       if (!application) {
