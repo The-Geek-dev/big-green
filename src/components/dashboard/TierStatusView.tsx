@@ -248,8 +248,15 @@ export const TierStatusView = () => {
             </div>
           </div>
           <p className="text-4xl font-bold text-white mb-2">${withdrawableAmount.toLocaleString()}</p>
-          <div className="flex items-center gap-2 text-green-400 text-sm">
-            <span className="px-2 py-1 bg-green-500/20 rounded-lg">+${accumulatedBonus} earned</span>
+          <div className="flex items-center justify-between">
+            <span className="px-2 py-1 bg-green-500/20 rounded-lg text-green-400 text-sm">+${accumulatedBonus} earned</span>
+            <Button
+              onClick={() => navigate("/withdraw")}
+              size="sm"
+              className="bg-green-500 hover:bg-green-600 text-white"
+            >
+              Withdraw
+            </Button>
           </div>
         </motion.div>
 
