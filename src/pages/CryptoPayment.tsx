@@ -106,6 +106,17 @@ const CryptoPayment = () => {
 
   const isDonation = paymentPurpose === "donation";
   
+  // Determine which tier upgrade based on amount
+  const getTierUpgradeInfo = () => {
+    const amount = parseFloat(donationAmount);
+    if (amount >= 3500) {
+      return { tier: 3, name: "Tier 3 VIP Legacy" };
+    }
+    return { tier: 2, name: "Tier 2 Quantum Leap" };
+  };
+  
+  const tierInfo = getTierUpgradeInfo();
+  
   const headerConfig = {
     donation: {
       icon: Heart,
@@ -118,12 +129,12 @@ const CryptoPayment = () => {
     },
     "tier-upgrade": {
       icon: ArrowUpCircle,
-      iconGradient: "from-yellow-400 to-orange-500",
+      iconGradient: tierInfo.tier === 3 ? "from-purple-400 to-pink-500" : "from-yellow-400 to-orange-500",
       title: "Upgrade to",
-      highlight: "Tier 2 Quantum Leap",
+      highlight: tierInfo.name,
       subtitle: `Send the upgrade fee of`,
-      bgAccent: "bg-yellow-50 border-yellow-200",
-      infoBg: "bg-amber-50 border-amber-200"
+      bgAccent: tierInfo.tier === 3 ? "bg-purple-50 border-purple-200" : "bg-yellow-50 border-yellow-200",
+      infoBg: tierInfo.tier === 3 ? "bg-purple-50 border-purple-200" : "bg-amber-50 border-amber-200"
     }
   };
 
