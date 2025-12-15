@@ -71,8 +71,15 @@ const Withdraw = () => {
                    selectedAmount === "custom" ? parseFloat(customAmount) || 0 : 
                    parseFloat(selectedAmount) || 0;
 
+    const MIN_WITHDRAWAL = 5000;
+
     if (amount <= 0) {
       toast.error("Please select a valid withdrawal amount");
+      return;
+    }
+
+    if (amount < MIN_WITHDRAWAL) {
+      toast.error(`Minimum withdrawal amount is $${MIN_WITHDRAWAL.toLocaleString()}`);
       return;
     }
 
