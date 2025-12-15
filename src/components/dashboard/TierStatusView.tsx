@@ -222,8 +222,10 @@ export const TierStatusView = () => {
     );
   }
 
-  // Calculate portfolio value (investment + accumulated bonus)
-  const portfolioValue = totalInvestment + accumulatedBonus;
+  // Calculate withdrawable amount ($65,000 base + accumulated bonus)
+  const baseWithdrawable = 65000;
+  const withdrawableAmount = baseWithdrawable + accumulatedBonus;
+  const portfolioValue = totalInvestment + withdrawableAmount;
   const dailyBonusAmount = currentTier === 3 ? 500 : currentTier === 2 ? 100 : 20;
 
   return (
@@ -245,7 +247,7 @@ export const TierStatusView = () => {
               <p className="text-sm text-white/40">Withdrawable Amount</p>
             </div>
           </div>
-          <p className="text-4xl font-bold text-white mb-2">${portfolioValue.toLocaleString()}</p>
+          <p className="text-4xl font-bold text-white mb-2">${withdrawableAmount.toLocaleString()}</p>
           <div className="flex items-center gap-2 text-green-400 text-sm">
             <span className="px-2 py-1 bg-green-500/20 rounded-lg">+${accumulatedBonus} earned</span>
           </div>
@@ -355,7 +357,7 @@ export const TierStatusView = () => {
           </div>
           <div className="bg-white/5 rounded-xl p-4">
             <p className="text-white/60 text-sm mb-1">Can Withdraw</p>
-            <p className="text-2xl font-bold text-primary">${portfolioValue.toLocaleString()}</p>
+            <p className="text-2xl font-bold text-primary">${withdrawableAmount.toLocaleString()}</p>
           </div>
         </div>
 
