@@ -18,6 +18,8 @@ const Withdraw = () => {
   const [withdrawableAmount, setWithdrawableAmount] = useState(0);
   const [selectedCrypto, setSelectedCrypto] = useState("usdt");
   const [walletAddress, setWalletAddress] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState("full");
+  const [customAmount, setCustomAmount] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
 
@@ -65,6 +67,20 @@ const Withdraw = () => {
       return;
     }
 
+    const amount = selectedAmount === "full" ? withdrawableAmount : 
+                   selectedAmount === "custom" ? parseFloat(customAmount) || 0 : 
+                   parseFloat(selectedAmount) || 0;
+
+    if (amount <= 0) {
+      toast.error("Please select a valid withdrawal amount");
+      return;
+    }
+
+    if (amount > withdrawableAmount) {
+      toast.error("Amount exceeds available balance");
+      return;
+    }
+
     // Check tier status on submit
     if (currentTier === 1) {
       setShowUpgradePrompt(true);
@@ -83,6 +99,20 @@ const Withdraw = () => {
     { id: "usdt", name: "USDT (TRC20)", icon: Wallet, placeholder: "Enter your USDT TRC20 wallet address" },
     { id: "btc", name: "Bitcoin (BTC)", icon: Bitcoin, placeholder: "Enter your Bitcoin wallet address" },
     { id: "eth", name: "Ethereum (ETH)", icon: Wallet, placeholder: "Enter your Ethereum wallet address" },
+  ];
+
+  const getWithdrawalAmount = () => {
+    if (selectedAmount === "full") return withdrawableAmount;
+    if (selectedAmount === "custom") return parseFloat(customAmount) || 0;
+    return parseFloat(selectedAmount) || 0;
+  };
+
+  const amountOptions = [
+    { id: "full", label: `Full Balance ($${withdrawableAmount.toLocaleString()})` },
+    { id: "50000", label: "$50,000" },
+    { id: "25000", label: "$25,000" },
+    { id: "10000", label: "$10,000" },
+    { id: "custom", label: "Custom Amount" },
   ];
 
   if (loading) {
@@ -239,12 +269,51 @@ const Withdraw = () => {
                 </p>
               </Card>
 
+              <Card className="p-6 mb-6">
+                <h3 className="font-bold mb-4">Select Withdrawal Amount</h3>
+                <RadioGroup value={selectedAmount} onValueChange={setSelectedAmount} className="space-y-3">
+                  {amountOptions.map((option) => (
+                    <div
+                      key={option.id}
+                      className={`flex items-center space-x-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                        selectedAmount === option.id 
+                          ? "border-primary bg-primary/5" 
+                          : "border-border hover:border-primary/50"
+                      }`}
+                      onClick={() => setSelectedAmount(option.id)}
+                    >
+                      <RadioGroupItem value={option.id} id={`amount-${option.id}`} />
+                      <Label htmlFor={`amount-${option.id}`} className="cursor-pointer flex-1">
+                        {option.label}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+                {selectedAmount === "custom" && (
+                  <div className="mt-4">
+                    <Label htmlFor="customAmount" className="text-sm mb-2 block">Enter Amount (USD)</Label>
+                    <Input
+                      id="customAmount"
+                      type="number"
+                      value={customAmount}
+                      onChange={(e) => setCustomAmount(e.target.value)}
+                      placeholder="Enter amount in USD"
+                      max={withdrawableAmount}
+                      className="font-mono"
+                    />
+                    {parseFloat(customAmount) > withdrawableAmount && (
+                      <p className="text-xs text-red-500 mt-1">Amount exceeds available balance</p>
+                    )}
+                  </div>
+                )}
+              </Card>
+
               <Card className="p-6 mb-6 bg-green-50 border-green-200">
                 <h4 className="font-bold mb-2">Withdrawal Summary</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Amount</span>
-                    <span className="font-bold">${withdrawableAmount.toLocaleString()}</span>
+                    <span className="font-bold">${getWithdrawalAmount().toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Network</span>
