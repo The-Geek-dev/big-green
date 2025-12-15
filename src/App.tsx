@@ -36,6 +36,7 @@ import Contact from "./pages/Contact";
 import ForEducators from "./pages/ForEducators";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import Withdraw from "./pages/Withdraw";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +79,7 @@ const App = () => (
       <Route path="/dashboard" element={<DashboardVerification />} />
       <Route path="/user-dashboard" element={<UserDashboard />} />
       <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/withdraw" element={<Withdraw />} />
           </Routes>
           <FloatingAIChat />
           <WelcomeTour />
