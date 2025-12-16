@@ -17,6 +17,23 @@ const InvestmentDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasAccess, setHasAccess] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [totalInvestment, setTotalInvestment] = useState(0);
+  const [activeProjects, setActiveProjects] = useState(0);
+
+  const fetchInvestmentStats = async (userId: string) => {
+    // Fetch verified investment transactions
+    const { data: transactions } = await supabase
+      .from("crypto_transactions")
+      .select("amount_usd")
+      .eq("user_id", userId)
+      .eq("verification_status", "verified");
+
+    if (transactions && transactions.length > 0) {
+      const total = transactions.reduce((sum, tx) => sum + Number(tx.amount_usd), 0);
+      setTotalInvestment(total);
+      setActiveProjects(transactions.length);
+    }
+  };
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -52,6 +69,7 @@ const InvestmentDashboard = () => {
       }
       
       setHasAccess(true);
+      await fetchInvestmentStats(session.user.id);
       setLoading(false);
     };
     
@@ -127,10 +145,12 @@ const InvestmentDashboard = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Total Investment</p>
-                  <p className="text-2xl font-bold text-white">$0</p>
+                  <p className="text-2xl font-bold text-white">${totalInvestment.toLocaleString()}</p>
                 </div>
               </div>
-              <p className="text-xs text-gray-500">Start investing to see your portfolio grow</p>
+              <p className="text-xs text-gray-500">
+                {totalInvestment > 0 ? "Verified investments" : "Start investing to see your portfolio grow"}
+              </p>
             </Card>
 
             <Card className="p-6 bg-gray-900 border-gray-800">
@@ -140,12 +160,12 @@ const InvestmentDashboard = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Total Returns</p>
-                  <p className="text-2xl font-bold text-white">$0</p>
+                  <p className="text-2xl font-bold text-white">${Math.floor(totalInvestment * 0.08).toLocaleString()}</p>
                 </div>
               </div>
               <p className="text-xs text-green-400 flex items-center gap-1">
                 <ArrowUpRight className="w-3 h-3" />
-                0% growth
+                {totalInvestment > 0 ? "~8% estimated growth" : "0% growth"}
               </p>
             </Card>
 
@@ -156,10 +176,12 @@ const InvestmentDashboard = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Active Projects</p>
-                  <p className="text-2xl font-bold text-white">0</p>
+                  <p className="text-2xl font-bold text-white">{activeProjects}</p>
                 </div>
               </div>
-              <p className="text-xs text-gray-500">No active investments yet</p>
+              <p className="text-xs text-gray-500">
+                {activeProjects > 0 ? "Verified investments" : "No active investments yet"}
+              </p>
             </Card>
           </div>
 
