@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import { Copy, Check, Bitcoin, Wallet, ArrowLeft, TrendingUp, Heart, ArrowUpCircle } from "lucide-react";
+import { Copy, Check, Bitcoin, Wallet, TrendingUp, Heart, ArrowUpCircle, BarChart3 } from "lucide-react";
 
 interface CryptoPrices {
   bitcoin: number;
@@ -13,7 +13,7 @@ interface CryptoPrices {
   tether: number;
 }
 
-type PaymentPurpose = "donation" | "tier-upgrade";
+type PaymentPurpose = "donation" | "tier-upgrade" | "investment";
 
 const CryptoPayment = () => {
   const navigate = useNavigate();
@@ -24,9 +24,11 @@ const CryptoPayment = () => {
   const queryAmount = searchParams.get("amount");
   const stateAmount = location.state?.amount;
   const statePurpose = location.state?.purpose as PaymentPurpose | undefined;
+  const investmentName = location.state?.investmentName;
+  const investmentSymbol = location.state?.investmentSymbol;
+  const investmentType = location.state?.investmentType;
   
-  // If amount comes from query params (DonateView), it's a donation
-  // If amount comes from state (Withdraw page), it's a tier upgrade
+  // Determine payment purpose
   const paymentPurpose: PaymentPurpose = statePurpose || (queryAmount ? "donation" : "tier-upgrade");
   const donationAmount = queryAmount || stateAmount || "0";
   
@@ -105,6 +107,7 @@ const CryptoPayment = () => {
   };
 
   const isDonation = paymentPurpose === "donation";
+  const isInvestment = paymentPurpose === "investment";
   
   // Determine which tier upgrade based on amount
   const getTierUpgradeInfo = () => {
@@ -117,7 +120,23 @@ const CryptoPayment = () => {
   
   const tierInfo = getTierUpgradeInfo();
   
-  const headerConfig = {
+  // Investment display name
+  const getInvestmentDisplayName = () => {
+    if (investmentName) {
+      return investmentSymbol ? `${investmentName} (${investmentSymbol})` : investmentName;
+    }
+    return "Investment";
+  };
+  
+  const headerConfig: Record<PaymentPurpose, {
+    icon: any;
+    iconGradient: string;
+    title: string;
+    highlight: string;
+    subtitle: string;
+    bgAccent: string;
+    infoBg: string;
+  }> = {
     donation: {
       icon: Heart,
       iconGradient: "from-pink-400 to-red-500",
@@ -135,6 +154,15 @@ const CryptoPayment = () => {
       subtitle: `Send the upgrade fee of`,
       bgAccent: tierInfo.tier === 3 ? "bg-purple-50 border-purple-200" : "bg-yellow-50 border-yellow-200",
       infoBg: tierInfo.tier === 3 ? "bg-purple-50 border-purple-200" : "bg-amber-50 border-amber-200"
+    },
+    investment: {
+      icon: BarChart3,
+      iconGradient: "from-green-400 to-emerald-600",
+      title: "Invest in",
+      highlight: getInvestmentDisplayName(),
+      subtitle: `Send your investment of`,
+      bgAccent: "bg-emerald-50 border-emerald-200",
+      infoBg: "bg-green-50 border-green-200"
     }
   };
 
@@ -161,6 +189,11 @@ const CryptoPayment = () => {
             <p className="text-lg text-muted-foreground mb-2">
               {config.subtitle} <span className="font-bold text-foreground">${donationAmount}</span> to any of these wallets
             </p>
+            {isInvestment && investmentType && (
+              <p className="text-xs text-muted-foreground mb-2">
+                Investment Type: <span className="font-medium capitalize">{investmentType}</span>
+              </p>
+            )}
             {loadingPrices ? (
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                 <TrendingUp className="w-4 h-4 animate-pulse" />
@@ -170,7 +203,9 @@ const CryptoPayment = () => {
               <p className="text-sm text-muted-foreground">
                 {isDonation 
                   ? "Your transaction will be processed once we receive the payment"
-                  : "Your tier will be upgraded once we verify your payment"
+                  : isInvestment
+                    ? "Your investment will be added to your portfolio after admin verification"
+                    : "Your tier will be upgraded once we verify your payment"
                 }
               </p>
             )}
@@ -235,7 +270,9 @@ const CryptoPayment = () => {
               <p className="text-sm text-muted-foreground mb-4">
                 {isDonation 
                   ? "Once you've sent your donation, submit your transaction hash to verify your payment."
-                  : "Once you've sent the upgrade fee, submit your transaction hash to complete your tier upgrade."
+                  : isInvestment
+                    ? "Once you've sent your investment, submit your transaction hash for admin verification."
+                    : "Once you've sent the upgrade fee, submit your transaction hash to complete your tier upgrade."
                 }
               </p>
               <Button
@@ -245,7 +282,10 @@ const CryptoPayment = () => {
                     amount: donationAmount,
                     cryptoType: "BTC",
                     cryptoAmount: calculateCryptoAmount("bitcoin"),
-                    purpose: paymentPurpose
+                    purpose: paymentPurpose,
+                    investmentName: investmentName,
+                    investmentSymbol: investmentSymbol,
+                    investmentType: investmentType
                   }
                 })}
               >
@@ -262,6 +302,8 @@ const CryptoPayment = () => {
                 <li>• Processing may take a few minutes to confirm</li>
                 {isDonation ? (
                   <li>• Your donation is tax-deductible</li>
+                ) : isInvestment ? (
+                  <li>• Your investment will reflect in your dashboard after admin approval</li>
                 ) : (
                   <li>• Your tier benefits will activate after verification</li>
                 )}

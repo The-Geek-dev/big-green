@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import { InvestmentDetailsModal } from "@/components/investment/InvestmentDetailsModal";
+import { LiveMarketCharts } from "@/components/investment/LiveMarketCharts";
 import { TrendingUp, DollarSign, PieChart, Activity, ArrowUpRight } from "lucide-react";
 
 const InvestmentDashboard = () => {
@@ -203,19 +204,24 @@ const InvestmentDashboard = () => {
             </div>
           </div>
 
+          {/* Live Market Charts Section */}
+          <div className="mb-12">
+            <LiveMarketCharts />
+          </div>
+
           <Card className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border-green-600/30">
             <div className="flex items-start gap-6">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center flex-shrink-0">
                 <DollarSign className="w-8 h-8 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-white mb-2">Ready to Start Investing?</h3>
+                <h3 className="text-2xl font-bold text-white mb-2">Need Help Investing?</h3>
                 <p className="text-gray-400 mb-4">
-                  Join thousands of investors making a positive impact on the planet while growing their wealth. 
-                  Complete our investment application to get started.
+                  All investments require admin verification before reflecting on your dashboard.
+                  Contact support if you have any questions about the investment process.
                 </p>
-                <Button size="lg" className="button-gradient" onClick={() => navigate("/application")}>
-                  Start Investment Application
+                <Button size="lg" className="button-gradient" onClick={() => navigate("/contact")}>
+                  Contact Support
                 </Button>
               </div>
             </div>
