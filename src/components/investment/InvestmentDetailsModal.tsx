@@ -261,17 +261,25 @@ export const InvestmentDetailsModal = ({ isOpen, onClose, investment }: Investme
             <div className="flex items-center justify-between gap-4">
               <div>
                 <h4 className="text-lg font-bold text-white mb-1">Ready to Invest?</h4>
-                <p className="text-sm text-gray-400">Start your application to join this investment opportunity</p>
+                <p className="text-sm text-gray-400">Min. investment: {investment.minInvestment}</p>
               </div>
               <Button
                 size="lg"
                 className="button-gradient"
                 onClick={() => {
                   onClose();
-                  navigate("/application");
+                  const minAmount = investment.minInvestment.replace(/[^0-9]/g, '');
+                  navigate("/crypto-payment", {
+                    state: {
+                      purpose: "investment",
+                      investmentName: investment.title,
+                      investmentType: "portfolio",
+                      amount: minAmount,
+                    }
+                  });
                 }}
               >
-                Start Application
+                Invest Now
               </Button>
             </div>
           </div>
