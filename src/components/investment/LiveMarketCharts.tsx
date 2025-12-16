@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { TrendingUp, TrendingDown, Bitcoin, DollarSign, Car } from "lucide-react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 interface MarketData {
   id: string;
@@ -21,6 +23,7 @@ export const LiveMarketCharts = () => {
   const navigate = useNavigate();
   const [marketData, setMarketData] = useState<MarketData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [customAmounts, setCustomAmounts] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const fetchMarketData = async () => {
@@ -109,14 +112,29 @@ export const LiveMarketCharts = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleAmountChange = (assetId: string, value: string) => {
+    // Only allow numbers and decimal point
+    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+      setCustomAmounts(prev => ({ ...prev, [assetId]: value }));
+    }
+  };
+
   const handleInvest = (asset: MarketData) => {
+    const customAmount = customAmounts[asset.id];
+    const amount = customAmount ? parseFloat(customAmount) : asset.minInvestment;
+    
+    if (isNaN(amount) || amount < asset.minInvestment) {
+      toast.error(`Minimum investment is $${asset.minInvestment}`);
+      return;
+    }
+
     navigate("/crypto-payment", {
       state: {
         purpose: "investment",
         investmentName: asset.name,
         investmentSymbol: asset.symbol,
         investmentType: asset.type,
-        amount: asset.minInvestment.toString(),
+        amount: amount.toString(),
         currentPrice: asset.price
       }
     });
@@ -214,6 +232,18 @@ export const LiveMarketCharts = () => {
                     <p className="text-xs text-gray-400">Min. Investment</p>
                     <p className="text-sm font-semibold text-green-400">${asset.minInvestment}</p>
                   </div>
+                </div>
+
+                <div className="mb-3">
+                  <label className="text-xs text-gray-400 mb-1 block">Investment Amount ($)</label>
+                  <Input
+                    type="text"
+                    inputMode="decimal"
+                    placeholder={`Min $${asset.minInvestment}`}
+                    value={customAmounts[asset.id] || ''}
+                    onChange={(e) => handleAmountChange(asset.id, e.target.value)}
+                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 h-9"
+                  />
                 </div>
 
                 <Button
