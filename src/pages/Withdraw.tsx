@@ -6,10 +6,11 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import { supabase } from "@/integrations/supabase/client";
-import { Wallet, Bitcoin, ArrowRight, AlertTriangle, Lock, Loader2, TrendingUp, Gift } from "lucide-react";
+import { Wallet, Bitcoin, ArrowRight, AlertTriangle, Lock, Loader2, TrendingUp, Gift, Info } from "lucide-react";
 
 const Withdraw = () => {
   const navigate = useNavigate();
@@ -280,9 +281,29 @@ const Withdraw = () => {
                     <Gift className="w-8 h-8 text-white" />
                   )}
                 </div>
-                <h1 className="text-3xl md:text-4xl font-black mb-2">
-                  Withdraw {withdrawalType === "investment" ? "Investment" : "Grant"} <span className="text-gradient">Funds</span>
-                </h1>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <h1 className="text-3xl md:text-4xl font-black">
+                    Withdraw {withdrawalType === "investment" ? "Investment" : "Grant"} <span className="text-gradient">Funds</span>
+                  </h1>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button className="text-muted-foreground hover:text-foreground transition-colors">
+                          <Info className="w-5 h-5" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" className="max-w-xs p-4">
+                        <p className="font-semibold mb-2">Tier Requirements for Withdrawals</p>
+                        <ul className="text-sm space-y-1">
+                          <li><span className="text-amber-500">• Tier 1:</span> Must upgrade to Tier 2 ($1,000) to withdraw</li>
+                          <li><span className="text-blue-500">• Tier 2:</span> Full withdrawal access unlocked</li>
+                          <li><span className="text-purple-500">• Tier 3:</span> Priority processing + higher limits</li>
+                        </ul>
+                        <p className="text-xs text-muted-foreground mt-2">Min. withdrawal: $5,000</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 <p className="text-muted-foreground">
                   Available balance: <span className="font-bold text-foreground">${withdrawableAmount.toLocaleString()}</span>
                 </p>
@@ -290,6 +311,12 @@ const Withdraw = () => {
                   <p className="text-xs text-muted-foreground mt-1">
                     Includes principal + ~8% estimated returns
                   </p>
+                )}
+                {currentTier === 1 && (
+                  <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-full text-amber-600 text-sm">
+                    <AlertTriangle className="w-4 h-4" />
+                    <span>Tier 2 upgrade required to withdraw</span>
+                  </div>
                 )}
               </div>
 
