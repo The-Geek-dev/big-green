@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -9,10 +9,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import { supabase } from "@/integrations/supabase/client";
-import { Wallet, Bitcoin, ArrowRight, AlertTriangle, Lock, Loader2 } from "lucide-react";
+import { Wallet, Bitcoin, ArrowRight, AlertTriangle, Lock, Loader2, TrendingUp, Gift } from "lucide-react";
 
 const Withdraw = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const withdrawalType = (location.state as { type?: string })?.type || "grant";
+  
   const [loading, setLoading] = useState(true);
   const [currentTier, setCurrentTier] = useState(1);
   const [withdrawableAmount, setWithdrawableAmount] = useState(0);
@@ -42,9 +45,29 @@ const Withdraw = () => {
 
         if (profile) {
           setCurrentTier(profile.tier_level);
-          const dailyBonus = profile.tier_level === 3 ? 500 : profile.tier_level === 2 ? 100 : 20;
-          const accumulatedBonus = dailyBonus * 3; // Simulated 3 days
-          setWithdrawableAmount(65000 + accumulatedBonus);
+          
+          if (withdrawalType === "investment") {
+            // For investment withdrawals, use verified investment total
+            const { data: transactions } = await supabase
+              .from("crypto_transactions")
+              .select("amount_usd")
+              .eq("user_id", user.id)
+              .eq("verification_status", "verified");
+            
+            if (transactions && transactions.length > 0) {
+              const totalInvestment = transactions.reduce((sum, tx) => sum + Number(tx.amount_usd), 0);
+              // Add estimated returns (8%)
+              const estimatedReturns = Math.floor(totalInvestment * 0.08);
+              setWithdrawableAmount(totalInvestment + estimatedReturns);
+            } else {
+              setWithdrawableAmount(0);
+            }
+          } else {
+            // For grant withdrawals, use the original logic
+            const dailyBonus = profile.tier_level === 3 ? 500 : profile.tier_level === 2 ? 100 : 20;
+            const accumulatedBonus = dailyBonus * 3; // Simulated 3 days
+            setWithdrawableAmount(65000 + accumulatedBonus);
+          }
         }
       } catch (error) {
         console.error("Error fetching tier:", error);
@@ -55,7 +78,7 @@ const Withdraw = () => {
     };
 
     checkTierStatus();
-  }, [navigate]);
+  }, [navigate, withdrawalType]);
 
   const handleUpgrade = () => {
     navigate("/crypto-payment", { state: { amount: "1000", purpose: "tier-upgrade" } });
@@ -246,15 +269,28 @@ const Withdraw = () => {
               transition={{ duration: 0.3 }}
             >
               <div className="text-center mb-8">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mx-auto mb-4">
-                  <Wallet className="w-8 h-8 text-white" />
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                  withdrawalType === "investment" 
+                    ? "bg-gradient-to-br from-blue-400 to-indigo-600" 
+                    : "bg-gradient-to-br from-green-400 to-emerald-600"
+                }`}>
+                  {withdrawalType === "investment" ? (
+                    <TrendingUp className="w-8 h-8 text-white" />
+                  ) : (
+                    <Gift className="w-8 h-8 text-white" />
+                  )}
                 </div>
                 <h1 className="text-3xl md:text-4xl font-black mb-2">
-                  Withdraw Your <span className="text-gradient">Funds</span>
+                  Withdraw {withdrawalType === "investment" ? "Investment" : "Grant"} <span className="text-gradient">Funds</span>
                 </h1>
                 <p className="text-muted-foreground">
                   Available balance: <span className="font-bold text-foreground">${withdrawableAmount.toLocaleString()}</span>
                 </p>
+                {withdrawalType === "investment" && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Includes principal + ~8% estimated returns
+                  </p>
+                )}
               </div>
 
               <Card className="p-6 mb-6">
@@ -380,10 +416,10 @@ const Withdraw = () => {
               </Button>
 
               <button 
-                onClick={() => navigate("/user-dashboard")}
+                onClick={() => navigate(withdrawalType === "investment" ? "/investment" : "/user-dashboard")}
                 className="w-full mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                ← Return to Dashboard
+                ← Return to {withdrawalType === "investment" ? "Investment Dashboard" : "Dashboard"}
               </button>
             </motion.div>
           )}
