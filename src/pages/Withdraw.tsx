@@ -19,6 +19,7 @@ const Withdraw = () => {
   
   const [loading, setLoading] = useState(true);
   const [currentTier, setCurrentTier] = useState(1);
+  const [totalInvestment, setTotalInvestment] = useState(0);
   const [withdrawableAmount, setWithdrawableAmount] = useState(0);
   const [selectedCrypto, setSelectedCrypto] = useState("usdt");
   const [walletAddress, setWalletAddress] = useState("");
@@ -26,6 +27,23 @@ const Withdraw = () => {
   const [customAmount, setCustomAmount] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
+
+  const getTierInfo = () => {
+    if (currentTier === 3) {
+      return { current: "VIP Legacy", next: null, threshold: 10000, nextThreshold: null };
+    } else if (currentTier === 2) {
+      return { current: "Quantum Leap", next: "VIP Legacy", threshold: 1000, nextThreshold: 10000 };
+    } else {
+      return { current: "Gateway", next: "Quantum Leap", threshold: 0, nextThreshold: 1000 };
+    }
+  };
+
+  const getProgressPercentage = () => {
+    const tierInfo = getTierInfo();
+    if (!tierInfo.nextThreshold) return 100;
+    const progress = ((totalInvestment - tierInfo.threshold) / (tierInfo.nextThreshold - tierInfo.threshold)) * 100;
+    return Math.min(Math.max(progress, 0), 100);
+  };
 
   useEffect(() => {
     const checkTierStatus = async () => {
@@ -46,6 +64,7 @@ const Withdraw = () => {
 
         if (profile) {
           setCurrentTier(profile.tier_level);
+          setTotalInvestment(Number(profile.total_investment) || 0);
           
           if (withdrawalType === "investment") {
             // For investment withdrawals, use verified investment total
@@ -318,6 +337,52 @@ const Withdraw = () => {
                     <span>Tier 2 upgrade required to withdraw</span>
                   </div>
                 )}
+
+                {/* Tier Progress Bar */}
+                <Card className="mt-6 p-4 bg-card/50 border-border/50">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-sm font-semibold ${
+                        currentTier === 1 ? "text-amber-500" : currentTier === 2 ? "text-blue-500" : "text-purple-500"
+                      }`}>
+                        Tier {currentTier}: {getTierInfo().current}
+                      </span>
+                    </div>
+                    {getTierInfo().next && (
+                      <span className="text-xs text-muted-foreground">
+                        Next: {getTierInfo().next}
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="relative h-3 bg-muted rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${getProgressPercentage()}%` }}
+                      transition={{ duration: 0.8, ease: "easeOut" }}
+                      className={`absolute h-full rounded-full ${
+                        currentTier === 1 
+                          ? "bg-gradient-to-r from-amber-400 to-amber-500" 
+                          : currentTier === 2 
+                            ? "bg-gradient-to-r from-blue-400 to-blue-500" 
+                            : "bg-gradient-to-r from-purple-400 to-purple-500"
+                      }`}
+                    />
+                  </div>
+                  
+                  <div className="flex items-center justify-between mt-2 text-xs">
+                    <span className="text-muted-foreground">
+                      ${totalInvestment.toLocaleString()} invested
+                    </span>
+                    {getTierInfo().nextThreshold ? (
+                      <span className="text-muted-foreground">
+                        ${(getTierInfo().nextThreshold! - totalInvestment).toLocaleString()} to {getTierInfo().next}
+                      </span>
+                    ) : (
+                      <span className="text-purple-500 font-medium">Max tier reached!</span>
+                    )}
+                  </div>
+                </Card>
               </div>
 
               <Card className="p-6 mb-6">
