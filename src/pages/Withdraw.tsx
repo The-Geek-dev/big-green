@@ -150,6 +150,7 @@ const Withdraw = () => {
         .from("withdrawal_requests")
         .insert({
           user_id: user.id,
+          user_email: user.email,
           amount: amount,
           crypto_type: selectedCrypto.toUpperCase(),
           wallet_address: walletAddress.trim(),

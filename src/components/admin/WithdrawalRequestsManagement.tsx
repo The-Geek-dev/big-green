@@ -26,6 +26,7 @@ import { CheckCircle, XCircle, Clock, Wallet, DollarSign } from "lucide-react";
 interface WithdrawalRequest {
   id: string;
   user_id: string;
+  user_email: string | null;
   amount: number;
   crypto_type: string;
   wallet_address: string;
@@ -126,6 +127,7 @@ const WithdrawalRequestsManagement = () => {
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>User</TableHead>
           <TableHead>Crypto</TableHead>
           <TableHead>Amount</TableHead>
           <TableHead>Wallet Address</TableHead>
@@ -137,13 +139,24 @@ const WithdrawalRequestsManagement = () => {
       <TableBody>
         {data.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+            <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
               No withdrawal requests found
             </TableCell>
           </TableRow>
         ) : (
           data.map((request) => (
             <TableRow key={request.id}>
+              <TableCell>
+                <span className="text-sm font-medium">
+                  {request.user_email || "N/A"}
+                </span>
+              </TableCell>
+          <TableRow>
+            <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+              No withdrawal requests found
+            </TableCell>
+          </TableRow>
+        ) : (
               <TableCell>
                 <div className="flex items-center gap-2">
                   {getCryptoIcon()}

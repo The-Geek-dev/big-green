@@ -101,6 +101,7 @@ export type Database = {
           crypto_amount: string
           crypto_type: string
           id: string
+          purpose: string
           transaction_hash: string
           updated_at: string
           user_id: string
@@ -116,6 +117,7 @@ export type Database = {
           crypto_amount: string
           crypto_type: string
           id?: string
+          purpose?: string
           transaction_hash: string
           updated_at?: string
           user_id: string
@@ -131,6 +133,7 @@ export type Database = {
           crypto_amount?: string
           crypto_type?: string
           id?: string
+          purpose?: string
           transaction_hash?: string
           updated_at?: string
           user_id?: string
@@ -246,6 +249,7 @@ export type Database = {
           processed_by: string | null
           status: string
           updated_at: string
+          user_email: string | null
           user_id: string
           wallet_address: string
         }
@@ -259,6 +263,7 @@ export type Database = {
           processed_by?: string | null
           status?: string
           updated_at?: string
+          user_email?: string | null
           user_id: string
           wallet_address: string
         }
@@ -272,6 +277,7 @@ export type Database = {
           processed_by?: string | null
           status?: string
           updated_at?: string
+          user_email?: string | null
           user_id?: string
           wallet_address?: string
         }
