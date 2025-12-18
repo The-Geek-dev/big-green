@@ -5,10 +5,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import { LogOut, Home, CheckCircle, XCircle, Clock, FileText, Key, Bitcoin } from "lucide-react";
+import { LogOut, Home, CheckCircle, XCircle, Clock, FileText, Key, Bitcoin, Wallet } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TokenManagement } from "@/components/admin/TokenManagement";
 import CryptoTransactionsManagement from "@/components/admin/CryptoTransactionsManagement";
+import WithdrawalRequestsManagement from "@/components/admin/WithdrawalRequestsManagement";
 import {
   Table,
   TableBody,
@@ -159,14 +160,18 @@ const AdminDashboard = () => {
           </div>
 
           <Tabs defaultValue="applications" className="w-full">
-            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8">
+            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-4 mb-8">
               <TabsTrigger value="applications" className="gap-2">
                 <FileText className="w-4 h-4" />
                 Applications
               </TabsTrigger>
               <TabsTrigger value="crypto" className="gap-2">
                 <Bitcoin className="w-4 h-4" />
-                Crypto Payments
+                Crypto
+              </TabsTrigger>
+              <TabsTrigger value="withdrawals" className="gap-2">
+                <Wallet className="w-4 h-4" />
+                Withdrawals
               </TabsTrigger>
               <TabsTrigger value="tokens" className="gap-2">
                 <Key className="w-4 h-4" />
@@ -250,6 +255,10 @@ const AdminDashboard = () => {
 
             <TabsContent value="crypto">
               <CryptoTransactionsManagement />
+            </TabsContent>
+
+            <TabsContent value="withdrawals">
+              <WithdrawalRequestsManagement />
             </TabsContent>
 
             <TabsContent value="tokens">
