@@ -37,7 +37,7 @@ interface Transaction {
 const PaymentConfirmation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount, cryptoType, cryptoAmount, applicationId } = location.state || {};
+  const { amount, cryptoType, cryptoAmount, applicationId, purpose, investmentName } = location.state || {};
   
   const [loading, setLoading] = useState(false);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -107,7 +107,8 @@ const PaymentConfirmation = () => {
           crypto_type: formData.cryptoType,
           amount_usd: parseFloat(amount || "0"),
           crypto_amount: formData.cryptoAmount,
-          verification_status: "pending"
+          verification_status: "pending",
+          purpose: purpose || "investment"
         });
 
       if (error) {
