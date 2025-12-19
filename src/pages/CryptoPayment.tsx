@@ -13,7 +13,7 @@ interface CryptoPrices {
   tether: number;
 }
 
-type PaymentPurpose = "donation" | "tier-upgrade" | "investment";
+type PaymentPurpose = "donation" | "tier-upgrade" | "investment" | "cybertruck-token";
 
 const CryptoPayment = () => {
   const navigate = useNavigate();
@@ -27,6 +27,8 @@ const CryptoPayment = () => {
   const investmentName = location.state?.investmentName;
   const investmentSymbol = location.state?.investmentSymbol;
   const investmentType = location.state?.investmentType;
+  const returnTo = location.state?.returnTo;
+  const customization = location.state?.customization;
   
   // Determine payment purpose
   const paymentPurpose: PaymentPurpose = statePurpose || (queryAmount ? "donation" : "tier-upgrade");
@@ -108,6 +110,7 @@ const CryptoPayment = () => {
 
   const isDonation = paymentPurpose === "donation";
   const isInvestment = paymentPurpose === "investment";
+  const isCybertruckTokenPurpose = paymentPurpose === "cybertruck-token";
   
   // Determine which tier upgrade based on amount
   const getTierUpgradeInfo = () => {
@@ -163,6 +166,15 @@ const CryptoPayment = () => {
       subtitle: `Send your investment of`,
       bgAccent: "bg-emerald-50 border-emerald-200",
       infoBg: "bg-green-50 border-green-200"
+    },
+    "cybertruck-token": {
+      icon: Wallet,
+      iconGradient: "from-gray-500 to-gray-700",
+      title: "Purchase",
+      highlight: "Cybertruck Token Key",
+      subtitle: `Send your payment of`,
+      bgAccent: "bg-gray-50 border-gray-200",
+      infoBg: "bg-gray-50 border-gray-200"
     }
   };
 
@@ -205,7 +217,9 @@ const CryptoPayment = () => {
                   ? "Your transaction will be processed once we receive the payment"
                   : isInvestment
                     ? "Your investment will be added to your portfolio after admin verification"
-                    : "Your tier will be upgraded once we verify your payment"
+                    : isCybertruckTokenPurpose
+                      ? "You will receive your token key after admin verification"
+                      : "Your tier will be upgraded once we verify your payment"
                 }
               </p>
             )}
@@ -272,7 +286,9 @@ const CryptoPayment = () => {
                   ? "Once you've sent your donation, submit your transaction hash to verify your payment."
                   : isInvestment
                     ? "Once you've sent your investment, submit your transaction hash for admin verification."
-                    : "Once you've sent the upgrade fee, submit your transaction hash to complete your tier upgrade."
+                    : isCybertruckTokenPurpose
+                      ? "Once you've sent your payment, submit your transaction hash. Admin will provide your token key after verification."
+                      : "Once you've sent the upgrade fee, submit your transaction hash to complete your tier upgrade."
                 }
               </p>
               <Button
@@ -285,7 +301,9 @@ const CryptoPayment = () => {
                     purpose: paymentPurpose,
                     investmentName: investmentName,
                     investmentSymbol: investmentSymbol,
-                    investmentType: investmentType
+                    investmentType: investmentType,
+                    returnTo: returnTo,
+                    customization: customization
                   }
                 })}
               >
@@ -304,6 +322,8 @@ const CryptoPayment = () => {
                   <li>• Your donation is tax-deductible</li>
                 ) : isInvestment ? (
                   <li>• Your investment will reflect in your dashboard after admin approval</li>
+                ) : isCybertruckTokenPurpose ? (
+                  <li>• Your token key will be provided after admin verification</li>
                 ) : (
                   <li>• Your tier benefits will activate after verification</li>
                 )}

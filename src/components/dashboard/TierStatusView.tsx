@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star, Award, Trophy, ArrowRight, CheckCircle, Clock, Download, Wallet, Timer } from "lucide-react";
+import { Star, Award, Trophy, ArrowRight, CheckCircle, Clock, Download, Wallet, Timer, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
@@ -372,6 +372,34 @@ export const TierStatusView = () => {
           <div className={`bg-gradient-to-r ${currentTierData.color} rounded-xl p-4 mb-6`}>
             <p className="text-white font-bold text-center">{currentTierData.special}</p>
           </div>
+        )}
+
+        {/* Cybertruck Button for Tier 3 */}
+        {currentTier === 3 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl p-6 mb-6 border border-white/20"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center">
+                  <Truck className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-white">Tesla Cybertruck</h4>
+                  <p className="text-white/60 text-sm">Your complimentary VIP reward is ready to customize</p>
+                </div>
+              </div>
+              <Button
+                onClick={() => navigate("/cybertruck-customize")}
+                className="bg-white text-black hover:bg-white/90 font-bold px-6"
+              >
+                <Truck className="w-4 h-4 mr-2" />
+                Customize Cybertruck
+              </Button>
+            </div>
+          </motion.div>
         )}
 
         <div className="space-y-2">
