@@ -151,6 +151,114 @@ export type Database = {
           },
         ]
       }
+      cybertruck_orders: {
+        Row: {
+          accessories: string[] | null
+          address: string
+          admin_notes: string | null
+          city: string
+          color: string
+          country: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          interior: string
+          model: string
+          order_status: string
+          state: string
+          token_key: string | null
+          token_key_verified: boolean
+          token_payment_status: string
+          updated_at: string
+          user_id: string
+          verified_at: string | null
+          verified_by: string | null
+          zip_code: string
+        }
+        Insert: {
+          accessories?: string[] | null
+          address: string
+          admin_notes?: string | null
+          city: string
+          color?: string
+          country?: string
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          interior?: string
+          model?: string
+          order_status?: string
+          state: string
+          token_key?: string | null
+          token_key_verified?: boolean
+          token_payment_status?: string
+          updated_at?: string
+          user_id: string
+          verified_at?: string | null
+          verified_by?: string | null
+          zip_code: string
+        }
+        Update: {
+          accessories?: string[] | null
+          address?: string
+          admin_notes?: string | null
+          city?: string
+          color?: string
+          country?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          interior?: string
+          model?: string
+          order_status?: string
+          state?: string
+          token_key?: string | null
+          token_key_verified?: boolean
+          token_payment_status?: string
+          updated_at?: string
+          user_id?: string
+          verified_at?: string | null
+          verified_by?: string | null
+          zip_code?: string
+        }
+        Relationships: []
+      }
+      cybertruck_tokens: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          expires_at: string | null
+          id: string
+          is_used: boolean
+          token_key: string
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          is_used?: boolean
+          token_key: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          is_used?: boolean
+          token_key?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
