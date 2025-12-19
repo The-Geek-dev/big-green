@@ -82,6 +82,8 @@ const App = () => (
       <Route path="/user-dashboard" element={<UserDashboard />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/withdraw" element={<Withdraw />} />
+      <Route path="/cybertruck-customize" element={<CybertruckCustomize />} />
+      <Route path="/cybertruck-order" element={<CybertruckOrder />} />
           </Routes>
           <FloatingAIChat />
           <WelcomeTour />
