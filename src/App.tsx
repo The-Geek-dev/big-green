@@ -37,6 +37,8 @@ import ForEducators from "./pages/ForEducators";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import Withdraw from "./pages/Withdraw";
+import CybertruckCustomize from "./pages/CybertruckCustomize";
+import CybertruckOrder from "./pages/CybertruckOrder";
 
 const queryClient = new QueryClient();
 
