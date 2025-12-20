@@ -6,6 +6,13 @@ import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
+interface PendingUpgrade {
+  id: string;
+  amount_usd: number;
+  created_at: string;
+  verification_status: string;
+}
+
 export const TierStatusView = () => {
   const navigate = useNavigate();
   const [currentTier, setCurrentTier] = useState(1);
@@ -14,7 +21,7 @@ export const TierStatusView = () => {
   const [userName, setUserName] = useState("");
   const [timeUntilNextBonus, setTimeUntilNextBonus] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [accumulatedBonus, setAccumulatedBonus] = useState(0);
-
+  const [pendingUpgrade, setPendingUpgrade] = useState<PendingUpgrade | null>(null);
   // Calculate time until next bonus (resets at midnight UTC)
   const calculateTimeUntilReset = useCallback(() => {
     const now = new Date();
@@ -64,6 +71,21 @@ export const TierStatusView = () => {
           const dailyBonus = profile.tier_level === 3 ? 500 : profile.tier_level === 2 ? 100 : 20;
           // Simulate some accumulated bonus (in real app, this would come from database)
           setAccumulatedBonus(dailyBonus * 3); // 3 days worth as example
+        }
+
+        // Check for pending tier upgrade transactions
+        const { data: pendingTx } = await supabase
+          .from("crypto_transactions")
+          .select("id, amount_usd, created_at, verification_status")
+          .eq("user_id", user.id)
+          .eq("purpose", "tier-upgrade")
+          .eq("verification_status", "pending")
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (pendingTx) {
+          setPendingUpgrade(pendingTx);
         }
       } catch (error) {
         console.error("Error fetching tier data:", error);
@@ -230,6 +252,42 @@ export const TierStatusView = () => {
 
   return (
     <div className="space-y-6">
+      {/* Pending Tier Upgrade Banner */}
+      {pendingUpgrade && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-xl border border-yellow-500/40 rounded-2xl p-5"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-yellow-500/30 flex items-center justify-center">
+              <Clock className="w-6 h-6 text-yellow-400 animate-pulse" />
+            </div>
+            <div className="flex-1">
+              <h4 className="text-lg font-semibold text-white flex items-center gap-2">
+                Tier Upgrade Pending Verification
+                <span className="px-2 py-0.5 bg-yellow-500/30 text-yellow-300 text-xs rounded-full">
+                  Processing
+                </span>
+              </h4>
+              <p className="text-white/60 text-sm">
+                Your ${pendingUpgrade.amount_usd.toLocaleString()} tier upgrade payment is being verified by our team. 
+                This usually takes 24-48 hours.
+              </p>
+              <p className="text-white/40 text-xs mt-1">
+                Submitted on {new Date(pendingUpgrade.created_at).toLocaleDateString('en-US', { 
+                  month: 'short', 
+                  day: 'numeric', 
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Portfolio & Daily Bonus Cards */}
       <div className="grid md:grid-cols-3 gap-4">
         {/* Portfolio Value Card */}
