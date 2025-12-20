@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award, Bot, Menu, Home, Leaf } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award, Bot, Menu, Home, Leaf, History } from "lucide-react";
 import { DashboardView } from "@/components/dashboard/DashboardView";
 import { MyGardensView } from "@/components/dashboard/MyGardensView";
 import { ProjectsView } from "@/components/dashboard/ProjectsView";
@@ -18,6 +18,7 @@ import { TransfersView } from "@/components/dashboard/TransfersView";
 import { DonateView } from "@/components/dashboard/DonateView";
 import { GrantsView } from "@/components/dashboard/GrantsView";
 import { TierStatusView } from "@/components/dashboard/TierStatusView";
+import { TransactionsHistoryView } from "@/components/dashboard/TransactionsHistoryView";
 import { AIChat } from "@/components/AIChat";
 
 const UserDashboard = () => {
@@ -149,6 +150,7 @@ const UserDashboard = () => {
     { name: "Documents", icon: FileText },
     { name: "Analytics", icon: TrendingUp },
     { name: "Transfers", icon: ArrowLeftRight },
+    { name: "Transactions", icon: History },
     { name: "Community", icon: Users },
     { name: "Donate", icon: Heart },
     { name: "Grants", icon: Award },
@@ -257,7 +259,7 @@ const UserDashboard = () => {
             {/* Tabs - scrollable on mobile */}
             <div className="flex-1 overflow-x-auto hide-scrollbar">
               <div className="flex items-center gap-4 lg:gap-8 min-w-max">
-                {["Dashboard", "My Gardens", "Projects", "Community", "Donate", "Grants", "Tier Status", "AI Assistant"].map((tab) => (
+                {["Dashboard", "My Gardens", "Projects", "Community", "Donate", "Grants", "Tier Status", "Transactions", "AI Assistant"].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
@@ -305,6 +307,7 @@ const UserDashboard = () => {
             {activeTab === "Documents" && <DocumentsView />}
             {activeTab === "Analytics" && <AnalyticsView />}
             {activeTab === "Transfers" && <TransfersView />}
+            {activeTab === "Transactions" && <TransactionsHistoryView />}
             {activeTab === "Donate" && <DonateView />}
             {activeTab === "Grants" && <GrantsView onNavigateToTab={setActiveTab} />}
             {activeTab === "Tier Status" && <TierStatusView />}
