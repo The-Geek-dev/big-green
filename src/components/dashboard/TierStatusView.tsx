@@ -461,7 +461,13 @@ export const TierStatusView = () => {
                 </div>
               ) : tier.id > currentTier ? (
                 <Button
-                  onClick={() => navigate("/investment")}
+                  onClick={() => navigate("/crypto-payment", { 
+                    state: { 
+                      amount: tier.id === 2 ? 1000 : 3500,
+                      purpose: "tier-upgrade",
+                      targetTier: tier.id
+                    }
+                  })}
                   variant="outline"
                   size="sm"
                   className="w-full bg-white/5 border-white/20 text-white hover:bg-white/10"
@@ -490,10 +496,16 @@ export const TierStatusView = () => {
             Unlock higher rewards and exclusive benefits with the next tier
           </p>
           <Button
-            onClick={() => navigate("/investment")}
+            onClick={() => navigate("/crypto-payment", { 
+              state: { 
+                amount: currentTier === 1 ? 1000 : 3500,
+                purpose: "tier-upgrade",
+                targetTier: currentTier + 1
+              }
+            })}
             className="bg-gradient-to-r from-primary to-yellow-500 text-white hover:opacity-90"
           >
-            Explore Investment Options
+            Upgrade to Tier {currentTier + 1}
             <ArrowRight className="ml-2 w-4 h-4" />
           </Button>
         </motion.div>
