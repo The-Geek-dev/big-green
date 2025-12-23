@@ -1,12 +1,88 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+
+const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
+};
+
+// Map notification types to preference keys
+const notificationTypeToPreference: Record<string, string> = {
+  transaction_submitted: "email_transactions",
+  transaction_verified: "email_transactions",
+  transaction_rejected: "email_transactions",
+  grant_submitted: "email_grants",
+  grant_approved: "email_grants",
+  grant_rejected: "email_grants",
+  application_submitted: "email_applications",
+  application_approved: "email_applications",
+  application_rejected: "email_applications",
+  withdrawal_submitted: "email_withdrawals",
+  withdrawal_approved: "email_withdrawals",
+  withdrawal_rejected: "email_withdrawals",
+  tier_upgrade_submitted: "email_tier_upgrades",
+  tier_upgrade_verified: "email_tier_upgrades",
+  tier_upgrade_rejected: "email_tier_upgrades",
+};
+
+// Check if user has enabled this notification type
+const checkUserPreference = async (userId: string, notificationType: string): Promise<boolean> => {
+  try {
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const preferenceKey = notificationTypeToPreference[notificationType];
+    
+    if (!preferenceKey) {
+      console.log(`No preference key found for type: ${notificationType}, sending by default`);
+      return true;
+    }
+
+    const { data, error } = await supabase
+      .from("notification_preferences")
+      .select("email_transactions, email_grants, email_applications, email_withdrawals, email_tier_upgrades")
+      .eq("user_id", userId)
+      .single();
+
+    if (error) {
+      console.log(`Error fetching preferences for user ${userId}:`, error.message);
+      // If no preferences found, default to sending
+      return true;
+    }
+
+    // Check the specific preference
+    let isEnabled = true;
+    if (data) {
+      switch (preferenceKey) {
+        case "email_transactions":
+          isEnabled = data.email_transactions ?? true;
+          break;
+        case "email_grants":
+          isEnabled = data.email_grants ?? true;
+          break;
+        case "email_applications":
+          isEnabled = data.email_applications ?? true;
+          break;
+        case "email_withdrawals":
+          isEnabled = data.email_withdrawals ?? true;
+          break;
+        case "email_tier_upgrades":
+          isEnabled = data.email_tier_upgrades ?? true;
+          break;
+      }
+    }
+    
+    console.log(`User ${userId} preference for ${preferenceKey}: ${isEnabled}`);
+    return isEnabled;
+  } catch (error) {
+    console.error("Error checking user preference:", error);
+    return true; // Default to sending on error
+  }
 };
 
 type NotificationType = 
@@ -373,6 +449,18 @@ const handler = async (req: Request): Promise<Response> => {
         status: 200,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
+    }
+
+    // Check user notification preferences if userId is provided
+    if (userId) {
+      const shouldSend = await checkUserPreference(userId, type);
+      if (!shouldSend) {
+        console.log(`User ${userId} has disabled ${type} notifications, skipping email`);
+        return new Response(JSON.stringify({ skipped: true, reason: "User disabled this notification type" }), {
+          status: 200,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      }
     }
 
     console.log(`Sending ${type} notification to:`, userEmail);
