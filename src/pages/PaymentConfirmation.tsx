@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import Navigation from "@/components/Navigation";
 import { ArrowLeft, CheckCircle2, Clock, XCircle, Send } from "lucide-react";
-
+import { sendNotification } from "@/utils/notifications";
 const transactionSchema = z.object({
   transactionHash: z.string()
     .trim()
@@ -116,6 +116,20 @@ const PaymentConfirmation = () => {
         toast.error("Failed to submit transaction. Please try again.");
         return;
       }
+
+      // Send notification email
+      const notificationType = purpose === "tier-upgrade" ? "tier_upgrade_submitted" : "transaction_submitted";
+      await sendNotification(
+        notificationType,
+        session.user.email || "",
+        undefined,
+        {
+          amount: parseFloat(amount || "0"),
+          cryptoType: formData.cryptoType,
+          cryptoAmount: formData.cryptoAmount,
+          transactionHash: formData.transactionHash.trim(),
+        }
+      );
 
       toast.success("Transaction submitted! We'll verify it shortly.");
       setFormData({ ...formData, transactionHash: "" });

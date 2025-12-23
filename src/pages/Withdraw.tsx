@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import { supabase } from "@/integrations/supabase/client";
 import { Wallet, Bitcoin, ArrowRight, AlertTriangle, Lock, Loader2, TrendingUp, Gift, Info } from "lucide-react";
+import { sendNotification } from "@/utils/notifications";
 
 const Withdraw = () => {
   const navigate = useNavigate();
@@ -158,6 +159,18 @@ const Withdraw = () => {
         });
 
       if (error) throw error;
+
+      // Send notification email
+      await sendNotification(
+        "withdrawal_submitted",
+        user.email || "",
+        undefined,
+        {
+          amount: amount,
+          cryptoType: selectedCrypto.toUpperCase(),
+          walletAddress: walletAddress.trim(),
+        }
+      );
 
       toast.success("Withdrawal request submitted successfully! Our team will process it within 24-48 hours.");
       navigate("/user-dashboard");
