@@ -328,6 +328,16 @@ const generateEmailHtml = (
                 </tr>
                 ` : ''}
                 
+                <!-- View Details Button -->
+                <tr>
+                  <td style="padding: 10px 40px 30px; text-align: center;">
+                    <a href="${Deno.env.get('APP_URL') || 'https://xhpvshnftocsdrifrsvf.lovableproject.com'}/user-dashboard" 
+                       style="display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: bold; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);">
+                      View Details →
+                    </a>
+                  </td>
+                </tr>
+                
                 <!-- Footer -->
                 <tr>
                   <td style="padding: 30px 40px; text-align: center; border-top: 1px solid #e5e7eb;">
