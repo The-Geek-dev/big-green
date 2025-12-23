@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, XCircle, Bitcoin, Loader2, ExternalLink } from "lucide-react";
-import { sendNotification } from "@/utils/notifications";
+import { sendNotification, createInAppNotification } from "@/utils/notifications";
 
 interface CryptoTransaction {
   id: string;
@@ -121,13 +121,11 @@ const CryptoTransactionsManagement = () => {
         notificationType = dialogAction === "approve" ? "transaction_verified" : "transaction_rejected";
       }
 
-      // Try to get user email from auth - we need to call the edge function with user_id
-      // The edge function will handle getting the email
+      // Create in-app notification for the user
       try {
-        await sendNotification(
+        await createInAppNotification(
+          selectedTransaction.user_id,
           notificationType,
-          "", // Will be fetched by looking up user in a different way
-          undefined,
           {
             amount: selectedTransaction.amount_usd,
             cryptoType: selectedTransaction.crypto_type,
@@ -136,8 +134,8 @@ const CryptoTransactionsManagement = () => {
             adminNotes: adminNotes || undefined,
           }
         );
-      } catch (emailError) {
-        console.error("Email notification error:", emailError);
+      } catch (notificationError) {
+        console.error("Notification error:", notificationError);
       }
 
       toast.success(`Transaction ${dialogAction === "approve" ? "approved" : "rejected"} successfully`);

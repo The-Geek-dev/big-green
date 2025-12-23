@@ -22,7 +22,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { CheckCircle, XCircle, Clock, Wallet, DollarSign } from "lucide-react";
-import { sendNotification } from "@/utils/notifications";
+import { sendNotification, createInAppNotification } from "@/utils/notifications";
 
 interface WithdrawalRequest {
   id: string;
@@ -95,9 +95,22 @@ const WithdrawalRequestsManagement = () => {
       toast.error("Failed to process withdrawal request");
       console.error(error);
     } else {
-      // Send notification email
+      const notificationType = actionType === "approved" ? "withdrawal_approved" : "withdrawal_rejected";
+      
+      // Create in-app notification
+      await createInAppNotification(
+        selectedRequest.user_id,
+        notificationType,
+        {
+          amount: Number(selectedRequest.amount),
+          cryptoType: selectedRequest.crypto_type,
+          walletAddress: selectedRequest.wallet_address,
+          adminNotes: adminNotes || undefined,
+        }
+      );
+      
+      // Send email notification if we have email
       if (selectedRequest.user_email) {
-        const notificationType = actionType === "approved" ? "withdrawal_approved" : "withdrawal_rejected";
         await sendNotification(
           notificationType,
           selectedRequest.user_email,

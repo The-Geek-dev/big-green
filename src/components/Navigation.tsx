@@ -5,6 +5,8 @@ import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import logoColor from "@/assets/logo-color.png";
 import { supabase } from "@/integrations/supabase/client";
+import NotificationCenter from "./NotificationCenter";
+
 const Navigation = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -107,13 +109,16 @@ const Navigation = () => {
                 {item.name}
               </a>)}
             {isAuthenticated ? (
-              <button
-                onClick={() => navigate("/dashboard")}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-black rounded-full hover:scale-105 transition-all duration-300 font-semibold"
-              >
-                <Award className="w-4 h-4" />
-                <span>{impactScore}</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <NotificationCenter />
+                <button
+                  onClick={() => navigate("/dashboard")}
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-black rounded-full hover:scale-105 transition-all duration-300 font-semibold"
+                >
+                  <Award className="w-4 h-4" />
+                  <span>{impactScore}</span>
+                </button>
+              </div>
             ) : (
               <Button onClick={() => navigate("/auth")} size="sm" className="button-gradient hover-scale">
                 ​APPLY NOW  
@@ -141,16 +146,21 @@ const Navigation = () => {
                       {item.name}
                     </a>)}
                   {isAuthenticated ? (
-                    <button
-                      onClick={() => {
-                        setIsMobileMenuOpen(false);
-                        navigate("/dashboard");
-                      }}
-                      className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-black rounded-full hover:scale-105 transition-all duration-300 font-semibold mt-4"
-                    >
-                      <Award className="w-5 h-5" />
-                      <span>Impact Score: {impactScore}</span>
-                    </button>
+                    <div className="space-y-4 mt-4">
+                      <div className="flex justify-center">
+                        <NotificationCenter />
+                      </div>
+                      <button
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          navigate("/dashboard");
+                        }}
+                        className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-black rounded-full hover:scale-105 transition-all duration-300 font-semibold"
+                      >
+                        <Award className="w-5 h-5" />
+                        <span>Impact Score: {impactScore}</span>
+                      </button>
+                    </div>
                   ) : (
                     <Button onClick={() => {
                     setIsMobileMenuOpen(false);
