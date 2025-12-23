@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import Navigation from "@/components/Navigation";
 import { Heart, Sprout, Users, School } from "lucide-react";
+import { sendNotification } from "@/utils/notifications";
 
 const donationSchema = z.object({
   fullName: z.string().trim().min(2, "Full name must be at least 2 characters").max(100),
@@ -125,6 +126,16 @@ const DonationForm = () => {
         toast.error("Failed to submit donation. Please try again.");
         return;
       }
+
+      // Send notification email
+      await sendNotification(
+        "application_submitted",
+        formData.email,
+        formData.fullName,
+        {
+          amount: parseFloat(formData.donationAmount),
+        }
+      );
 
       toast.success("Donation recorded! Choose your crypto payment method.");
       navigate("/crypto-payment", { state: { amount: formData.donationAmount } });

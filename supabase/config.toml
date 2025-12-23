@@ -2,3 +2,9 @@ project_id = "xhpvshnftocsdrifrsvf"
 
 [functions.send-crypto-notification]
 verify_jwt = false
+
+[functions.send-notification]
+verify_jwt = false
+
+[functions.chat]
+verify_jwt = false

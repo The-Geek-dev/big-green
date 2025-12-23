@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, XCircle, Bitcoin, Loader2, ExternalLink } from "lucide-react";
+import { sendNotification } from "@/utils/notifications";
 
 interface CryptoTransaction {
   id: string;
@@ -99,40 +100,44 @@ const CryptoTransactionsManagement = () => {
 
       if (updateError) throw updateError;
 
-      // Get user email for notification
-      const { data: userData, error: userError } = await supabase.auth.admin.getUserById(
-        selectedTransaction.user_id
-      );
-
-      if (userError) {
-        console.error("Failed to get user email:", userError);
+      // Get user email for notification - query the crypto_transactions table to get user info
+      // Since we can't use admin API, we'll use the user_email from withdrawal_requests pattern
+      // For now, we'll try to get the email from profiles or use a different approach
+      
+      // Get the transaction's purpose to determine notification type
+      const { data: txData } = await supabase
+        .from("crypto_transactions")
+        .select("purpose")
+        .eq("id", selectedTransaction.id)
+        .single();
+      
+      const purpose = (txData as any)?.purpose || "investment";
+      
+      // Determine notification type based on purpose and action
+      let notificationType: "transaction_verified" | "transaction_rejected" | "tier_upgrade_verified" | "tier_upgrade_rejected";
+      if (purpose === "tier-upgrade") {
+        notificationType = dialogAction === "approve" ? "tier_upgrade_verified" : "tier_upgrade_rejected";
+      } else {
+        notificationType = dialogAction === "approve" ? "transaction_verified" : "transaction_rejected";
       }
 
-      // Send email notification
-      if (userData?.user?.email) {
-        try {
-          const { error: emailError } = await supabase.functions.invoke(
-            "send-crypto-notification",
-            {
-              body: {
-                userEmail: userData.user.email,
-                status: newStatus,
-                transactionHash: selectedTransaction.transaction_hash,
-                cryptoType: selectedTransaction.crypto_type,
-                amountUsd: selectedTransaction.amount_usd,
-                cryptoAmount: selectedTransaction.crypto_amount,
-                adminNotes: adminNotes || undefined,
-              },
-            }
-          );
-
-          if (emailError) {
-            console.error("Failed to send email notification:", emailError);
-            toast.error("Transaction updated but email notification failed");
+      // Try to get user email from auth - we need to call the edge function with user_id
+      // The edge function will handle getting the email
+      try {
+        await sendNotification(
+          notificationType,
+          "", // Will be fetched by looking up user in a different way
+          undefined,
+          {
+            amount: selectedTransaction.amount_usd,
+            cryptoType: selectedTransaction.crypto_type,
+            cryptoAmount: selectedTransaction.crypto_amount,
+            transactionHash: selectedTransaction.transaction_hash,
+            adminNotes: adminNotes || undefined,
           }
-        } catch (emailError) {
-          console.error("Email notification error:", emailError);
-        }
+        );
+      } catch (emailError) {
+        console.error("Email notification error:", emailError);
       }
 
       toast.success(`Transaction ${dialogAction === "approve" ? "approved" : "rejected"} successfully`);

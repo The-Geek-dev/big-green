@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import Navigation from "@/components/Navigation";
 import { Award, Zap, TrendingUp } from "lucide-react";
+import { sendNotification } from "@/utils/notifications";
 
 const grantSchema = z.object({
   fullName: z.string().trim().min(2, "Full name must be at least 2 characters").max(100),
@@ -150,6 +151,16 @@ const GrantApplication = () => {
         toast.error("Failed to submit application. Please try again.");
         return;
       }
+
+      // Send notification email
+      await sendNotification(
+        "grant_submitted",
+        formData.email,
+        formData.fullName,
+        {
+          grantType: selectedTier?.title,
+        }
+      );
 
       toast.success("Grant application submitted successfully!");
       navigate("/dashboard");
