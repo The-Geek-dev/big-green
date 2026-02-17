@@ -53,12 +53,14 @@ const UserDashboard = () => {
         setUserEmail(session.user.email || "");
         
         // Check application status
-        const { data: applicationData, error } = await supabase
+        const { data: applications, error } = await supabase
           .from("applications")
           .select("status")
           .eq("user_id", session.user.id)
-          .maybeSingle();
+          .eq("status", "approved")
+          .limit(1);
         
+        const applicationData = applications?.[0] || null;
         console.log("Application check:", { applicationData, error, userId: session.user.id });
         
         // Only redirect if we're sure the application doesn't exist or is not approved
