@@ -84,10 +84,19 @@ const Withdraw = () => {
               setWithdrawableAmount(0);
             }
           } else {
-            // For grant withdrawals, use the original logic
+            // For grant withdrawals, check application type for base amount
+            const { data: appData } = await supabase
+              .from("applications")
+              .select("application_type")
+              .eq("user_id", user.id)
+              .order("created_at", { ascending: false })
+              .limit(1)
+              .single();
+
+            const baseGrant = appData?.application_type === "business_funding" ? 150000 : 65000;
             const dailyBonus = profile.tier_level === 3 ? 500 : profile.tier_level === 2 ? 100 : 20;
             const accumulatedBonus = dailyBonus * 3; // Simulated 3 days
-            setWithdrawableAmount(65000 + accumulatedBonus);
+            setWithdrawableAmount(baseGrant + accumulatedBonus);
           }
         }
       } catch (error) {
