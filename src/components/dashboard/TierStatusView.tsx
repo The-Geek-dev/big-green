@@ -22,6 +22,7 @@ export const TierStatusView = () => {
   const [timeUntilNextBonus, setTimeUntilNextBonus] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [accumulatedBonus, setAccumulatedBonus] = useState(0);
   const [pendingUpgrade, setPendingUpgrade] = useState<PendingUpgrade | null>(null);
+  const [baseGrant, setBaseGrant] = useState(65000);
   // Calculate time until next bonus (resets at midnight UTC)
   const calculateTimeUntilReset = useCallback(() => {
     const now = new Date();
@@ -71,6 +72,19 @@ export const TierStatusView = () => {
           const dailyBonus = profile.tier_level === 3 ? 500 : profile.tier_level === 2 ? 100 : 20;
           // Simulate some accumulated bonus (in real app, this would come from database)
           setAccumulatedBonus(dailyBonus * 3); // 3 days worth as example
+        }
+
+        // Check if user has a business_funding application to determine base grant
+        const { data: appData } = await supabase
+          .from("applications")
+          .select("application_type")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .single();
+
+        if (appData?.application_type === "business_funding") {
+          setBaseGrant(150000);
         }
 
         // Check for pending tier upgrade transactions
@@ -244,8 +258,8 @@ export const TierStatusView = () => {
     );
   }
 
-  // Calculate withdrawable amount ($65,000 base + accumulated bonus)
-  const baseWithdrawable = 65000;
+  // Calculate withdrawable amount (base grant + accumulated bonus)
+  const baseWithdrawable = baseGrant;
   const withdrawableAmount = baseWithdrawable + accumulatedBonus;
   const portfolioValue = totalInvestment + withdrawableAmount;
   const dailyBonusAmount = currentTier === 3 ? 500 : currentTier === 2 ? 100 : 20;
