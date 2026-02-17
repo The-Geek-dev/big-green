@@ -60,9 +60,11 @@ export const TierStatusView = () => {
           .from("profiles")
           .select("tier_level, total_investment")
           .eq("user_id", user.id)
-          .single();
+          .maybeSingle();
 
-        if (error) throw error;
+        if (error) {
+          console.error("Error fetching profile:", error);
+        }
 
         if (profile) {
           setCurrentTier(profile.tier_level);
@@ -74,16 +76,15 @@ export const TierStatusView = () => {
           setAccumulatedBonus(dailyBonus * 3); // 3 days worth as example
         }
 
-        // Check if user has a business_funding application to determine base grant
-        const { data: appData } = await supabase
+        // Check if user has a business funding application to determine base grant
+        const { data: bfApps, error: bfError } = await supabase
           .from("applications")
           .select("application_type")
           .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .single();
+          .in("application_type", ["business_funding", "business funding"])
+          .limit(1);
 
-        if (appData?.application_type === "business_funding") {
+        if (bfApps && bfApps.length > 0) {
           setBaseGrant(150000);
         }
 
@@ -192,16 +193,18 @@ export const TierStatusView = () => {
     toast.success("Certificate downloaded successfully!");
   };
 
+  const formattedGrant = `$${baseGrant.toLocaleString()}`;
+
   const tiers = [
     {
       id: 1,
       name: "Tier 1: The Gateway",
       icon: Star,
-      grant: "$65,000",
+      grant: formattedGrant,
       dailyBonus: "$20",
       color: "from-green-500 to-emerald-600",
       benefits: [
-        "$65,000 instant grant eligibility",
+        `${formattedGrant} instant grant eligibility`,
         "$20 consistent daily bonus",
         "Official welcome packet via email",
         "Certificate of acknowledgment",
