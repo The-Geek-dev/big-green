@@ -120,6 +120,15 @@ export const DashboardView = ({ userEmail, applicationType }: DashboardViewProps
           .order("created_at", { ascending: false })
           .limit(5);
 
+        // Fetch active applications
+        const { data: apps } = await supabase
+          .from("applications")
+          .select("id, application_type, status, created_at")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false });
+
+        if (apps) setApplications(apps);
+
         const combined: Transaction[] = [
           ...(cryptoTx || []).map((t) => ({
             id: t.id,
