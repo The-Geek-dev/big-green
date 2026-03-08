@@ -31,6 +31,7 @@ const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSidebarSection, setActiveSidebarSection] = useState("Dashboard");
+  const [applicationType, setApplicationType] = useState<string>("grant");
 
   const handleSidebarNavigation = (section: string) => {
     setActiveSidebarSection(section);
@@ -74,6 +75,19 @@ const UserDashboard = () => {
           console.log("Application status:", applicationData.status);
           navigate("/dashboard");
           return;
+        }
+        
+        // Fetch application type
+        const { data: appTypeData } = await supabase
+          .from("applications")
+          .select("application_type")
+          .eq("user_id", session.user.id)
+          .eq("status", "approved")
+          .order("created_at", { ascending: false })
+          .limit(1);
+        
+        if (appTypeData && appTypeData.length > 0) {
+          setApplicationType(appTypeData[0].application_type);
         }
         
         // Check if user is admin
@@ -304,7 +318,7 @@ const UserDashboard = () => {
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.5 }}
           >
-            {activeTab === "Dashboard" && <DashboardView userEmail={userEmail} />}
+            {activeTab === "Dashboard" && <DashboardView userEmail={userEmail} applicationType={applicationType} />}
             {activeTab === "My Gardens" && <MyGardensView />}
             {activeTab === "Projects" && <ProjectsView />}
             {activeTab === "Community" && <CommunityView />}
