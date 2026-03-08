@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 import { Button } from "@/components/ui/button";
-import { Download, ArrowDownToLine, ArrowUpFromLine, Clock, CheckCircle, XCircle, Wallet, TrendingUp, Heart, Award, Briefcase } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ArrowDownToLine, ArrowUpFromLine, Clock, CheckCircle, XCircle, TrendingUp, Heart, Award, Briefcase, Shield, Star, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
