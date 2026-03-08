@@ -58,6 +58,15 @@ const APP_CONFIG: Record<string, {
     chartColor: "#22c55e",
     description: "Your grant funding overview",
   },
+  "grant application": {
+    label: "Grant",
+    baseGrant: 65000,
+    icon: Award,
+    gradient: "from-green-500/20 to-emerald-600/20",
+    accentColor: "text-green-400",
+    chartColor: "#22c55e",
+    description: "Your grant funding overview",
+  },
   investment: {
     label: "Investment",
     baseGrant: 65000,
