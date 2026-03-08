@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 import { Button } from "@/components/ui/button";
-import { Download, ArrowDownToLine, ArrowUpFromLine, Clock, CheckCircle, XCircle, Wallet, TrendingUp, Heart, Award, Briefcase } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ArrowDownToLine, ArrowUpFromLine, Clock, CheckCircle, XCircle, TrendingUp, Heart, Award, Briefcase, Shield, Star, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
@@ -85,6 +86,8 @@ export const DashboardView = ({ userEmail, applicationType }: DashboardViewProps
   const [profile, setProfile] = useState<{ tier_level: number; total_investment: number; impact_score: number } | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [chartPeriod, setChartPeriod] = useState<"1D" | "1W" | "1M" | "All">("1M");
+  const [activeBottomTab, setActiveBottomTab] = useState<"positions" | "history">("positions");
+  const [applications, setApplications] = useState<{ id: string; application_type: string; status: string; created_at: string }[]>([]);
 
   const config = APP_CONFIG[applicationType] || DEFAULT_CONFIG;
 
@@ -117,6 +120,15 @@ export const DashboardView = ({ userEmail, applicationType }: DashboardViewProps
           .eq("user_id", user.id)
           .order("created_at", { ascending: false })
           .limit(5);
+
+        // Fetch active applications
+        const { data: apps } = await supabase
+          .from("applications")
+          .select("id, application_type, status, created_at")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false });
+
+        if (apps) setApplications(apps);
 
         const combined: Transaction[] = [
           ...(cryptoTx || []).map((t) => ({
@@ -335,41 +347,171 @@ export const DashboardView = ({ userEmail, applicationType }: DashboardViewProps
         <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
           <CardContent className="p-0">
             <div className="flex border-b border-white/10">
-              <button className="flex-1 py-3 text-sm font-medium text-white/50 hover:text-white transition-colors">
+              <button
+                onClick={() => setActiveBottomTab("positions")}
+                className={`flex-1 py-3 text-sm font-medium transition-colors ${
+                  activeBottomTab === "positions"
+                    ? "text-white border-b-2 border-white"
+                    : "text-white/50 hover:text-white"
+                }`}
+              >
                 Positions
               </button>
-              <button className="flex-1 py-3 text-sm font-medium text-white border-b-2 border-white">
+              <button
+                onClick={() => setActiveBottomTab("history")}
+                className={`flex-1 py-3 text-sm font-medium transition-colors ${
+                  activeBottomTab === "history"
+                    ? "text-white border-b-2 border-white"
+                    : "text-white/50 hover:text-white"
+                }`}
+              >
                 History
               </button>
             </div>
 
-            <div className="divide-y divide-white/5">
-              {transactions.length === 0 ? (
-                <div className="py-12 text-center text-white/50 text-sm">
-                  No transactions yet. Make your first deposit to get started.
-                </div>
-              ) : (
-                transactions.map((tx) => (
-                  <div key={tx.id} className="flex items-center justify-between px-5 py-4">
+            {activeBottomTab === "positions" ? (
+              <div className="divide-y divide-white/5">
+                {/* Tier Status Card */}
+                <div className="px-5 py-4">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
-                        {getStatusIcon(tx.status)}
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        tierLevel === 3 ? "bg-yellow-500/20" : tierLevel === 2 ? "bg-purple-500/20" : "bg-white/10"
+                      }`}>
+                        {tierLevel === 3 ? <Star className="w-5 h-5 text-yellow-400" /> :
+                         tierLevel === 2 ? <Zap className="w-5 h-5 text-purple-400" /> :
+                         <Shield className="w-5 h-5 text-white/70" />}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-white">{tx.type}</p>
-                        <p className="text-xs text-white/50">{getStatusLabel(tx.status)}</p>
+                        <p className="text-sm font-medium text-white">
+                          {tierLevel === 3 ? "VIP Legacy" : tierLevel === 2 ? "Quantum Leap" : "Gateway"}
+                        </p>
+                        <p className="text-xs text-white/50">Tier {tierLevel} · ${dailyBonus}/day bonus</p>
+                      </div>
+                    </div>
+                    <Badge className={`${
+                      tierLevel === 3 ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" :
+                      tierLevel === 2 ? "bg-purple-500/20 text-purple-400 border-purple-500/30" :
+                      "bg-white/10 text-white/70 border-white/20"
+                    }`}>
+                      Tier {tierLevel}
+                    </Badge>
+                  </div>
+                </div>
+
+                {/* Holdings */}
+                <div className="px-5 py-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                        <Icon className={`w-5 h-5 ${config.accentColor}`} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-white">{config.label} Balance</p>
+                        <p className="text-xs text-white/50">Base + bonuses</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-semibold text-white">
-                        ${tx.amount.toLocaleString()}
-                      </p>
-                      <p className="text-xs text-white/40">{formatTimeAgo(tx.created_at)}</p>
+                      <p className="text-sm font-semibold text-white">${totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                      <p className={`text-xs ${config.accentColor}`}>+${accumulatedBonus.toLocaleString()}</p>
                     </div>
                   </div>
-                ))
-              )}
-            </div>
+                </div>
+
+                {/* Total Investment */}
+                {(profile?.total_investment ?? 0) > 0 && (
+                  <div className="px-5 py-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                          <TrendingUp className="w-5 h-5 text-blue-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-white">Total Invested</p>
+                          <p className="text-xs text-white/50">Verified deposits</p>
+                        </div>
+                      </div>
+                      <p className="text-sm font-semibold text-white">${(profile?.total_investment ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Active Applications / Grants / Funding */}
+                {applications.length > 0 && (
+                  <>
+                    <div className="px-5 pt-4 pb-2">
+                      <p className="text-xs font-medium text-white/40 uppercase tracking-wider">Active Positions</p>
+                    </div>
+                    {applications.map((app) => (
+                      <div key={app.id} className="px-5 py-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                              {app.application_type === "business_funding" || app.application_type === "business funding"
+                                ? <Briefcase className="w-4 h-4 text-emerald-400" />
+                                : app.application_type === "investment"
+                                ? <TrendingUp className="w-4 h-4 text-blue-400" />
+                                : app.application_type === "donation"
+                                ? <Heart className="w-4 h-4 text-pink-400" />
+                                : <Award className="w-4 h-4 text-green-400" />}
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-white capitalize">
+                                {app.application_type.replace(/_/g, " ")}
+                              </p>
+                              <p className="text-xs text-white/40">
+                                {new Date(app.created_at).toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+                          <Badge className={`text-xs ${
+                            app.status === "approved" ? "bg-green-500/20 text-green-400 border-green-500/30" :
+                            app.status === "rejected" ? "bg-red-500/20 text-red-400 border-red-500/30" :
+                            "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+                          }`}>
+                            {app.status}
+                          </Badge>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
+
+                {applications.length === 0 && (profile?.total_investment ?? 0) === 0 && (
+                  <div className="py-8 text-center text-white/50 text-sm">
+                    No active positions yet.
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="divide-y divide-white/5">
+                {transactions.length === 0 ? (
+                  <div className="py-12 text-center text-white/50 text-sm">
+                    No transactions yet. Make your first deposit to get started.
+                  </div>
+                ) : (
+                  transactions.map((tx) => (
+                    <div key={tx.id} className="flex items-center justify-between px-5 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                          {getStatusIcon(tx.status)}
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-white">{tx.type}</p>
+                          <p className="text-xs text-white/50">{getStatusLabel(tx.status)}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-semibold text-white">
+                          ${tx.amount.toLocaleString()}
+                        </p>
+                        <p className="text-xs text-white/40">{formatTimeAgo(tx.created_at)}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
           </CardContent>
         </Card>
       </motion.div>
