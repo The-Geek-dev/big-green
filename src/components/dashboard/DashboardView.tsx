@@ -1,309 +1,378 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card, CardContent } from "@/components/ui/card";
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 import { Button } from "@/components/ui/button";
-import { Download, Calendar, Plus } from "lucide-react";
-import { toast } from "sonner";
+import { Download, ArrowDownToLine, ArrowUpFromLine, Clock, CheckCircle, XCircle, Wallet, TrendingUp, Heart, Award, Briefcase } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-const chartData = [
-  { time: "Jan", value: 0 },
-  { time: "Feb", value: 0 },
-  { time: "Mar", value: 0 },
-  { time: "Apr", value: 0 },
-  { time: "May", value: 0 },
-  { time: "Jun", value: 0 },
-  { time: "Jul", value: 0 },
-  { time: "Aug", value: 0 },
-];
+interface DashboardViewProps {
+  userEmail: string;
+  applicationType: string;
+}
 
-const transactions: Array<{ name: string; change: string; date: string; amount: string; status: string }> = [];
+interface Transaction {
+  id: string;
+  type: string;
+  amount: number;
+  status: string;
+  created_at: string;
+}
 
-export const DashboardView = ({ userEmail }: { userEmail: string }) => {
+// Config per application type
+const APP_CONFIG: Record<string, {
+  label: string;
+  baseGrant: number;
+  icon: React.ElementType;
+  gradient: string;
+  accentColor: string;
+  chartColor: string;
+  description: string;
+}> = {
+  business_funding: {
+    label: "Business Funding",
+    baseGrant: 150000,
+    icon: Briefcase,
+    gradient: "from-emerald-500/20 to-teal-600/20",
+    accentColor: "text-emerald-400",
+    chartColor: "#10b981",
+    description: "Your business funding portfolio",
+  },
+  "business funding": {
+    label: "Business Funding",
+    baseGrant: 150000,
+    icon: Briefcase,
+    gradient: "from-emerald-500/20 to-teal-600/20",
+    accentColor: "text-emerald-400",
+    chartColor: "#10b981",
+    description: "Your business funding portfolio",
+  },
+  grant: {
+    label: "Grant",
+    baseGrant: 65000,
+    icon: Award,
+    gradient: "from-green-500/20 to-emerald-600/20",
+    accentColor: "text-green-400",
+    chartColor: "#22c55e",
+    description: "Your grant funding overview",
+  },
+  investment: {
+    label: "Investment",
+    baseGrant: 65000,
+    icon: TrendingUp,
+    gradient: "from-blue-500/20 to-indigo-600/20",
+    accentColor: "text-blue-400",
+    chartColor: "#3b82f6",
+    description: "Your investment portfolio",
+  },
+  donation: {
+    label: "Donation",
+    baseGrant: 65000,
+    icon: Heart,
+    gradient: "from-pink-500/20 to-rose-600/20",
+    accentColor: "text-pink-400",
+    chartColor: "#ec4899",
+    description: "Your donation impact overview",
+  },
+};
+
+const DEFAULT_CONFIG = APP_CONFIG.grant;
+
+export const DashboardView = ({ userEmail, applicationType }: DashboardViewProps) => {
   const navigate = useNavigate();
-  const [impactScore, setImpactScore] = useState<number>(0);
   const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState<{ tier_level: number; total_investment: number; impact_score: number } | null>(null);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [chartPeriod, setChartPeriod] = useState<"1D" | "1W" | "1M" | "All">("1M");
+
+  const config = APP_CONFIG[applicationType] || DEFAULT_CONFIG;
 
   useEffect(() => {
-    const fetchImpactScore = async () => {
+    const fetchData = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
-        
-        if (user) {
-          const { data, error } = await supabase
-            .from('profiles')
-            .select('impact_score')
-            .eq('user_id', user.id)
-            .single();
-          
-          if (error) {
-            console.error('Error fetching impact score:', error);
-          } else if (data) {
-            setImpactScore(data.impact_score);
-          }
+        if (!user) return;
 
-          // Set up realtime subscription
-          const channel = supabase
-            .channel('dashboard-profile-changes')
-            .on(
-              'postgres_changes',
-              {
-                event: 'UPDATE',
-                schema: 'public',
-                table: 'profiles',
-                filter: `user_id=eq.${user.id}`
-              },
-              (payload) => {
-                console.log('Dashboard: Impact score updated:', payload);
-                if (payload.new && 'impact_score' in payload.new) {
-                  setImpactScore(payload.new.impact_score as number);
-                }
-              }
-            )
-            .subscribe();
+        // Fetch profile
+        const { data: profileData } = await supabase
+          .from("profiles")
+          .select("tier_level, total_investment, impact_score")
+          .eq("user_id", user.id)
+          .maybeSingle();
 
-          return () => {
-            supabase.removeChannel(channel);
-          };
-        }
+        if (profileData) setProfile(profileData);
+
+        // Fetch recent transactions (crypto + withdrawals)
+        const { data: cryptoTx } = await supabase
+          .from("crypto_transactions")
+          .select("id, amount_usd, verification_status, created_at, purpose")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false })
+          .limit(5);
+
+        const { data: withdrawals } = await supabase
+          .from("withdrawal_requests")
+          .select("id, amount, status, created_at")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false })
+          .limit(5);
+
+        const combined: Transaction[] = [
+          ...(cryptoTx || []).map((t) => ({
+            id: t.id,
+            type: t.purpose === "tier-upgrade" ? "Tier Upgrade" : "Deposit",
+            amount: t.amount_usd,
+            status: t.verification_status,
+            created_at: t.created_at,
+          })),
+          ...(withdrawals || []).map((w) => ({
+            id: w.id,
+            type: "Withdrawal",
+            amount: w.amount,
+            status: w.status,
+            created_at: w.created_at,
+          })),
+        ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 8);
+
+        setTransactions(combined);
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error fetching dashboard data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchImpactScore();
+    fetchData();
   }, []);
 
-  const handleStartNewProject = () => {
-    navigate("/application");
+  const tierLevel = profile?.tier_level || 1;
+  const dailyBonus = tierLevel === 3 ? 500 : tierLevel === 2 ? 100 : 20;
+  const accumulatedBonus = dailyBonus * 3;
+  const totalBalance = config.baseGrant + accumulatedBonus;
+  const totalCash = config.baseGrant + accumulatedBonus;
+
+  // Generate chart data based on period
+  const generateChartData = () => {
+    const points = chartPeriod === "1D" ? 24 : chartPeriod === "1W" ? 7 : chartPeriod === "1M" ? 30 : 12;
+    const labels = chartPeriod === "1D"
+      ? Array.from({ length: points }, (_, i) => `${i}h`)
+      : chartPeriod === "1W"
+      ? ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      : chartPeriod === "1M"
+      ? Array.from({ length: 30 }, (_, i) => `${i + 1}`)
+      : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Simulate a growth line toward current balance
+    return labels.map((label, i) => ({
+      time: label,
+      value: Math.round((totalBalance / points) * (i + 1) * (0.85 + Math.random() * 0.3)),
+    }));
   };
 
-  return (
-    <>
-      {/* Welcome Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold mb-1">Welcome back, {userEmail.split('@')[0]}</h1>
-          <p className="text-white/50">Here's your environmental impact and garden analytics.</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm" className="bg-white/5 border-white/10 text-white hover:bg-white/10">
-            <Calendar className="w-4 h-4 mr-2" />
-            January 2024 - August 2024
-          </Button>
-          <Button size="sm" className="bg-green-500 hover:bg-green-600 text-black font-medium" onClick={handleStartNewProject}>
-            <Plus className="w-4 h-4 mr-2" />
-            Start New Project
-          </Button>
-        </div>
+  const chartData = generateChartData();
+
+  const formatTimeAgo = (dateStr: string) => {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const minutes = Math.floor(diff / 60000);
+    if (minutes < 1) return "now";
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    return `${days}d ago`;
+  };
+
+  const getStatusIcon = (status: string) => {
+    if (status === "verified" || status === "approved") return <CheckCircle className="w-4 h-4 text-green-400" />;
+    if (status === "rejected") return <XCircle className="w-4 h-4 text-red-400" />;
+    return <Clock className="w-4 h-4 text-yellow-400" />;
+  };
+
+  const getStatusLabel = (status: string) => {
+    if (status === "verified" || status === "approved") return "Completed";
+    if (status === "rejected") return "Rejected";
+    return "In progress";
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
       </div>
+    );
+  }
 
-      {/* Main Grid */}
-      <div className="grid lg:grid-cols-3 gap-6 mb-6">
-        {/* Left Stats Column */}
-        <div className="space-y-6">
-          <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <p className="text-xs text-white/50 uppercase tracking-wide mb-2">Impact This Month</p>
-              <p className="text-4xl font-bold mb-2">0<span className="text-2xl text-white/50"> people</span></p>
-              <div className="space-y-3 mt-4">
-                <div>
-                  <p className="text-xs text-white/50 mb-1">MONTHLY GROWTH</p>
-                  <p className="text-white/70 text-sm font-medium">0%</p>
-                </div>
-                <div>
-                  <p className="text-xs text-white/50 mb-1">ACTIVE GARDENS</p>
-                  <p className="text-sm font-medium">0 gardens</p>
-                </div>
-                <div>
-                  <p className="text-xs text-white/50 mb-1">TOTAL CO₂ OFFSET</p>
-                  <p className="text-sm font-medium">0 tons</p>
-                </div>
-                <div>
-                  <p className="text-xs text-white/50 mb-1">ENERGY SAVED</p>
-                  <p className="text-sm font-medium">0 kWh</p>
-                </div>
-              </div>
-              <Button 
-                className="w-full mt-6 bg-green-500 hover:bg-green-600 text-black font-medium"
-                onClick={() => toast.info("No data available to download yet")}
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Download Report
-              </Button>
-            </CardContent>
-          </Card>
+  const Icon = config.icon;
+
+  return (
+    <div className="max-w-2xl mx-auto space-y-6">
+      {/* User Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex items-center justify-between"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+            <Icon className={`w-5 h-5 ${config.accentColor}`} />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-white">{userEmail.split("@")[0]}</p>
+            <p className="text-xs text-white/50">{config.label} Account</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Balance Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="text-center py-6"
+      >
+        <p className="text-5xl md:text-6xl font-bold text-white tracking-tight">
+          ${totalBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+        </p>
+        <div className="flex items-center justify-center gap-3 mt-2">
+          <span className={`text-sm font-medium ${config.accentColor}`}>
+            +${accumulatedBonus.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+          </span>
+          <span className="text-sm text-white/50">
+            ${totalCash.toLocaleString()} cash
+          </span>
+        </div>
+      </motion.div>
+
+      {/* Portfolio Chart */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <div className="h-32">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={chartData}>
+              <defs>
+                <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={config.chartColor} stopOpacity={0.3} />
+                  <stop offset="95%" stopColor={config.chartColor} stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="time" hide />
+              <YAxis hide />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#111",
+                  border: "1px solid #333",
+                  borderRadius: "8px",
+                  padding: "6px 10px",
+                  fontSize: "12px",
+                }}
+                labelStyle={{ color: "#fff" }}
+                formatter={(value: number) => [`$${value.toLocaleString()}`, "Value"]}
+              />
+              <Area
+                type="monotone"
+                dataKey="value"
+                stroke={config.chartColor}
+                strokeWidth={2}
+                fill="url(#chartGradient)"
+                dot={false}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
 
-        {/* Center Chart */}
-        <Card className="bg-white/5 border-white/10 backdrop-blur-sm lg:col-span-1">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-lg">Community Impact</CardTitle>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <Download className="w-4 h-4" />
-              </Button>
+        {/* Period Selector */}
+        <div className="flex items-center gap-2 mt-4">
+          {(["1D", "1W", "1M", "All"] as const).map((period) => (
+            <button
+              key={period}
+              onClick={() => setChartPeriod(period)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                chartPeriod === period
+                  ? "bg-white/15 text-white"
+                  : "text-white/50 hover:text-white/75"
+              }`}
+            >
+              {period}
+            </button>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Deposit / Withdraw Buttons */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="grid grid-cols-2 gap-3"
+      >
+        <Button
+          onClick={() => navigate("/crypto-payment")}
+          className="bg-white text-black hover:bg-white/90 rounded-full py-6 text-base font-semibold"
+        >
+          <ArrowDownToLine className="w-5 h-5 mr-2" />
+          Deposit
+        </Button>
+        <Button
+          onClick={() => navigate("/withdraw")}
+          variant="outline"
+          className="border-white/20 text-white hover:bg-white/10 rounded-full py-6 text-base font-semibold"
+        >
+          <ArrowUpFromLine className="w-5 h-5 mr-2" />
+          Withdraw
+        </Button>
+      </motion.div>
+
+      {/* Positions / History */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
+          <CardContent className="p-0">
+            <div className="flex border-b border-white/10">
+              <button className="flex-1 py-3 text-sm font-medium text-white/50 hover:text-white transition-colors">
+                Positions
+              </button>
+              <button className="flex-1 py-3 text-sm font-medium text-white border-b-2 border-white">
+                History
+              </button>
             </div>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={250}>
-              <AreaChart data={chartData}>
-                <defs>
-                  <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-                <XAxis dataKey="time" stroke="#ffffff50" style={{ fontSize: '10px' }} />
-                <YAxis stroke="#ffffff50" style={{ fontSize: '10px' }} />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#000', 
-                    border: '1px solid #ffffff20',
-                    borderRadius: '8px',
-                    padding: '8px'
-                  }}
-                  labelStyle={{ color: '#fff' }}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="value" 
-                  stroke="#10b981" 
-                  strokeWidth={2}
-                  fill="url(#colorValue)" 
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-            <div className="flex items-center gap-4 mt-4">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="text-xs text-white/50">Gardens</span>
-                <span className="text-sm font-bold">0</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
-                <span className="text-xs text-white/50">Members</span>
-                <span className="text-sm font-bold">0</span>
-              </div>
+
+            <div className="divide-y divide-white/5">
+              {transactions.length === 0 ? (
+                <div className="py-12 text-center text-white/50 text-sm">
+                  No transactions yet. Make your first deposit to get started.
+                </div>
+              ) : (
+                transactions.map((tx) => (
+                  <div key={tx.id} className="flex items-center justify-between px-5 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                        {getStatusIcon(tx.status)}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-white">{tx.type}</p>
+                        <p className="text-xs text-white/50">{getStatusLabel(tx.status)}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-white">
+                        ${tx.amount.toLocaleString()}
+                      </p>
+                      <p className="text-xs text-white/40">{formatTimeAgo(tx.created_at)}</p>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </CardContent>
         </Card>
-
-        {/* Right Column */}
-        <div className="space-y-6">
-          {/* Impact Score */}
-          <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <p className="text-sm text-white/50 mb-4">Your impact score</p>
-              <div className="relative w-40 h-40 mx-auto mb-4">
-                <svg className="w-full h-full transform -rotate-90">
-                  <circle cx="80" cy="80" r="70" stroke="#ffffff10" strokeWidth="12" fill="none" />
-                  <circle cx="80" cy="80" r="70" stroke="#10b981" strokeWidth="12" fill="none" strokeDasharray={`${70 * 2 * Math.PI * (impactScore / 500)} ${70 * 2 * Math.PI}`} strokeLinecap="round" />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  {loading ? (
-                    <div className="text-white/50">Loading...</div>
-                  ) : (
-                    <>
-                      <div className="text-sm text-white/50 mb-1">{Math.round((impactScore / 500) * 100)}%</div>
-                      <div className="text-5xl font-bold">{impactScore}</div>
-                      <div className="text-white/50 text-xs mt-1">points</div>
-                    </>
-                  )}
-                </div>
-              </div>
-              <p className="text-xs text-white/50 text-center">
-                {impactScore === 0 ? "No activity yet" : "Keep up the great work!"}
-              </p>
-              <p className="text-sm text-center mt-2">
-                {impactScore === 0 
-                  ? "Start your first project to begin tracking impact" 
-                  : `${500 - impactScore} points to reach next milestone`}
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Garden Stats Card */}
-          <Card className="bg-gradient-to-br from-green-500/20 to-green-600/10 border-green-500/20 backdrop-blur-sm">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-                    <span className="text-white text-lg">🌱</span>
-                  </div>
-                  <div>
-                    <p className="font-medium">Active Gardens</p>
-                    <p className="text-xs text-white/50">Your Projects</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-white/50">Growth Rate</p>
-                  <p className="text-sm font-bold text-white/50">0%</p>
-                </div>
-              </div>
-              <p className="text-3xl font-bold mt-4">0</p>
-              <p className="text-white/50 text-xs">No gardens yet</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* Activity History */}
-      <Card className="bg-white/5 border-white/10 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle className="text-xl">Recent Activity</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow className="border-white/10 hover:bg-transparent">
-                <TableHead className="text-white/50">NAME</TableHead>
-                <TableHead className="text-white/50">DATE</TableHead>
-                <TableHead className="text-white/50">PRICE</TableHead>
-                <TableHead className="text-white/50">STATUS</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {transactions.length === 0 ? (
-                <TableRow className="border-white/10">
-                  <TableCell colSpan={4} className="text-center text-white/50 py-8">
-                    No activity yet. Start your first project to see your impact!
-                  </TableCell>
-                </TableRow>
-              ) : (
-                transactions.map((transaction, index) => (
-                  <TableRow key={index} className="border-white/10 hover:bg-white/5">
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500"></div>
-                        <div>
-                          <p className="font-medium">{transaction.name}</p>
-                          <p className={`text-xs ${transaction.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
-                            {transaction.change}
-                          </p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-white/70">{transaction.date}</TableCell>
-                    <TableCell className="text-white/70">{transaction.amount}</TableCell>
-                    <TableCell>
-                      <span className="inline-flex items-center gap-1 text-xs text-green-400">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                        {transaction.status}
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-    </>
+      </motion.div>
+    </div>
   );
 };
