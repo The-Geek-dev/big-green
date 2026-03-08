@@ -85,6 +85,8 @@ export const DashboardView = ({ userEmail, applicationType }: DashboardViewProps
   const [profile, setProfile] = useState<{ tier_level: number; total_investment: number; impact_score: number } | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [chartPeriod, setChartPeriod] = useState<"1D" | "1W" | "1M" | "All">("1M");
+  const [activeBottomTab, setActiveBottomTab] = useState<"positions" | "history">("positions");
+  const [applications, setApplications] = useState<{ id: string; application_type: string; status: string; created_at: string }[]>([]);
 
   const config = APP_CONFIG[applicationType] || DEFAULT_CONFIG;
 
