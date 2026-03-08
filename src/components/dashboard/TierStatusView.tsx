@@ -76,16 +76,22 @@ export const TierStatusView = () => {
           setAccumulatedBonus(dailyBonus * 3); // 3 days worth as example
         }
 
-        // Check if user has a business funding application to determine base grant
-        const { data: bfApps, error: bfError } = await supabase
+        // Check user's latest approved application type to determine base grant
+        const { data: latestApp } = await supabase
           .from("applications")
           .select("application_type")
           .eq("user_id", user.id)
-          .in("application_type", ["business_funding", "business funding"])
+          .eq("status", "approved")
+          .order("created_at", { ascending: false })
           .limit(1);
 
-        if (bfApps && bfApps.length > 0) {
-          setBaseGrant(150000);
+        if (latestApp && latestApp.length > 0) {
+          const appType = latestApp[0].application_type;
+          if (appType === "business_funding" || appType === "business funding") {
+            setBaseGrant(150000);
+          } else {
+            setBaseGrant(65000);
+          }
         }
 
         // Check for pending tier upgrade transactions
