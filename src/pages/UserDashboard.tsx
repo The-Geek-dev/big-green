@@ -21,6 +21,7 @@ import { TierStatusView } from "@/components/dashboard/TierStatusView";
 import { TransactionsHistoryView } from "@/components/dashboard/TransactionsHistoryView";
 import { AIChat } from "@/components/AIChat";
 import { NotificationPreferences } from "@/components/NotificationPreferences";
+import { FundingStatusView } from "@/components/dashboard/FundingStatusView";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
