@@ -356,7 +356,66 @@ const UserDashboard = () => {
             {activeTab === "Transactions" && <TransactionsHistoryView />}
             {activeTab === "Donate" && <DonateView />}
             {activeTab === "Grants" && <GrantsView onNavigateToTab={setActiveTab} />}
-            {activeTab === "Tier Status" && <TierStatusView />}
+            {activeTab === "Funding Status" && (
+              <div className="space-y-6">
+                <h1 className="text-2xl font-bold">Funding Status</h1>
+                <p className="text-white/60">Track your business funding application progress and disbursement status.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Approved Amount</p>
+                    <p className="text-2xl font-bold text-emerald-400 mt-1">$150,000.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Disbursed</p>
+                    <p className="text-2xl font-bold text-white mt-1">$0.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Status</p>
+                    <p className="text-lg font-semibold text-yellow-400 mt-1">Processing</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {activeTab === "Investment Portfolio" && (
+              <div className="space-y-6">
+                <h1 className="text-2xl font-bold">Investment Portfolio</h1>
+                <p className="text-white/60">View your investment positions and returns.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Total Invested</p>
+                    <p className="text-2xl font-bold text-blue-400 mt-1">$0.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Current Value</p>
+                    <p className="text-2xl font-bold text-white mt-1">$0.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Returns</p>
+                    <p className="text-lg font-semibold text-green-400 mt-1">0.00%</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {activeTab === "My Donations" && (
+              <div className="space-y-6">
+                <h1 className="text-2xl font-bold">My Donations</h1>
+                <p className="text-white/60">Track your donation history and impact.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Total Donated</p>
+                    <p className="text-2xl font-bold text-pink-400 mt-1">$0.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Projects Supported</p>
+                    <p className="text-2xl font-bold text-white mt-1">0</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Impact Score</p>
+                    <p className="text-lg font-semibold text-purple-400 mt-1">0</p>
+                  </div>
+                </div>
+              </div>
+            )}
             {activeTab === "AI Assistant" && <AIChat />}
             {activeTab === "Settings" && (
               <div className="max-w-2xl">
