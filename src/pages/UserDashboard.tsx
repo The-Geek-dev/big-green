@@ -160,19 +160,40 @@ const UserDashboard = () => {
     toast.success("Signed out successfully");
   };
 
-  const isGrantUser = applicationType === "grant" || applicationType === "grant application";
+  const isGrantUser = applicationType === "grant" || applicationType === "grant application" || applicationType === "housing-grant";
+  const isBusinessFunding = applicationType === "business_funding" || applicationType === "business funding";
+  const isInvestment = applicationType === "investment";
+  const isDonation = applicationType === "donation";
+
+  // Application-type-specific sidebar items
+  const getTypeSpecificItems = () => {
+    const items: { name: string; icon: React.ElementType }[] = [];
+    if (isBusinessFunding) {
+      items.push({ name: "Funding Status", icon: Briefcase });
+    }
+    if (isGrantUser) {
+      items.push({ name: "Grants", icon: Award });
+    }
+    if (isInvestment) {
+      items.push({ name: "Investment Portfolio", icon: PiggyBank });
+    }
+    if (isDonation) {
+      items.push({ name: "My Donations", icon: DollarSign });
+    }
+    return items;
+  };
 
   const sidebarItems = [
     { name: "Dashboard", icon: LayoutDashboard },
     { name: "My Gardens", icon: Home },
     { name: "Projects", icon: Leaf },
+    ...getTypeSpecificItems(),
     { name: "Documents", icon: FileText },
     { name: "Analytics", icon: TrendingUp },
     { name: "Transfers", icon: ArrowLeftRight },
     { name: "Transactions", icon: History },
     { name: "Community", icon: Users },
     { name: "Donate", icon: Heart },
-    ...(isGrantUser ? [{ name: "Grants", icon: Award }] : []),
     { name: "AI Assistant", icon: Bot },
     { name: "Settings", icon: Settings },
   ];
