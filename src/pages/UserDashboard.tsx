@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award, Bot, Menu, Home, Leaf, History, Settings } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award, Bot, Menu, Home, Leaf, History, Settings, Briefcase, DollarSign, PiggyBank } from "lucide-react";
 import { DashboardView } from "@/components/dashboard/DashboardView";
 import { MyGardensView } from "@/components/dashboard/MyGardensView";
 import { ProjectsView } from "@/components/dashboard/ProjectsView";
