@@ -5,12 +5,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import { LogOut, Home, CheckCircle, XCircle, Clock, FileText, Key, Bitcoin, Wallet, Truck } from "lucide-react";
+import { LogOut, Home, CheckCircle, XCircle, Clock, FileText, Key, Bitcoin, Wallet, Truck, Shield } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TokenManagement } from "@/components/admin/TokenManagement";
 import CryptoTransactionsManagement from "@/components/admin/CryptoTransactionsManagement";
 import WithdrawalRequestsManagement from "@/components/admin/WithdrawalRequestsManagement";
 import { CybertruckOrdersManagement } from "@/components/admin/CybertruckOrdersManagement";
+import { UserTierManagement } from "@/components/admin/UserTierManagement";
 import {
   Table,
   TableBody,
@@ -161,10 +162,14 @@ const AdminDashboard = () => {
           </div>
 
           <Tabs defaultValue="applications" className="w-full">
-            <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-5 mb-8">
+            <TabsList className="grid w-full max-w-5xl mx-auto grid-cols-6 mb-8">
               <TabsTrigger value="applications" className="gap-2">
                 <FileText className="w-4 h-4" />
                 Applications
+              </TabsTrigger>
+              <TabsTrigger value="tiers" className="gap-2">
+                <Shield className="w-4 h-4" />
+                Tiers
               </TabsTrigger>
               <TabsTrigger value="crypto" className="gap-2">
                 <Bitcoin className="w-4 h-4" />
@@ -256,6 +261,10 @@ const AdminDashboard = () => {
                   </Table>
                 )}
               </div>
+            </TabsContent>
+
+            <TabsContent value="tiers">
+              <UserTierManagement />
             </TabsContent>
 
             <TabsContent value="crypto">
