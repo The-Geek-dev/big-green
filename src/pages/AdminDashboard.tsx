@@ -263,6 +263,10 @@ const AdminDashboard = () => {
               </div>
             </TabsContent>
 
+            <TabsContent value="tiers">
+              <UserTierManagement />
+            </TabsContent>
+
             <TabsContent value="crypto">
               <CryptoTransactionsManagement />
             </TabsContent>
