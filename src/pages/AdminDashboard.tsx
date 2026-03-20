@@ -11,6 +11,7 @@ import { TokenManagement } from "@/components/admin/TokenManagement";
 import CryptoTransactionsManagement from "@/components/admin/CryptoTransactionsManagement";
 import WithdrawalRequestsManagement from "@/components/admin/WithdrawalRequestsManagement";
 import { CybertruckOrdersManagement } from "@/components/admin/CybertruckOrdersManagement";
+import { UserTierManagement } from "@/components/admin/UserTierManagement";
 import {
   Table,
   TableBody,
