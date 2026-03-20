@@ -279,7 +279,7 @@ const UserDashboard = () => {
             {/* Tabs - scrollable on mobile */}
             <div className="flex-1 overflow-x-auto hide-scrollbar">
               <div className="flex items-center gap-4 lg:gap-8 min-w-max">
-                {["Dashboard", "My Gardens", "Projects", "Community", "Donate", "Grants", "Tier Status", "Transactions", "AI Assistant", "Settings"].map((tab) => (
+                {["Dashboard", "My Gardens", "Projects", "Community", "Donate", ...(isGrantUser ? ["Grants"] : []), "Tier Status", "Transactions", "AI Assistant", "Settings"].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
