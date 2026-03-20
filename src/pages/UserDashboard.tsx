@@ -160,6 +160,8 @@ const UserDashboard = () => {
     toast.success("Signed out successfully");
   };
 
+  const isGrantUser = applicationType === "grant" || applicationType === "grant application";
+
   const sidebarItems = [
     { name: "Dashboard", icon: LayoutDashboard },
     { name: "My Gardens", icon: Home },
@@ -170,7 +172,7 @@ const UserDashboard = () => {
     { name: "Transactions", icon: History },
     { name: "Community", icon: Users },
     { name: "Donate", icon: Heart },
-    { name: "Grants", icon: Award },
+    ...(isGrantUser ? [{ name: "Grants", icon: Award }] : []),
     { name: "AI Assistant", icon: Bot },
     { name: "Settings", icon: Settings },
   ];
