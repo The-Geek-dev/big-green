@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award, Bot, Menu, Home, Leaf, History, Settings } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, TrendingUp, ArrowLeftRight, Users, Heart, Award, Bot, Menu, Home, Leaf, History, Settings, Briefcase, DollarSign, PiggyBank } from "lucide-react";
 import { DashboardView } from "@/components/dashboard/DashboardView";
 import { MyGardensView } from "@/components/dashboard/MyGardensView";
 import { ProjectsView } from "@/components/dashboard/ProjectsView";
@@ -160,19 +160,40 @@ const UserDashboard = () => {
     toast.success("Signed out successfully");
   };
 
-  const isGrantUser = applicationType === "grant" || applicationType === "grant application";
+  const isGrantUser = applicationType === "grant" || applicationType === "grant application" || applicationType === "housing-grant";
+  const isBusinessFunding = applicationType === "business_funding" || applicationType === "business funding";
+  const isInvestment = applicationType === "investment";
+  const isDonation = applicationType === "donation";
+
+  // Application-type-specific sidebar items
+  const getTypeSpecificItems = () => {
+    const items: { name: string; icon: React.ElementType }[] = [];
+    if (isBusinessFunding) {
+      items.push({ name: "Funding Status", icon: Briefcase });
+    }
+    if (isGrantUser) {
+      items.push({ name: "Grants", icon: Award });
+    }
+    if (isInvestment) {
+      items.push({ name: "Investment Portfolio", icon: PiggyBank });
+    }
+    if (isDonation) {
+      items.push({ name: "My Donations", icon: DollarSign });
+    }
+    return items;
+  };
 
   const sidebarItems = [
     { name: "Dashboard", icon: LayoutDashboard },
     { name: "My Gardens", icon: Home },
     { name: "Projects", icon: Leaf },
+    ...getTypeSpecificItems(),
     { name: "Documents", icon: FileText },
     { name: "Analytics", icon: TrendingUp },
     { name: "Transfers", icon: ArrowLeftRight },
     { name: "Transactions", icon: History },
     { name: "Community", icon: Users },
     { name: "Donate", icon: Heart },
-    ...(isGrantUser ? [{ name: "Grants", icon: Award }] : []),
     { name: "AI Assistant", icon: Bot },
     { name: "Settings", icon: Settings },
   ];
@@ -279,7 +300,12 @@ const UserDashboard = () => {
             {/* Tabs - scrollable on mobile */}
             <div className="flex-1 overflow-x-auto hide-scrollbar">
               <div className="flex items-center gap-4 lg:gap-8 min-w-max">
-                {["Dashboard", "My Gardens", "Projects", "Community", "Donate", ...(isGrantUser ? ["Grants"] : []), "Tier Status", "Transactions", "AI Assistant", "Settings"].map((tab) => (
+                {["Dashboard", "My Gardens", "Projects",
+                  ...(isBusinessFunding ? ["Funding Status"] : []),
+                  ...(isGrantUser ? ["Grants"] : []),
+                  ...(isInvestment ? ["Investment Portfolio"] : []),
+                  ...(isDonation ? ["My Donations"] : []),
+                  "Community", "Donate", "Tier Status", "Transactions", "AI Assistant", "Settings"].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
@@ -330,7 +356,66 @@ const UserDashboard = () => {
             {activeTab === "Transactions" && <TransactionsHistoryView />}
             {activeTab === "Donate" && <DonateView />}
             {activeTab === "Grants" && <GrantsView onNavigateToTab={setActiveTab} />}
-            {activeTab === "Tier Status" && <TierStatusView />}
+            {activeTab === "Funding Status" && (
+              <div className="space-y-6">
+                <h1 className="text-2xl font-bold">Funding Status</h1>
+                <p className="text-white/60">Track your business funding application progress and disbursement status.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Approved Amount</p>
+                    <p className="text-2xl font-bold text-emerald-400 mt-1">$150,000.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Disbursed</p>
+                    <p className="text-2xl font-bold text-white mt-1">$0.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Status</p>
+                    <p className="text-lg font-semibold text-yellow-400 mt-1">Processing</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {activeTab === "Investment Portfolio" && (
+              <div className="space-y-6">
+                <h1 className="text-2xl font-bold">Investment Portfolio</h1>
+                <p className="text-white/60">View your investment positions and returns.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Total Invested</p>
+                    <p className="text-2xl font-bold text-blue-400 mt-1">$0.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Current Value</p>
+                    <p className="text-2xl font-bold text-white mt-1">$0.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Returns</p>
+                    <p className="text-lg font-semibold text-green-400 mt-1">0.00%</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {activeTab === "My Donations" && (
+              <div className="space-y-6">
+                <h1 className="text-2xl font-bold">My Donations</h1>
+                <p className="text-white/60">Track your donation history and impact.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Total Donated</p>
+                    <p className="text-2xl font-bold text-pink-400 mt-1">$0.00</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Projects Supported</p>
+                    <p className="text-2xl font-bold text-white mt-1">0</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                    <p className="text-white/50 text-sm">Impact Score</p>
+                    <p className="text-lg font-semibold text-purple-400 mt-1">0</p>
+                  </div>
+                </div>
+              </div>
+            )}
             {activeTab === "AI Assistant" && <AIChat />}
             {activeTab === "Settings" && (
               <div className="max-w-2xl">
