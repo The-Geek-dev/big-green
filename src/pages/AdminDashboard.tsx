@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import { LogOut, Home, CheckCircle, XCircle, Clock, FileText, Key, Bitcoin, Wallet, Truck } from "lucide-react";
+import { LogOut, Home, CheckCircle, XCircle, Clock, FileText, Key, Bitcoin, Wallet, Truck, Shield } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TokenManagement } from "@/components/admin/TokenManagement";
 import CryptoTransactionsManagement from "@/components/admin/CryptoTransactionsManagement";
