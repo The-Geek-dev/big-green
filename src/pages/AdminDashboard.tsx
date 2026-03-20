@@ -162,10 +162,14 @@ const AdminDashboard = () => {
           </div>
 
           <Tabs defaultValue="applications" className="w-full">
-            <TabsList className="grid w-full max-w-4xl mx-auto grid-cols-5 mb-8">
+            <TabsList className="grid w-full max-w-5xl mx-auto grid-cols-6 mb-8">
               <TabsTrigger value="applications" className="gap-2">
                 <FileText className="w-4 h-4" />
                 Applications
+              </TabsTrigger>
+              <TabsTrigger value="tiers" className="gap-2">
+                <Shield className="w-4 h-4" />
+                Tiers
               </TabsTrigger>
               <TabsTrigger value="crypto" className="gap-2">
                 <Bitcoin className="w-4 h-4" />
